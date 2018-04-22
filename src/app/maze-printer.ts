@@ -1,11 +1,12 @@
 import Big from "big.js";
 
+import OrderedPair from "app/common/ordered-pair";
 import { ZERO } from "app/misc/big-util";
 import SVG_HEADER from "app/misc/svg-header";
 import CalibrationRectangle from "app/models/calibration-rectangle";
 import SheetWallModel from "app/models/sheet-wall-model";
 import VectorNumber from "app/models/vector-number";
-import Rect from "app/svg/rect";
+import Path from "app/svg/path";
 import SvgElementGenerator from "app/svg/svg-element-generator";
 
 export default class MazePrinter {
@@ -69,29 +70,35 @@ export default class MazePrinter {
         result += "</g>\n";
 
         if (calibrationRectangle != null) {
-            result += svgElementGenerator.rectToSvgText(this.buildCalibrationRectangle(calibrationRectangle), this.precision);
+            result += "<g id=\"calibration-rectangle\">";
+            for (const rectSide of this.buildCalibrationRectangle(calibrationRectangle)) {
+                rectSide.style = rectSide.style.replace("000000", "00ff00");
+                result += svgElementGenerator.pathToSvgText(rectSide, this.precision);
+            }
+            result += "</g>\n";
         }
 
         result += "</svg>\n";
         return result;
     }
 
-    private buildCalibrationRectangle(calibrationRectangle: CalibrationRectangle): Rect {
-        let width: Big, height: Big, x: Big, y: Big;
-        width = calibrationRectangle.unit.pixelsPer.mul(new Big(calibrationRectangle.width));
-        height = calibrationRectangle.unit.pixelsPer.mul(new Big(calibrationRectangle.height));
-        if (calibrationRectangle.leftAligned) {
-            x = ZERO;
-        } else {
-            x = this.maxWidth.sub(width);
+    private buildCalibrationRectangle(calibrationRectangle: CalibrationRectangle): Path[] {
+        const width = calibrationRectangle.unit.pixelsPer.mul(new Big(calibrationRectangle.width)),
+            height = calibrationRectangle.unit.pixelsPer.mul(new Big(calibrationRectangle.height));
+        const topLeft = new OrderedPair(ZERO, ZERO);
+        if (!calibrationRectangle.leftAligned) {
+            topLeft.x = this.maxWidth.sub(width);
         }
-        if (calibrationRectangle.topAligned) {
-            y = ZERO;
-        } else {
-            y = this.maxHeight.sub(height);
+        if (!calibrationRectangle.topAligned) {
+            topLeft.y = this.maxHeight.sub(height);
         }
-        const rect = new Rect("calibration-rectangle", width, height, x, y);
-        rect.style = rect.style.replace("000000", "00ff00");
-        return rect;
+        const topRight = new OrderedPair(topLeft.x.add(width), topLeft.y),
+            bottomRight = new OrderedPair(topRight.x, topLeft.y.add(height)),
+            bottomLeft = new OrderedPair(topLeft.x, bottomRight.y);
+        const top = new Path(topLeft, topRight),
+            right = new Path(topRight, bottomRight),
+            bottom = new Path(bottomRight, bottomLeft),
+            left = new Path(bottomLeft, topLeft);
+        return [top, right, bottom, left];
     }
 }

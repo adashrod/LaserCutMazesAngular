@@ -194,7 +194,7 @@ export default class SheetWallModelGenerator {
                 if (!firstPoint.equals(secondPoint)) {
                     sheetWallModel.floorOutline.addPath(new Path(firstPoint, secondPoint).setClosed(false));
                 } else {
-                    console.log("DEBUG: skipping connecting floor outer path because it's length 0: " + firstPoint.toString());
+                    console.debug("skipping connecting floor outer path because it's length 0: " + firstPoint.toString());
                 }
             } else {
                 // notches are on different sides and neither is a corner (unusual case of both parts of a corner of the maze being open)

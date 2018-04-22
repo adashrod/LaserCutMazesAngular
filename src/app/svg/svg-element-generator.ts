@@ -26,7 +26,7 @@ export default class SvgElementGenerator {
     pathToSvgText(path: SvgPath, fpPrecision: number): string {
         let dAttrBuilder = "M";
         if (path.multiPartPath.length === 0) {
-            dAttrBuilder += ` ${roundAndStrip(path.start.x, fpPrecision)},${roundAndStrip(path.start.y, fpPrecision)}` +
+            dAttrBuilder += ` ${roundAndStrip(path.start.x, fpPrecision)},${roundAndStrip(path.start.y, fpPrecision)} ` +
                 `${roundAndStrip(path.end.x, fpPrecision)},${roundAndStrip(path.end.y, fpPrecision)}`;
         } else {
             for (const point of path.multiPartPath) {
