@@ -1,63 +1,122 @@
 <!-- <form #mazeForm="ngForm"> -->
 <form>
-    <label for="numRowsInput">number of maze rows</label>
-    <input id="numRowsInput" type="number" [(ngModel)]="mazeConfig.numRows" name="numRowsInput"/>
-    <label for="numColsInput">number of maze columns</label>
-    <input id="numColsInput" type="number" [(ngModel)]="mazeConfig.numCols" name="numColsInput"/>
-    <label for="mazeUnitInput">units</label>
-    <select id="mazeUnitInput" [(ngModel)]="mazeConfig.unit" name="mazeUnitInput">
-        <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.name}}</option>
-    </select>
-    <label for="wallHeightInput">wall height</label>
-    <input id="wallHeightInput" type="number" [(ngModel)]="mazeConfig.wallHeight" name="wallHeightInput"/>
-    <label for="materialThicknessInput">material thickness</label>
-    <input id="materialThicknessInput" type="number" [(ngModel)]="mazeConfig.materialThickness" name="materialThicknessInput"/>
-    <label for="hallWidthInput">hall width</label>
-    <input id="hallWidthInput" type="number" [(ngModel)]="mazeConfig.hallWidth" name="hallWidthInput"/>
-    <label for="notchHeightInput">notch height</label>
-    <input id="notchHeightInput" type="number" [(ngModel)]="mazeConfig.notchHeight" name="notchHeightInput"/>
-    <label for="separationSpaceInput">separation space</label>
-    <input id="separationSpaceInput" type="number" [(ngModel)]="mazeConfig.separationSpace" name="separationSpaceInput"/>
-    <label for="algorithmInput">algorithm</label>
-    <select id="algorithmInput" [(ngModel)]="currentAlgorithm" name="algorithmInput">
-        <option *ngFor="let a of algorithms; let i = index" [ngValue]="i">{{a.name}}</option>
-    </select>
-    <label for="maxWidthInput">max printer width</label>
-    <input id="maxWidthInput" type="number" [(ngModel)]="maxWidth" name="maxWidthInput"/>
-    <label for="maxHeightInput">max printer height</label>
-    <input id="maxHeightInput" type="number" [(ngModel)]="maxHeight" name="maxHeightInput"/>
-    <label for="randomSeedInput">random seed</label>
-    <input id="randomSeedInput" type="text" [(ngModel)]="randomSeed" name="randomSeedInput"/>
-
-    <label for="includeCalibrationRectangleInput">include calibration rectangle</label>
-    <input id="includeCalibrationRectangleInput" type="checkbox" [(ngModel)]="includeCalibrationRectangle" name="includeCalibrationRectangleInput"/>
-    <label for="calibrationRectangleWidthInput">calibration rectangle width</label>
-    <input id="calibrationRectangleWidthInput" type="number" [(ngModel)]="calibrationRectangleConfig.width" name="calibrationRectangleWidthInput"/>
-    <label for="calibrationRectangleHeightInput">calibration rectangle height</label>
-    <input id="calibrationRectangleHeightInput" type="number" [(ngModel)]="calibrationRectangleConfig.height" name="calibrationRectangleHeightInput"/>
-    <label for="calibrationRectangleUnitInput">units</label>
-    <select id="calibrationRectangleUnitInput" [(ngModel)]="calibrationRectangleConfig.unit" name="calibrationRectangleUnitInput">
-        <option *ngFor="let u of rectangleUnits" [ngValue]="u">{{u.name}}</option>
-    </select>
-    <span>horizontal alignment</span>
-    <label for="calibrationRectangleLeftInput">left</label>
-    <input id="calibrationRectangleLeftInput" type="radio" [value]="true" [(ngModel)]="calibrationRectangleConfig.leftAligned" name="horizontalRadio"/>
-    <label for="calibrationRectangleRightInput">right</label>
-    <input id="calibrationRectangleRightInput" type="radio" [value]="false" [(ngModel)]="calibrationRectangleConfig.leftAligned" name="horizontalRadio"/>
-    <span>vertical alignment</span>
-    <label for="calibrationRectangleTopInput">top</label>
-    <input id="calibrationRectangleTopInput" type="radio" [value]="true" [(ngModel)]="calibrationRectangleConfig.topAligned" name="verticalRadio"/>
-    <label for="calibrationRectangleBottomInput">bottom</label>
-    <input id="calibrationRectangleBottomInput" type="radio" [value]="false" [(ngModel)]="calibrationRectangleConfig.topAligned" name="verticalRadio"/>
-    
-    <input type="button" (click)="buildMaze()" value="build it"/>
+    <div class="group">
+        <div class="maze-inputs">
+            <div class="section-title">Maze Configuration</div>
+            <div class="row">
+                <label for="numRowsInput">number of maze rows</label>
+                <input id="numRowsInput" type="number" min="1" step="1" [(ngModel)]="mazeConfig.numRows" name="numRowsInput"/>
+            </div>
+            <div class="row">
+                <label for="numColsInput">number of maze columns</label>
+                <input id="numColsInput" type="number" min="1" step="1" [(ngModel)]="mazeConfig.numCols" name="numColsInput"/>
+            </div>
+            <div class="row">
+                <label for="mazeUnitInput">units</label>
+                <select id="mazeUnitInput" [(ngModel)]="mazeConfig.unit" name="mazeUnitInput">
+                    <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.name}}</option>
+                </select>
+            </div>
+            <div class="row">
+                <label for="wallHeightInput">wall height</label>
+                <input id="wallHeightInput" type="number" min=".01" step=".25" [(ngModel)]="mazeConfig.wallHeight" name="wallHeightInput"/>
+            </div>
+            <div class="row">
+                <label for="materialThicknessInput">material thickness</label>
+                <input id="materialThicknessInput" type="number" min=".01" step=".01" [(ngModel)]="mazeConfig.materialThickness" name="materialThicknessInput"/>
+            </div>
+            <div class="row">
+                <label for="hallWidthInput">hall width</label>
+                <input id="hallWidthInput" type="number" min=".1" step=".1" [(ngModel)]="mazeConfig.hallWidth" name="hallWidthInput"/>
+            </div>
+            <div class="row">
+                <label for="separationSpaceInput">separation space</label>
+                <input id="separationSpaceInput" type="number" min=".01" step=".01" [(ngModel)]="mazeConfig.separationSpace" name="separationSpaceInput"/>
+            </div>
+            <div class="row">
+                <label for="algorithmInput">algorithm</label>
+                <select id="algorithmInput" [(ngModel)]="currentAlgorithm" (change)="buildMaze()" name="algorithmInput">
+                    <option *ngFor="let a of algorithms; let i = index" [ngValue]="i">{{a.name}}</option>
+                </select>
+            </div>
+            <div class="row">
+                <label for="randomSeedInput">random seed</label>
+                <input id="randomSeedInput" type="text" [(ngModel)]="randomSeed" (change)="buildMaze()" (keyup)="buildMaze()" name="randomSeedInput"/>
+            </div>
+            <div class="row">
+                <span>last seed used:</span>
+                <span>{{lastSeedUsed}}</span>
+            </div>
+        </div>
+        <div class="printer-inputs">
+            <div class="section-title">Printer Configuration</div>
+            <div class="row">
+                <label for="maxPrinterUnits">units</label>
+                <select id="maxPrinterUnits" [(ngModel)]="maxPrinterUnits" name="maxPrinterUnits">
+                    <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.name}}</option>
+                </select>
+            </div>
+            <div class="row">
+                <label for="maxWidthInput">max printer width</label>
+                <input id="maxWidthInput" type="number" min="1" [(ngModel)]="maxWidth" name="maxWidthInput"/>
+            </div>
+            <div class="row">
+                <label for="maxHeightInput">max printer height</label>
+                <input id="maxHeightInput" type="number" min="1" [(ngModel)]="maxHeight" name="maxHeightInput"/>
+            </div>
+        </div>
+        <div class="calibration-inputs">
+            <div class="section-title">Calibration Rectangle Configuration</div>
+            <div class="row">
+                <label for="includeCalibrationRectangleInput">include calibration rectangle</label>
+                <input id="includeCalibrationRectangleInput" type="checkbox" [(ngModel)]="includeCalibrationRectangle" name="includeCalibrationRectangleInput"/>
+            </div>
+            <div class="row">
+                <label for="calibrationRectangleUnitInput">units</label>
+                <select id="calibrationRectangleUnitInput" [(ngModel)]="calibrationRectangleConfig.unit" name="calibrationRectangleUnitInput">
+                    <option *ngFor="let u of rectangleUnits" [ngValue]="u">{{u.name}}</option>
+                </select>
+            </div>
+            <div class="row">
+                <label for="calibrationRectangleWidthInput">calibration rectangle width</label>
+                <input id="calibrationRectangleWidthInput" type="number" min="1" step="1" [(ngModel)]="calibrationRectangleConfig.width" name="calibrationRectangleWidthInput"/>
+            </div>
+            <div class="row">
+                <label for="calibrationRectangleHeightInput">calibration rectangle height</label>
+                <input id="calibrationRectangleHeightInput" type="number" min="1" step="1" [(ngModel)]="calibrationRectangleConfig.height" name="calibrationRectangleHeightInput"/>
+            </div>
+            <div class="row">
+                <span>horizontal alignment</span>
+                <div>
+                    <label for="calibrationRectangleLeftInput">left</label>
+                    <input id="calibrationRectangleLeftInput" type="radio" [value]="true" [(ngModel)]="calibrationRectangleConfig.leftAligned" name="horizontalRadio"/>
+                    <label for="calibrationRectangleRightInput">right</label>
+                    <input id="calibrationRectangleRightInput" type="radio" [value]="false" [(ngModel)]="calibrationRectangleConfig.leftAligned" name="horizontalRadio"/>
+                </div>
+            </div>
+            <div class="row">
+                <span>vertical alignment</span>
+                <div>
+                    <label for="calibrationRectangleTopInput">top</label>
+                    <input id="calibrationRectangleTopInput" type="radio" [value]="true" [(ngModel)]="calibrationRectangleConfig.topAligned" name="verticalRadio"/>
+                    <label for="calibrationRectangleBottomInput">bottom</label>
+                    <input id="calibrationRectangleBottomInput" type="radio" [value]="false" [(ngModel)]="calibrationRectangleConfig.topAligned" name="verticalRadio"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="button" (click)="buildMaze()" value="Regenerate" [disabled]="!mazeConfig.numRows || !mazeConfig.numCols"/>
+    <div *ngIf="maze">
+        <table class="maze">
+            <tr *ngFor="let row of maze.grid">
+                <td *ngFor="let elem of row" [ngClass]="{'northWall': !elem.northOpen, 'eastWall': !elem.eastOpen, 'southWall': !elem.southOpen, 'westWall': !elem.westOpen}"></td>
+            </tr>
+        </table>
+    </div>
+    <input type="button" (click)="exportSvg()" value="Export SVG Blueprint" [disabled]="!maze"/>
 </form>
-<div *ngIf="testMaze">
-    <table class="maze">
-        <tr *ngFor="let row of testMaze.grid">
-            <td *ngFor="let elem of row" [ngClass]="{'northWall': !elem.northOpen, 'eastWall': !elem.eastOpen, 'southWall': !elem.southOpen, 'westWall': !elem.westOpen}"></td>
-        </tr>
-    </table>
+<input type="button" (click)="downloadSvg()" value="Download" [disabled]="!svgSrc"/>
+<input type="button" (click)="toggleSvgPreview()" value="SVG Blueprint Preview"/>
+<div class="svg-preview" *ngIf="showSvgPreview">
+    <img class="blueprint" [src]="svgDataUrl" *ngIf="svgDataUrl"/>
 </div>
-<img class="blueprint" [src]="svgDataUrl"/>
-<div>{{testSvgSrc}}</div>

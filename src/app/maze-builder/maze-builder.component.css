@@ -1,11 +1,39 @@
+/* clear fix */
+.group > * { float: left; }
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.section-title {
+    text-align: center;
+}
+
+.maze-inputs, .printer-inputs, .calibration-inputs {
+    border-width: 2px;
+    border-style: outset;
+    border-color: #ccc #aaa #aaa #ccc;
+    padding: 5px;
+}
+
+.row {
+    display: table-row;
+}
+
+.row > span, .row > input, .row > label, .row > select   {
+    display: table-cell;
+}
+
 table.maze {
     border-collapse: collapse;
 }
 
 td {
     padding: 0;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
 }
 
 .northWall {
