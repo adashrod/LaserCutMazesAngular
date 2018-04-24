@@ -4,11 +4,13 @@ import { BrowserModule } from "@angular/platform-browser";
 
 import { MazeBuilderComponent } from "app/maze-builder/maze-builder.component";
 import { AppComponent } from "app/app.component";
+import { HelpModalComponent } from "app/help-modal/help-modal.component";
 
 @NgModule({
     declarations: [
         AppComponent,
-        MazeBuilderComponent
+        MazeBuilderComponent,
+        HelpModalComponent
     ],
     imports: [
         BrowserModule,

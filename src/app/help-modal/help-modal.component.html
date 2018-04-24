@@ -1,0 +1,8 @@
+<span class="container">
+    <span (click)="toggle()" class="toggle-button">[?]</span>
+    <div *ngIf="showHelpModal" class="modal" [ngClass]="{'pop-left': popLeft}">
+        <span class="close" (click)="close()">&times;</span>
+        <ng-content select=".title"></ng-content>
+        <ng-content select=".body"></ng-content>
+    </div>
+</span>
