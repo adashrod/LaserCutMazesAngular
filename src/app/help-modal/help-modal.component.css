@@ -2,6 +2,14 @@
     position: relative;
 }
 
+.fade-slide {
+    animation: fade-in 500ms, slide 500ms;
+}
+
+.fade-slide-pop-left {
+    animation: fade-in 500ms, slide-pop-left 500ms;
+}
+
 .toggle-button, .close {
     cursor: pointer;
 }
@@ -38,4 +46,19 @@
 
 :host /deep/ .title, :host /deep/ .body {
     text-align: left;
+}
+
+@keyframes fade-in {
+    0% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes slide {
+    0% { left: 10px; }
+    100% { left: 0; }
+}
+
+@keyframes slide-pop-left {
+    0% { right: -10px; }
+    100% { right: 0; }
 }

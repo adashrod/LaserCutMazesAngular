@@ -6,10 +6,11 @@ import { Component, Input, OnInit } from "@angular/core";
     styleUrls: ["./help-modal.component.css"]
 })
 export class HelpModalComponent implements OnInit {
+    private static instances: HelpModalComponent[] = [];
+
     showHelpModal: boolean = false;
     @Input() popLeft: boolean;
-    private static instances: HelpModalComponent[] = [];
-    
+
     constructor() {}
 
     ngOnInit() {
