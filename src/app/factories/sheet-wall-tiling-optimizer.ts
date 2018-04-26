@@ -16,15 +16,17 @@ export default class SheetWallTilingOptimizer {
     private separationSpace: Big;
     private maxWidth: Big;
     private maxHeight: Big;
+    private wallHeight: Big;
     private cursor = new OrderedPair<Big>(ZERO, ZERO);
     private beginningOfLineX: Big;
     private currentMaxRowWidth: Big | null;
 
-    constructor(sheetWallModel: SheetWallModel, separationSpace: Big, maxWidth: Big, maxHeight: Big) {
+    constructor(sheetWallModel: SheetWallModel, separationSpace: Big, maxWidth: Big, maxHeight: Big, wallHeight: Big) {
         this.sheetWallModel = sheetWallModel;
         this.separationSpace = separationSpace;
         this.maxWidth = maxWidth;
         this.maxHeight = maxHeight;
+        this.wallHeight = wallHeight;
     }
 
     // todo: could make this even more efficient by doing rows instead of columns after the first column
@@ -84,7 +86,7 @@ export default class SheetWallTilingOptimizer {
         }
         wallLabel.translate(new OrderedPair(
             this.cursor.x.add(wall.width.mul(HALF)).sub(wallLabel.width.mul(HALF)),
-            this.cursor.y.add(wall.height.mul(HALF)).sub(wallLabel.height.mul(HALF))
+            this.cursor.y.add(this.wallHeight.mul(HALF)).sub(wallLabel.height.mul(HALF))
         ));
         this.sheetWallModel.walls.push(wall);
         this.cursor.x = this.cursor.x.add(wall.width.add(this.separationSpace));

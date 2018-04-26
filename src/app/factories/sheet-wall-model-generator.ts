@@ -79,7 +79,7 @@ export default class SheetWallModelGenerator {
                 new OrderedPair(ZERO, ZERO))); // translate in optimizer
         }
         this.createOutline(sheetWallModel);
-        new SheetWallTilingOptimizer(sheetWallModel, this.separationSpace, this.maxWidth, this.maxHeight).optimize();
+        new SheetWallTilingOptimizer(sheetWallModel, this.separationSpace, this.maxWidth, this.maxHeight, this.wallHeight).optimize();
         return sheetWallModel;
     }
 
