@@ -1,5 +1,5 @@
 <span class="container">
-    <span (click)="toggle()" class="toggle-button">[?]</span>
+    <span (click)="toggle()" class="toggle-button" [ngClass]="{'glow': glow}">[?]</span>
     <div *ngIf="showHelpModal" class="modal" [ngClass]="{'pop-left': popLeft, 'fade-slide': !popLeft, 'fade-slide-pop-left': popLeft}">
         <span class="close" (click)="close()">&times;</span>
         <ng-content select=".title"></ng-content>

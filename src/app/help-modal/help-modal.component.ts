@@ -10,6 +10,7 @@ export class HelpModalComponent implements OnInit {
 
     showHelpModal: boolean = false;
     @Input() popLeft: boolean;
+    @Input() glow: boolean;
 
     constructor() {}
 

@@ -10,6 +10,10 @@
     animation: fade-in 500ms, slide-pop-left 500ms;
 }
 
+.glow {
+    animation: 750ms glow 1s 3;
+}
+
 .toggle-button, .close {
     cursor: pointer;
 }
@@ -46,6 +50,21 @@
 
 :host /deep/ .title, :host /deep/ .body {
     text-align: left;
+}
+
+@keyframes glow {
+    0% {
+        color: #000;
+        background-color: #fff;
+    }
+    50% {
+        color: #888;
+        background-color: #0ff;
+    }
+    100% {
+        color: #000;
+        background-color: #fff;
+    }
 }
 
 @keyframes fade-in {
