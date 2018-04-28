@@ -9,12 +9,6 @@ export default class Space {
     eastOpen: boolean = false;
     southOpen: boolean = false;
     westOpen: boolean = false;
-    exploringNext: boolean = false;
-    onPath: boolean = false;
-
-    get unexplored(): boolean {
-        return !this.northOpen && !this.eastOpen && !this.southOpen && !this.westOpen && !this.exploringNext && !this.onPath;
-    }
 
     /**
      * Removes a wall in the space

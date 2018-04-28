@@ -3,6 +3,7 @@ import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 import Big from "big.js";
 import { saveAs } from "file-saver";
 
+import DepthFirstSearch from "app/algorithms/depth-first-search-algorithm";
 import KruskalsAlgorithm from "app/algorithms/kruskals-algorithm";
 import MazeGenerator from "app/algorithms/maze-generator";
 import PrimsAlgorithm from "app/algorithms/prims-algorithm";
@@ -35,7 +36,7 @@ export class MazeBuilderComponent implements OnInit {
 
     includeCalibrationRectangle: boolean = false;
     calibrationRectangleConfig: CalibrationRectangle = new CalibrationRectangle();
-    algorithms: MazeGenerator[] = [new PrimsAlgorithm(), new KruskalsAlgorithm];
+    algorithms: MazeGenerator[] = [new PrimsAlgorithm(), new KruskalsAlgorithm(), new DepthFirstSearch()];
     currentAlgorithm = 0;
 
     maze: Maze;

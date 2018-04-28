@@ -90,8 +90,10 @@
                         <dl>
                             <dt>Prim's Algorithm</dt>
                             <dd>Method: start with all spaces having all walls closed. Randomly pick a space and add it to the maze path. Add all of its neighboring spaces to a list. While there are spaces in the list, remove a random one, pick a random neighbor, connect the two (remove the wall), and add the removed space's unexplored neighbors to the list. Repeat until all spaces have been visited. <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm" target="_blank">Prim's Algorithm on Wikipedia</a></dd>
-                            <dt>Krukkal's Algorithm</dt>
+                            <dt>Kruskal's Algorithm</dt>
                             <dd>Method: start with all spaces having all walls closed. Go over every wall that separates two spaces (outer walls not included). Randomly pick a wall. If the two spaces separated by the wall are not already connected by a path, remove the wall between them. Repeat until all spaces are on the same path. <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm" target="_blank">Kruskal's Algorithm on Wikipedia</a></dd>
+                            <dt>Depth-First Search</dt>
+                            <dd>Method: start with all spaces having all walls closed. Randomly pick a space and add it to the maze path. Move in a random direction and add that to the path. Continue until a dead end is reached, then backtrack until reaching a space where a fork is possible and pick a new direction. Continue until all spaces have been visited. This method tends to make mazes with long paths, dead ends, and not a lot of forks. <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Depth-First Search Algorithm on Wikipedia</a></dd>
                         </dl>
                     </div>
                 </app-help-modal>
@@ -103,7 +105,7 @@
                     <div class="title">Random Seed</div>
                     <div class="body">
                         <p>The random seed is where the random number generator "starts" generating random numbers. It can be any string of numbers/letters/etc. If you enter a random seed, then the randomly generated maze will always be the same randomly generated maze as long as you use that seed.</p>
-                        <p>For example: if you use Prim's algorithm, enter a seed of "rand1234", and choose 4 rows and 4 columns, you should see a maze that has a path from the top-left corner, to the top-right corner, to the bottom-right corner. You should be able to generate that same maze using the same row, column, and seed parameters at any time, in any browser, even if you refresh the page.</p>
+                        <p>For example: if you use Prim's algorithm, enter a seed of "rand12", and choose 4 rows and 4 columns, you should see a maze that has a path from the top-left corner, to the top-right corner, to the bottom-right corner. You should be able to generate that same maze using the same row, column, and seed parameters at any time, in any browser, even if you refresh the page.</p>
                     </div>
                 </app-help-modal>
             </div>
