@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    color: #f3e0dc;
+    font-family: sans-serif;
+    background: #deb887 url("/assets/bg1.png") repeat-x 0 0;
+}
+
+/* clear fix */
+.group > * { float: left; }
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+a {
+    text-decoration: none;
+    color: #d4a59a;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #5c2018;
+}

@@ -1,18 +1,7 @@
-<div class="page-title">
-    <span>Laser-Cut Blueprints: Maze Builder</span>
-    <app-help-modal [glow]="true">
-        <div class="title">blah blah</div>
-        <div class="body">
-            tab: intro
-            tab: youtube video
-            tab: make a chart of common unit conversions
-        </div>
-    </app-help-modal>
-</div>
 <!-- <form #mazeForm="ngForm"> -->
 <form>
     <div class="group">
-        <div class="maze-inputs">
+        <div class="maze-inputs inputs">
             <div class="section-title">
                 <span>Maze Configuration</span>
                 <app-help-modal>
@@ -67,7 +56,7 @@
                 <input id="hallWidthInput" type="number" min=".1" step=".1" [(ngModel)]="mazeConfig.hallWidth" name="hallWidthInput"/>
                 <app-help-modal>
                     <div class="title">Hall width</div>
-                    <div class="body">Hall width, or speace between walls. This should be at least as big as the diameter of a marble that would be rolling through the maze.</div>
+                    <div class="body">Hall width, or space between walls. This should be at least as big as the diameter of a marble that would be rolling through the maze.</div>
                 </app-help-modal>
             </div>
             <div class="row">
@@ -114,7 +103,7 @@
                 <span>{{lastSeedUsed}}</span>
             </div>
         </div>
-        <div class="printer-inputs">
+        <div class="printer-inputs inputs">
             <div class="section-title">
                 <span>Printer Configuration</span>
                 <app-help-modal>
@@ -149,7 +138,7 @@
                 </app-help-modal>
             </div>
         </div>
-        <div class="calibration-inputs">
+        <div class="calibration-inputs inputs">
             <div class="section-title">
                 <span>Calibration Rectangle Configuration</span>
                 <app-help-modal [popLeft]="true">

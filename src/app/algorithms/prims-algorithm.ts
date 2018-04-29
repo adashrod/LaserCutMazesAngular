@@ -49,14 +49,14 @@ export default class PrimsAlgorithm extends MazeGenerator {
     private markOnPathAndAddUnexploredNeighborsToNext(x: number, y: number): void {
         this.onPath.set(new OrderedPair<number>(x, y).toString(), true);
         for (const delta of this.deltas) {
-            this.addToNextIfUnexplored(x + delta.x, y + delta.y);        
+            this.addToNextIfUnexplored(x + delta.x, y + delta.y);
         }
     }
 
     private findOnPathNeighbors(x: number, y: number): OrderedPair<number>[] {
         const n: OrderedPair<number>[] = [];
         for (const delta of this.deltas) {
-            if (this.maze.isInBounds(x + delta.x, y + delta.y) && 
+            if (this.maze.isInBounds(x + delta.x, y + delta.y) &&
                     this.onPath.has(new OrderedPair<number>(x + delta.x, y + delta.y).toString())) {
                 n.push(new OrderedPair<number>(x + delta.x, y + delta.y));
             }
@@ -66,7 +66,7 @@ export default class PrimsAlgorithm extends MazeGenerator {
 
     private isUnexplored(x: number, y: number): boolean {
         const space = this.maze.grid[y][x];
-        return !space.isOpen(Direction.NORTH) && !space.isOpen(Direction.EAST) && 
+        return !space.isOpen(Direction.NORTH) && !space.isOpen(Direction.EAST) &&
             !space.isOpen(Direction.SOUTH) && !space.isOpen(Direction.WEST) &&
             !this.exploringNext.has(new OrderedPair<number>(x, y).toString());
     }

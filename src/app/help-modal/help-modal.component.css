@@ -29,7 +29,8 @@
     position: absolute;
     left: 0;
     padding: 5px;
-    background: #fff;
+    background: #f3e0dc;
+    color: #bc4639;
     width: 300px;
     z-index: 1;
 }

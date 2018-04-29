@@ -1,1 +1,113 @@
-<app-maze-builder></app-maze-builder>
+<div class="end-container">
+    <div class="header">
+        <span class="page-title">Laser-Cut Blueprints: Maze Builder</span>
+    </div>
+</div>
+<div class="main-body">
+    <div>
+        <p>Welcome to the Laser-Cut Maze Builder, by Aaron Rodriguez</p>
+        <p>With this tool and a laser cutter such as a <a href="http://glowforge.com" target="_blank">Glowforge</a> or an
+            <a href="http://epiloglaser.com" target="_blank">Epilog</a>, you can create your own wooden toy maze. You can then assemble
+            it and play with it by rolling around a small marble through the hallways.
+        </p>
+    </div>
+    <div>todo: put video here</div>
+    <div>
+        <p>To get started, enter some values for the maze dimensions (rows and columns). Once you do that the algorithm will automatically generate a maze.
+            Choose your material measurements and you'll be ready to click "Export SVG Blueprint", which will let you download an SVG file to send to your
+            laser cutter.
+        </p>
+        <p>Each input has a [?] help button with more information on what that input means.</p>
+    </div>
+    <div class="conversions">
+        <span>Some common measurements and conversions</span>
+        <app-help-modal>
+            <div class="title">Common conversions</div>
+            <div class="body">
+                <div class="conversion-table-title">Material Thickness</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Millimeters (mm)</th>
+                            <th>Centimeters (cm)</th>
+                            <th>Inches (in)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>.1</td>
+                            <td>.039</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>.2</td>
+                            <td>.079</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>.3</td>
+                            <td>.118</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>.4</td>
+                            <td>.158</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>.5</td>
+                            <td>.197</td>
+                        </tr>
+                        <tr>
+                            <td>3.18</td>
+                            <td>.318</td>
+                            <td>1/8</td>
+                        </tr>
+                        <tr>
+                            <td>6.35</td>
+                            <td>.635</td>
+                            <td>1/4</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="conversion-table-title">Print Area Dimensions</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Millimeters (mm)</th>
+                            <th>Centimeters (cm)</th>
+                            <th>Inches (in)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>279.4</td>
+                            <td>27.94</td>
+                            <td>11</td>
+                        </tr>
+                        <tr>
+                            <td>304.8</td>
+                            <td>30.48</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td>495.3</td>
+                            <td>49.53</td>
+                            <td>19.5</td>
+                        </tr>
+                        <tr>
+                            <td>508</td>
+                            <td>50.8</td>
+                            <td>20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-help-modal>
+    </div>
+    <app-maze-builder></app-maze-builder>
+</div>
+<div class="end-container">
+    <div class="footer">&copy; 2018 Aaron Rodriguez</div>
+</div>

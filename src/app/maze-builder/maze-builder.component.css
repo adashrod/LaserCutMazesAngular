@@ -1,21 +1,14 @@
-/* clear fix */
-.group > * { float: left; }
-
-.group:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
 .section-title {
     text-align: center;
 }
 
-.maze-inputs, .printer-inputs, .calibration-inputs {
+.inputs {
     border-width: 2px;
     border-style: outset;
-    border-color: #ccc #aaa #aaa #ccc;
+    border-color: #f3e0dc #d4a59a #d4a59a #f3e0dc;
     padding: 5px;
+    background: #d4a59a;
+    color: #5c2018;
 }
 
 .row {
@@ -28,6 +21,7 @@
 
 table.maze {
     border-collapse: collapse;
+    background: #f3e0dc;
 }
 
 td {
@@ -50,6 +44,10 @@ td {
 
 .westWall {
     border-left: 1px solid black;
+}
+
+.svg-preview {
+    background: #d4a59a;
 }
 
 .blueprint {
