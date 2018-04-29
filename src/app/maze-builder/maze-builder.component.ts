@@ -23,6 +23,7 @@ import MazePrinter from "app/maze-printer";
     styleUrls: ["./maze-builder.component.css"]
 })
 export class MazeBuilderComponent implements OnInit {
+    static AUTO_SVG_THRESHOLD_MS = 500;
     readonly mazeUnits: Unit[] = [Unit.INCHES, Unit.CENTIMETERS, Unit.MILLIMETERS];
     readonly rectangleUnits: Unit[] = [Unit.INCHES, Unit.CENTIMETERS];
 
@@ -43,6 +44,7 @@ export class MazeBuilderComponent implements OnInit {
     svgSrc: string | null;
     svgDataUrl: SafeUrl | null;
     showSvgPreview: boolean = false;
+    autoGenerateSvg: boolean;
 
     constructor(private sanitizer: DomSanitizer) {}
 
@@ -50,14 +52,15 @@ export class MazeBuilderComponent implements OnInit {
         this.mazeConfig.addChangeListener((oldVal, newVal) => {
             this.buildMaze();
         });
+        this.autoGenerateSvg = this.benchmark() < MazeBuilderComponent.AUTO_SVG_THRESHOLD_MS;
     }
 
     buildMaze() {
+        this.svgSrc = null;
+        this.svgDataUrl = null;
         if (typeof this.mazeConfig.numRows !== "number" || typeof this.mazeConfig.numCols !== "number") {
             return;
         }
-        this.svgSrc = null;
-        this.svgDataUrl = null;
         const start = new Date().getTime();
         const maze = new Maze(this.mazeConfig.numCols, this.mazeConfig.numRows);
         const algo = this.algorithms[this.currentAlgorithm];
@@ -67,6 +70,9 @@ export class MazeBuilderComponent implements OnInit {
         console.log(`seed used: ${algo.seed}`);
         this.maze = maze;
         console.log(`maze build time: ${new Date().getTime() - start} ms`);
+        if (this.autoGenerateSvg) {
+            this.exportSvg();
+        }
     }
 
     exportSvg() {
@@ -103,5 +109,17 @@ export class MazeBuilderComponent implements OnInit {
     downloadSvg() {
         const file = new File([this.svgSrc || ""], "maze.svg", {type: "image/svg+xml;charset=utf-8"});
         saveAs(file);
+    }
+
+    benchmark(): number {
+        const start = new Date().getTime();
+        this.mazeConfig.numCols = 8;
+        this.mazeConfig.numRows = 8;
+        this.buildMaze();
+        this.exportSvg();
+        const end = new Date().getTime();
+        this.mazeConfig.numCols = 0;
+        this.mazeConfig.numRows = 0;
+        return end - start;
     }
 }

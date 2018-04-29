@@ -5,8 +5,8 @@ import Unit from "app/common/unit";
  * a class for encapsulating all of the config needed for building a maze
  */
 export default class MazeConfig {
-    _numRows: number;
-    _numCols: number;
+    private _numRows: number;
+    private _numCols: number;
     unit: Unit = Unit.INCHES;
     wallHeight: number = .5;
     materialThickness: number = .118;

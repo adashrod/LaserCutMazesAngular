@@ -229,6 +229,7 @@
         <div class="title">Export Maze Design to an SVG Blueprint</div>
         <div class="body">Once you've created a maze that you like with the above settings, click here to create the SVG file for download.</div>
     </app-help-modal>
+    <label for="auto-svg">Automatic SVG generation is {{autoGenerateSvg ? "on" : "off"}}</label><input id="auto-svg" type="checkbox" [(ngModel)]="autoGenerateSvg" name="autoSvgCheckbox"/>
 </form>
 <input type="button" (click)="downloadSvg()" value="Download" [disabled]="!svgSrc"/>
 <input type="button" (click)="toggleSvgPreview()" value="SVG Blueprint Preview"/>
