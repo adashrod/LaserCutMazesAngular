@@ -58,7 +58,8 @@ export class MazeBuilderComponent implements OnInit {
     buildMaze() {
         this.svgSrc = null;
         this.svgDataUrl = null;
-        if (typeof this.mazeConfig.numRows !== "number" || typeof this.mazeConfig.numCols !== "number") {
+        if (typeof this.mazeConfig.numRows !== "number" || typeof this.mazeConfig.numCols !== "number" ||
+                this.mazeConfig.numRows <= 0 || this.mazeConfig.numCols <= 0) {
             return;
         }
         const start = new Date().getTime();
@@ -120,6 +121,7 @@ export class MazeBuilderComponent implements OnInit {
         const end = new Date().getTime();
         this.mazeConfig.numCols = 0;
         this.mazeConfig.numRows = 0;
+        this.lastSeedUsed = "";
         return end - start;
     }
 }

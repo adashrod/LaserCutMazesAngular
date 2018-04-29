@@ -106,7 +106,7 @@
         <div class="printer-inputs inputs">
             <div class="section-title">
                 <span>Printer Configuration</span>
-                <app-help-modal>
+                <app-help-modal [popLeft]="true">
                     <div class="title">Printer Configuration</div>
                     <div class="body">These are configurations specific to the model of the printer that are needed by this tool.</div>
                 </app-help-modal>
@@ -116,7 +116,7 @@
                 <select id="maxPrinterUnits" [(ngModel)]="maxPrinterUnits" name="maxPrinterUnits">
                     <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.name}}</option>
                 </select>
-                <app-help-modal>
+                <app-help-modal [popLeft]="true">
                     <div class="title">Printer Dimension Units</div>
                     <div class="body">These are the units used for the measurements below.</div>
                 </app-help-modal>
@@ -124,7 +124,7 @@
             <div class="row">
                 <label for="maxWidthInput">max printer width</label>
                 <input id="maxWidthInput" type="number" min="1" [(ngModel)]="maxWidth" name="maxWidthInput"/>
-                <app-help-modal>
+                <app-help-modal [popLeft]="true">
                     <div class="title">Max Printer Width</div>
                     <div class="body">The width of the laser cutter's printable area</div>
                 </app-help-modal>
@@ -132,7 +132,7 @@
             <div class="row">
                 <label for="maxHeightInput">max printer height</label>
                 <input id="maxHeightInput" type="number" min="1" [(ngModel)]="maxHeight" name="maxHeightInput"/>
-                <app-help-modal>
+                <app-help-modal [popLeft]="true">
                     <div class="title">Max Printer Height</div>
                     <div class="body">The height of the laser cutter's printable area</div>
                 </app-help-modal>
