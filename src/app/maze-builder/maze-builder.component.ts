@@ -46,6 +46,32 @@ export class MazeBuilderComponent implements OnInit {
     showSvgPreview: boolean = false;
     autoGenerateSvg: boolean;
 
+    consolidateConfigs(): string[][] {
+        const configs: string[][] = [];
+        const mc = this.mazeConfig;
+        configs.push(["numMazeRows", mc.numRows.toString()]);
+        configs.push(["numMazeCols", mc.numCols.toString()]);
+        configs.push(["mazeUnits", mc.unit.name]);
+        configs.push(["wallHeight", mc.wallHeight.toString()]);
+        configs.push(["materialThickness", mc.materialThickness.toString()]);
+        configs.push(["hallWidth", mc.hallWidth.toString()]);
+        configs.push(["separationSpace", mc.separationSpace.toString()]);
+        configs.push(["algorithm", this.algorithms[this.currentAlgorithm].name]);
+        configs.push(["randomSeed", this.lastSeedUsed]);
+        configs.push(["printerConfigUnits", this.maxPrinterUnits.name]);
+        configs.push(["maxPrinterWidth", this.maxWidth.toString()]);
+        configs.push(["maxPrinterHeight", this.maxHeight.toString()]);
+        configs.push(["calibrationRectangle", this.includeCalibrationRectangle ? "yes" : "no"]);
+        if (this.includeCalibrationRectangle) {
+            configs.push(["calibrationRectangleUnits", this.calibrationRectangleConfig.unit.name]);
+            configs.push(["calibrationRectangleWidth", this.calibrationRectangleConfig.width.toString()]);
+            configs.push(["calibrationRectangleHeight", this.calibrationRectangleConfig.height.toString()]);
+            configs.push(["calibrationRectangleHorizontal", this.calibrationRectangleConfig.leftAligned ? "left" : "right"]);
+            configs.push(["calibrationRectangleVertical", this.calibrationRectangleConfig.topAligned ? "top" : "bottom"]);
+        }
+        return configs;
+    }
+
     constructor(private sanitizer: DomSanitizer) {}
 
     ngOnInit(): void {
@@ -98,9 +124,9 @@ export class MazeBuilderComponent implements OnInit {
         const mazePrinter = new MazePrinter(sheetWallModel, new Big(this.maxWidth).mul(this.maxPrinterUnits.pixelsPer),
             new Big(this.maxHeight).mul(this.maxPrinterUnits.pixelsPer));
         if (this.includeCalibrationRectangle) {
-            this.svgSrc = mazePrinter.printSvg(this.calibrationRectangleConfig);
+            this.svgSrc = mazePrinter.printSvg(this.consolidateConfigs(), this.calibrationRectangleConfig);
         } else {
-            this.svgSrc = mazePrinter.printSvg();
+            this.svgSrc = mazePrinter.printSvg(this.consolidateConfigs());
         }
         this.svgDataUrl = this.sanitizer.bypassSecurityTrustUrl(`data:image/svg+xml;utf-8,${this.svgSrc}`);
         console.info(`svg export time: ${new Date().getTime() - start} ms`);

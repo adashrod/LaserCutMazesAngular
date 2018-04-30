@@ -1,4 +1,3 @@
-import MazeGenerator from "app/algorithms/maze-generator";
 import Unit from "app/common/unit";
 
 /**
@@ -12,7 +11,7 @@ export default class MazeConfig {
     materialThickness: number = .118;
     hallWidth: number = .5;
     separationSpace: number = .05;
-    algorithm: MazeGenerator;
+    // algorithm: MazeGenerator;
     private listeners: ((oldVal: any, newVal: any) => void)[] = [];
 
     get numRows(): number {
