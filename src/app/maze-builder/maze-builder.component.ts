@@ -40,7 +40,7 @@ export class MazeBuilderComponent implements OnInit {
     algorithms: MazeGenerator[] = [new PrimsAlgorithm(), new KruskalsAlgorithm(), new DepthFirstSearch()];
     currentAlgorithm = 0;
 
-    maze: Maze;
+    maze: Maze | null;
     svgSrc: string | null;
     svgDataUrl: SafeUrl | null;
     showSvgPreview: boolean = false;
@@ -77,6 +77,9 @@ export class MazeBuilderComponent implements OnInit {
     }
 
     exportSvg() {
+        if (this.maze === null) {
+            return;
+        }
         const start = new Date().getTime();
         const linearWallModelGenerator = new LinearWallModelGenerator(this.maze);
         const linearWallModel = linearWallModelGenerator.generate();
@@ -103,10 +106,6 @@ export class MazeBuilderComponent implements OnInit {
         console.info(`svg export time: ${new Date().getTime() - start} ms`);
     }
 
-    toggleSvgPreview() {
-        this.showSvgPreview = !this.showSvgPreview;
-    }
-
     downloadSvg() {
         const file = new File([this.svgSrc || ""], "maze.svg", {type: "image/svg+xml;charset=utf-8"});
         saveAs(file);
@@ -121,6 +120,7 @@ export class MazeBuilderComponent implements OnInit {
         const end = new Date().getTime();
         this.mazeConfig.numCols = 0;
         this.mazeConfig.numRows = 0;
+        this.maze = null;
         this.lastSeedUsed = "";
         return end - start;
     }
