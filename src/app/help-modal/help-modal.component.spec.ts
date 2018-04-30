@@ -8,7 +8,9 @@ describe("HelpModalComponent", () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ HelpModalComponent ]
+            declarations: [
+                HelpModalComponent
+            ]
         })
         .compileComponents();
     }));
