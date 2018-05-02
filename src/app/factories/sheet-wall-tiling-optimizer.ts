@@ -54,7 +54,7 @@ export default class SheetWallTilingOptimizer {
                 // so that we don't overwrite cmrw when it's already been set to the floor width on the first iteration
                 if (this.currentMaxRowWidth == null) {
                     this.currentMaxRowWidth = longWall.width;
-                    if (this.cursor.x.add(this.currentMaxRowWidth).gt(this.maxWidth)) {
+                    if (this.cursor.x.gt(this.maxWidth)) {
                         this.sheetWallModel.outOfBounds = true;
                     }
                 }
