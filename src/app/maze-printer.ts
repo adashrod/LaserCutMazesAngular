@@ -31,25 +31,10 @@ export default class MazePrinter {
         result += this.createConfigComment(configs);
         const svgElementGenerator = new SvgElementGenerator();
 
-        result += "<g id=\"floor\">";
+        result += "<g id=\"floor-notches\">";
         for (const notch of this.sheetWallModel.floorNotches.paths) {
             const svgPath = svgElementGenerator.modelPathToSvgPath(notch);
             result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
-        }
-
-        for (const outlinePath of this.sheetWallModel.floorOutline.paths) {
-            const svgPath = svgElementGenerator.modelPathToSvgPath(outlinePath);
-            svgPath.style = svgPath.style.replace("#000000", "#ff0000");
-            result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
-        }
-        result += "</g>\n";
-
-        result += "<g id=\"walls\">";
-        for (const shape of this.sheetWallModel.walls) {
-            for (const wall of shape.paths) {
-                const svgPath = svgElementGenerator.modelPathToSvgPath(wall);
-                result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
-            }
         }
         result += "</g>\n";
 
@@ -71,10 +56,36 @@ export default class MazePrinter {
         }
         result += "</g>\n";
 
+        result += "<g id=\"walls\">";
+        for (const shape of this.sheetWallModel.walls) {
+            for (const wall of shape.paths) {
+                const svgPath = svgElementGenerator.modelPathToSvgPath(wall);
+                result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
+            }
+        }
+        result += "</g>\n";
+
+        result += "<g id=\"floor-outline\">";
+        for (const outlinePath of this.sheetWallModel.floorOutline.paths) {
+            const svgPath = svgElementGenerator.modelPathToSvgPath(outlinePath);
+            svgPath.style = svgPath.style.replace("#000000", "#ff0000");
+            result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
+        }
+        result += "</g>\n";
+
         if (calibrationRectangle != null) {
             result += "<g id=\"calibration-rectangle\">";
             for (const rectSide of this.buildCalibrationRectangle(calibrationRectangle)) {
                 rectSide.style = rectSide.style.replace("000000", "00ff00");
+                result += svgElementGenerator.pathToSvgText(rectSide, this.precision);
+            }
+            result += "</g>\n";
+        }
+
+        if (this.sheetWallModel.outOfBounds) {
+            result += "<g id=\"bounding-box\">";
+            for (const rectSide of this.buildBoundingBoxRectangle()) {
+                rectSide.style = rectSide.style.replace("000000", "ff00ff");
                 result += svgElementGenerator.pathToSvgText(rectSide, this.precision);
             }
             result += "</g>\n";
@@ -110,6 +121,14 @@ export default class MazePrinter {
             right = new Path(topRight, bottomRight),
             bottom = new Path(bottomRight, bottomLeft),
             left = new Path(bottomLeft, topLeft);
+        return [top, right, bottom, left];
+    }
+
+    private buildBoundingBoxRectangle(): Path[] {
+        const top: Path = new Path(new OrderedPair<Big>(ZERO, ZERO), new OrderedPair<Big>(this.maxWidth, ZERO)),
+            right: Path = new Path(new OrderedPair<Big>(this.maxWidth, ZERO), new OrderedPair<Big>(this.maxWidth, this.maxHeight)),
+            bottom: Path = new Path(new OrderedPair<Big>(this.maxWidth, this.maxHeight), new OrderedPair<Big>(ZERO, this.maxHeight)),
+            left: Path = new Path(new OrderedPair<Big>(ZERO, this.maxHeight), new OrderedPair<Big>(ZERO, ZERO));
         return [top, right, bottom, left];
     }
 }

@@ -54,3 +54,9 @@ td {
     width: 100%;
     height: 1000px;
 }
+
+.out-of-bounds {
+    background: #4285f4;
+    border: 1px solid #5c2018;
+    padding: 2px 5px 2px;
+}

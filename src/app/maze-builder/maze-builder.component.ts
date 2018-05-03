@@ -45,6 +45,7 @@ export class MazeBuilderComponent implements OnInit {
     svgDataUrl: SafeUrl | null;
     showSvgPreview: boolean = false;
     autoGenerateSvg: boolean;
+    outOfBounds: boolean = false;
 
     consolidateConfigs(): string[][] {
         const configs: string[][] = [];
@@ -129,6 +130,7 @@ export class MazeBuilderComponent implements OnInit {
             this.svgSrc = mazePrinter.printSvg(this.consolidateConfigs());
         }
         this.svgDataUrl = this.sanitizer.bypassSecurityTrustUrl(`data:image/svg+xml;utf-8,${this.svgSrc}`);
+        this.outOfBounds = sheetWallModel.outOfBounds;
         console.info(`svg export time: ${new Date().getTime() - start} ms`);
     }
 

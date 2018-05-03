@@ -1,0 +1,60 @@
+<p>You can click on any of the thumbnails in this page to see full-size versions.</p>
+<div class="help-section">
+    <h1>Printing</h1>
+    <div class="group">
+        <app-lightbox-thumbnail title="Example SVG" image="assets/blueprint.png" thumbnailHeight="100"></app-lightbox-thumbnail>
+        <div class="cut-intro">
+            The different parts of the maze are grouped together and given different colors to facilitate printing (see example on left).
+            The order that the groups are printed matters and an ideal order is:
+        </div>
+    </div>
+    <ol>
+        <li>score/engrave wall numbers and floor numbers (blue)</li>
+        <li>cut walls and cut notches (black)</li>
+        <li>cut floor outline (red)</li>
+        <li>DO NOT cut, score, or engrave the calibration rectangle (green)</li>
+        <li>DO NOT cut, score, or engrave the bounding box rectangle (purple)</li>
+    </ol>
+    <ul>
+        <li>
+            The numbers can be scored, or left out entirely. They're only there as a guide for assembly, though assembling a large maze without them could be
+            tedious.
+        </li>
+        <li>
+            The floor outline should be cut last. Since this is the cut that cuts the floor out of the material, cutting this before the notches could lead to
+            the notch cuts being misaligned.
+        </li>
+        <li>
+            The calibration rectangle serves as a guide for setting up the print job in your printer software and should not be cut, engraved, or scored at 
+            all. See the next section for more details.
+        </li>
+    </ul>
+</div>
+<div class="help-section">
+    <h1>Assembly</h1>
+    <div class="group">
+        <app-lightbox-thumbnail title="Floor Notches" image="assets/notches.png" thumbnailHeight="80"></app-lightbox-thumbnail>
+        <div class="numbering-text">
+            The floor piece has rectangular notches cut into it (left); the walls have stubs that fit into these notches (right).
+            Each pair of notches has a number printed between them, and a wall piece that fits into those notches has the same number printed on it.
+        </div>
+        <app-lightbox-thumbnail class="right" title="Numbered Wall Pieces" image="assets/wallPieces.png" thumbnailHeight="80"></app-lightbox-thumbnail>    
+    </div>
+    <p>
+        If the pieces fit somewhat snugly, you might only need to glue the walls along the outer edge to the floor. If they fit very tightly, you might not need
+        to glue them at all.
+    </p>
+</div>
+<div class="help-section">
+    <h1>Out of Bounds</h1>
+    <p>
+        If the maze is too big, the pieces won't fit in a single printing area, and you'll get the out-of-bounds warning when the SVG is generated.
+        The tool currently doesn't break up the blueprint into multiple SVGs in this case. One solution would be to change any of the maze dimensions to use
+        less printing material; if that isn't preferred, you'll need to manually edit the SVG in the SVG editor of your choice to split the print into two or
+        more print jobs.
+    </p>
+    <p>
+        When the out-of-bounds situation occurs, the printer's max width and max height values will be used to generate a rectangular bounding box in the SVG
+        as a guide. It is displayed as a purple rectangle and anything outside of it will be outside of the printing area.
+    </p>
+</div>

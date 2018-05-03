@@ -1,0 +1,8 @@
+.cut-intro, .numbering-text {
+    max-width: 550px;
+    margin: 0 20px 0;
+}
+
+.right {
+    float: right;
+}

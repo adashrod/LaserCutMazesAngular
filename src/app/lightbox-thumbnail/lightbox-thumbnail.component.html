@@ -1,0 +1,8 @@
+<img #thumbnail class="thumbnail" [src]="image" (click)="showLightbox()"/>
+<div class="modal" *ngIf="shown" (click)="hideLightbox()">
+    <div class="lightbox">
+        <a class="close" (click)="hideLightbox()">&times;</a>
+        <div class="title">{{title}}</div>
+        <img [src]="image"/>
+    </div>
+</div>
