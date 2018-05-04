@@ -122,7 +122,7 @@
             <div class="row">
                 <label for="mazeUnitInput">units</label>
                 <select id="mazeUnitInput" [(ngModel)]="mazeConfig.unit" (change)="buildMaze()" name="mazeUnitInput">
-                    <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.name}}</option>
+                    <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.pluralName}}</option>
                 </select>
                 <app-help-modal>
                     <div class="title">Maze Measurement Units</div>
@@ -220,11 +220,22 @@
             <div class="row">
                 <label for="maxPrinterUnits">units</label>
                 <select id="maxPrinterUnits" [(ngModel)]="maxPrinterUnits" (change)="buildMaze()" name="maxPrinterUnits">
-                    <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.name}}</option>
+                    <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.pluralName}}</option>
                 </select>
                 <app-help-modal [popLeft]="true">
                     <div class="title">Printer Dimension Units</div>
                     <div class="body">These are the units used for the measurements below.</div>
+                </app-help-modal>
+            </div>
+            <div class="row">
+                <label for="printerPpu">pixels per {{maxPrinterUnits.singularName}}</label>
+                <input type="number" min="1" step="1" [(ngModel)]="ppu" (change)="buildMaze()" name="printerPpu"/>
+                <app-help-modal [popLeft]="true">
+                    <div class="title">Pixels per Unit</div>
+                    <div class="body">
+                        The number of pixels that the laser cutter interprets as being the length of the selected unit. E.g. Choosing inches and 96 would mean
+                        96 pixels per inch, aka 96 dots per inch (DPI).
+                    </div>
                 </app-help-modal>
             </div>
             <div class="row">
@@ -267,7 +278,7 @@
             <div class="row">
                 <label for="calibrationRectangleUnitInput">units</label>
                 <select id="calibrationRectangleUnitInput" [(ngModel)]="calibrationRectangleConfig.unit" (change)="buildMaze()" name="calibrationRectangleUnitInput">
-                    <option *ngFor="let u of rectangleUnits" [ngValue]="u">{{u.name}}</option>
+                    <option *ngFor="let u of rectangleUnits" [ngValue]="u">{{u.pluralName}}</option>
                 </select>
                 <app-help-modal [popLeft]="true">
                     <div class="title">Calibration Rectangle Units</div>

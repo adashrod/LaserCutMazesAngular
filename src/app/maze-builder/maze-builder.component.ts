@@ -34,6 +34,7 @@ export class MazeBuilderComponent implements OnInit {
     maxWidth: number = 19.5;
     maxHeight: number = 11;
     maxPrinterUnits = Unit.INCHES;
+    ppu: number = 96;
 
     includeCalibrationRectangle: boolean = false;
     calibrationRectangleConfig: CalibrationRectangle = new CalibrationRectangle();
@@ -52,19 +53,20 @@ export class MazeBuilderComponent implements OnInit {
         const mc = this.mazeConfig;
         configs.push(["numMazeRows", mc.numRows.toString()]);
         configs.push(["numMazeCols", mc.numCols.toString()]);
-        configs.push(["mazeUnits", mc.unit.name]);
+        configs.push(["mazeUnits", mc.unit.pluralName]);
         configs.push(["wallHeight", mc.wallHeight.toString()]);
         configs.push(["materialThickness", mc.materialThickness.toString()]);
         configs.push(["hallWidth", mc.hallWidth.toString()]);
         configs.push(["separationSpace", mc.separationSpace.toString()]);
         configs.push(["algorithm", this.algorithms[this.currentAlgorithm].name]);
         configs.push(["randomSeed", this.lastSeedUsed]);
-        configs.push(["printerConfigUnits", this.maxPrinterUnits.name]);
+        configs.push(["printerConfigUnits", this.maxPrinterUnits.pluralName]);
+        configs.push(["printerConfigPixelsPerUnit", this.ppu.toString()]);
         configs.push(["maxPrinterWidth", this.maxWidth.toString()]);
         configs.push(["maxPrinterHeight", this.maxHeight.toString()]);
         configs.push(["calibrationRectangle", this.includeCalibrationRectangle ? "yes" : "no"]);
         if (this.includeCalibrationRectangle) {
-            configs.push(["calibrationRectangleUnits", this.calibrationRectangleConfig.unit.name]);
+            configs.push(["calibrationRectangleUnits", this.calibrationRectangleConfig.unit.pluralName]);
             configs.push(["calibrationRectangleWidth", this.calibrationRectangleConfig.width.toString()]);
             configs.push(["calibrationRectangleHeight", this.calibrationRectangleConfig.height.toString()]);
             configs.push(["calibrationRectangleHorizontal", this.calibrationRectangleConfig.leftAligned ? "left" : "right"]);
@@ -107,23 +109,24 @@ export class MazeBuilderComponent implements OnInit {
         if (this.maze === null) {
             return;
         }
+        const multiplier = this.maxPrinterUnits.perInch.mul(this.ppu).div(this.mazeConfig.unit.perInch);
         const start = new Date().getTime();
         const linearWallModelGenerator = new LinearWallModelGenerator(this.maze);
         const linearWallModel = linearWallModelGenerator.generate();
         const rectangularWallModelGenerator = new RectangularWallModelGenerator(linearWallModel);
         const rectangularWallModel = rectangularWallModelGenerator.generate();
         const sheetWallModelGenerator = new SheetWallModelGenerator(rectangularWallModel);
-        sheetWallModelGenerator.hallWidth = new Big(this.mazeConfig.hallWidth).mul(this.mazeConfig.unit.pixelsPer);
-        sheetWallModelGenerator.materialThickness = new Big(this.mazeConfig.materialThickness).mul(this.mazeConfig.unit.pixelsPer);
-        sheetWallModelGenerator.maxHeight = new Big(this.maxHeight).mul(this.maxPrinterUnits.pixelsPer);
-        sheetWallModelGenerator.maxWidth = new Big(this.maxWidth).mul(this.maxPrinterUnits.pixelsPer);
-        sheetWallModelGenerator.notchHeight = min(Unit.MILLIMETERS.pixelsPer.mul("4"),
-            new Big(this.mazeConfig.hallWidth).mul(this.mazeConfig.unit.pixelsPer).mul(".33"));
-        sheetWallModelGenerator.separationSpace = new Big(this.mazeConfig.separationSpace).mul(this.mazeConfig.unit.pixelsPer);
-        sheetWallModelGenerator.wallHeight = new Big(this.mazeConfig.wallHeight).mul(this.mazeConfig.unit.pixelsPer);
+        sheetWallModelGenerator.hallWidth = new Big(this.mazeConfig.hallWidth).mul(multiplier);
+        sheetWallModelGenerator.materialThickness = new Big(this.mazeConfig.materialThickness).mul(multiplier);
+        sheetWallModelGenerator.maxHeight = new Big(this.maxHeight).mul(this.ppu);
+        sheetWallModelGenerator.maxWidth = new Big(this.maxWidth).mul(this.ppu);
+        sheetWallModelGenerator.notchHeight = min(this.maxPrinterUnits.perInch.mul(this.ppu).div(Unit.MILLIMETERS.perInch).mul(4),
+            new Big(this.mazeConfig.hallWidth).mul(multiplier).mul(".33"));
+        sheetWallModelGenerator.separationSpace = new Big(this.mazeConfig.separationSpace).mul(multiplier);
+        sheetWallModelGenerator.wallHeight = new Big(this.mazeConfig.wallHeight).mul(multiplier);
         const sheetWallModel = sheetWallModelGenerator.generate();
-        const mazePrinter = new MazePrinter(sheetWallModel, new Big(this.maxWidth).mul(this.maxPrinterUnits.pixelsPer),
-            new Big(this.maxHeight).mul(this.maxPrinterUnits.pixelsPer));
+        const mazePrinter = new MazePrinter(sheetWallModel, new Big(this.maxWidth).mul(this.ppu),
+            new Big(this.maxHeight).mul(this.ppu), this.maxPrinterUnits, this.ppu);
         if (this.includeCalibrationRectangle) {
             this.svgSrc = mazePrinter.printSvg(this.consolidateConfigs(), this.calibrationRectangleConfig);
         } else {

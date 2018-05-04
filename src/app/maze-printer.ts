@@ -1,6 +1,7 @@
 import Big from "big.js";
 
 import OrderedPair from "app/common/ordered-pair";
+import Unit from "app/common/unit";
 import { ZERO } from "app/misc/big-util";
 import SVG_HEADER from "app/misc/svg-header";
 import CalibrationRectangle from "app/models/calibration-rectangle";
@@ -13,12 +14,16 @@ export default class MazePrinter {
     private sheetWallModel: SheetWallModel;
     private maxWidth: Big;
     private maxHeight: Big;
+    private printerUnits: Unit;
+    private ppu: number;
     precision: number = 5;
 
-    constructor(sheetWallModel: SheetWallModel, maxWidth: Big, maxHeight: Big) {
+    constructor(sheetWallModel: SheetWallModel, maxWidth: Big, maxHeight: Big, printerUnits: Unit, ppu: number) {
         this.sheetWallModel = sheetWallModel;
         this.maxWidth = maxWidth;
         this.maxHeight = maxHeight;
+        this.printerUnits = printerUnits;
+        this.ppu = ppu;
     }
 
     /**
@@ -105,8 +110,9 @@ export default class MazePrinter {
     }
 
     private buildCalibrationRectangle(calibrationRectangle: CalibrationRectangle): Path[] {
-        const width = calibrationRectangle.unit.pixelsPer.mul(new Big(calibrationRectangle.width)),
-            height = calibrationRectangle.unit.pixelsPer.mul(new Big(calibrationRectangle.height));
+        const multiplier = this.printerUnits.perInch.mul(this.ppu).div(calibrationRectangle.unit.perInch),
+            width = multiplier.mul(calibrationRectangle.width),
+            height = multiplier.mul(calibrationRectangle.height);
         const topLeft = new OrderedPair(ZERO, ZERO);
         if (!calibrationRectangle.leftAligned) {
             topLeft.x = this.maxWidth.sub(width);

@@ -1,15 +1,17 @@
 import Big from "big.js";
 
 export default class Unit {
-    static INCHES: Unit = new Unit("inches", new Big(96));
-    static CENTIMETERS: Unit = new Unit("centimeters", new Big(35.433071));
-    static MILLIMETERS: Unit = new Unit("millimeters", new Big(3.5433071));
+    static INCHES: Unit = new Unit("inch", "es", new Big(1));
+    static CENTIMETERS: Unit = new Unit("centimeter", "s", new Big("2.54"));
+    static MILLIMETERS: Unit = new Unit("millimeter", "s", new Big("25.4"));
 
-    readonly name: string;
-    readonly pixelsPer: Big;
+    readonly singularName: string;
+    readonly pluralName: string;
+    readonly perInch: Big;
 
-    private constructor(name: string, pixelsPer: Big) {
-        this.name = name;
-        this.pixelsPer = pixelsPer;
+    private constructor(singularName: string, pluralSuffix: string, perInch: Big) {
+        this.singularName = singularName;
+        this.pluralName = singularName + pluralSuffix;
+        this.perInch = perInch;
     }
 }
