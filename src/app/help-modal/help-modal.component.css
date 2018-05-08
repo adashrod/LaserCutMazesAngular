@@ -46,7 +46,7 @@
 
 :host /deep/ .body {
     max-height: 400px;
-    overflow-y: auto;    
+    overflow-y: auto;
 }
 
 :host /deep/ .title, :host /deep/ .body {
