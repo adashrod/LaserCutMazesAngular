@@ -1,5 +1,10 @@
+.conversions {
+    margin-bottom: 5px;
+}
+
 .section-title {
     text-align: center;
+    margin: 2px 0;
 }
 
 .inputs {
@@ -11,12 +16,17 @@
     color: #5c2018;
 }
 
+.printer-inputs, .calibration-inputs {
+    width: 395px;
+}
+
 .row {
     display: table-row;
 }
 
 .row > span, .row > input, .row > label, .row > select   {
     display: table-cell;
+    margin: 2px 0;
 }
 
 table.maze {
