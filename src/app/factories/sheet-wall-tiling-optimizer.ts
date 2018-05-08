@@ -50,6 +50,10 @@ export default class SheetWallTilingOptimizer {
                 if (typeof longWall === "undefined") {
                     throw new Error("shift() can't return undefined because the array length was checked just beforehand");
                 }
+                if (this.currentMaxRowWidth !== null && longWall.width.gt(this.currentMaxRowWidth)) {
+                    // simple fix for potential tiling overlap when numRows > numCols, not ideal because it wastes a bit of material space
+                    this.currentMaxRowWidth = longWall.width;
+                }
                 this.addToCurrentRow(longWall);
                 // so that we don't overwrite cmrw when it's already been set to the floor width on the first iteration
                 if (this.currentMaxRowWidth == null) {
