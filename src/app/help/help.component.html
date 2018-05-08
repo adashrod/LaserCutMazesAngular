@@ -58,3 +58,27 @@
         as a guide. It is displayed as a purple rectangle and anything outside of it will be outside of the printing area.
     </p>
 </div>
+<div class="help-section">
+    <h1>Calibration Rectangle</h1>
+    <h3>A need for Calibration</h3>
+    <div>
+        <p>
+            If your laser cutter software doesn't respect the pixel density settings (dots/pixels per inch, DPI, etc) then your image won't be the proper size,
+            i.e. it will be scaled down or up. The problem with this is that scaling everything down makes the floor notches smaller, (and scaling up makes the
+            floor notches bigger), but the material thickness doesn't change, so printing a scaled image would result in wall pieces that wouldn't fit in the
+            notches. More specifically, the width of the notches has to be exactly the same size as the material thickness for the pieces to fit together, and
+            scaling breaks that. See the following image for an example of this auto-scaling.
+        </p>
+        <app-lightbox-thumbnail title="Scaled Down" image="assets/improperScale.png" thumbnailWidth="600"></app-lightbox-thumbnail>
+        <p>
+            The above example maze was created with an 8-inch wide calibration rectangle (highlighted in green), but the image has been scaled down to about 
+            7.5 inches. In order to fix this, the entire image should be selected and scaled up (stretched) until the calibration rectangle is lined up with
+            the 8-inch mark on the ruler.
+        </p>
+        <app-lightbox-thumbnail title="Corrected Scale" image="assets/correctedScale.png" thumbnailWidth="600"></app-lightbox-thumbnail>
+        <p>
+            In the second image, the entire blueprint has been scaled back up to make the calibration rectangle the correct size (8 inches wide here),
+            ensuring that all pieces are the correct size.
+        </p>
+    </div>
+</div>
