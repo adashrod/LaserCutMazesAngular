@@ -16,17 +16,25 @@
     color: #5c2018;
 }
 
+.maze-inputs {
+    width: 390px;
+}
+
 .printer-inputs, .calibration-inputs {
-    width: 395px;
+    width: 380px;
 }
 
 .row {
     display: table-row;
 }
 
-.row > span, .row > input, .row > label, .row > select   {
+.row > span, .row > input, .row > label, .row > select {
     display: table-cell;
-    margin: 2px 0;
+    margin: 2px 5px;
+}
+
+.row > input {
+    width: 60px;
 }
 
 table.maze {

@@ -104,7 +104,7 @@
                 </app-help-modal>
             </div>
             <div class="row">
-                <label for="numRowsInput">number of maze rows</label>
+                <label for="numRowsInput">number of rows</label>
                 <input id="numRowsInput" type="number" min="1" step="1" [(ngModel)]="mazeConfig.numRows" name="numRowsInput"/>
                 <app-help-modal>
                     <div class="title">number of maze rows</div>
@@ -112,7 +112,7 @@
                 </app-help-modal>
             </div>
             <div class="row">
-                <label for="numColsInput">number of maze columns</label>
+                <label for="numColsInput">number of columns</label>
                 <input id="numColsInput" type="number" min="1" step="1" [(ngModel)]="mazeConfig.numCols" name="numColsInput"/>
                 <app-help-modal>
                     <div class="title">number of maze columns</div>
@@ -261,14 +261,14 @@
                 <app-help-modal [popLeft]="true">
                     <div class="title">Calibration Rectangle</div>
                     <div class="body">
-                        <p>All measurement inputs are used to calculate pixel-perfect-sized cutouts in the SVG, however some laser cutter software might scale images down or up. Since the pieces are interlocking, scaling the image down or up will make them not fit together properly.</p>
+                        <p>All measurement inputs are used to calculate pixel-perfect-sized cutouts in the SVG, however some laser cutter software might scale images down or up. Since the pieces are interlocking, scaling the image will make them not fit together properly.</p>
                         <p>If your laser cutter software scales the image, you can use the calibration rectangle as a guide to restore the correct scale. For Example: if your laser cutter has a ruler on the edge of the canvas with inch measurements, you can create a calibration rectangle 6 inches wide and scale the image back up/down until the rectangle is 6 inches according to that ruler, then the pieces should be cut at the correct size.</p>
                         <p>IMPORTANT NOTE: Once you've used the rectangle to calibrate the scale, make sure not to cut or engrave it on the material.</p>
                     </div>
                 </app-help-modal>
             </div>
             <div class="row">
-                <label for="includeCalibrationRectangleInput">include calibration rectangle</label>
+                <label for="includeCalibrationRectangleInput">include in SVG</label>
                 <input id="includeCalibrationRectangleInput" type="checkbox" [(ngModel)]="includeCalibrationRectangle" (change)="buildMaze()" name="includeCalibrationRectangleInput"/>
                 <app-help-modal [popLeft]="true">
                     <div class="title">Include Calibration Rectangle</div>
@@ -286,7 +286,7 @@
                 </app-help-modal>
             </div>
             <div class="row">
-                <label for="calibrationRectangleWidthInput">calibration rectangle width</label>
+                <label for="calibrationRectangleWidthInput">rectangle width</label>
                 <input id="calibrationRectangleWidthInput" type="number" min="1" step="1" [(ngModel)]="calibrationRectangleConfig.width" (change)="buildMaze()" name="calibrationRectangleWidthInput"/>
                 <app-help-modal [popLeft]="true">
                     <div class="title">Rectangle Width</div>
@@ -294,7 +294,7 @@
                 </app-help-modal>
             </div>
             <div class="row">
-                <label for="calibrationRectangleHeightInput">calibration rectangle height</label>
+                <label for="calibrationRectangleHeightInput">rectangle height</label>
                 <input id="calibrationRectangleHeightInput" type="number" min="1" step="1" [(ngModel)]="calibrationRectangleConfig.height" (change)="buildMaze()" name="calibrationRectangleHeightInput"/>
                 <app-help-modal [popLeft]="true">
                     <div class="title">Rectangle Height</div>
@@ -302,7 +302,7 @@
                 </app-help-modal>
             </div>
             <div class="row">
-                <span>horizontal alignment</span>
+                <span>horizontal alignment&nbsp;</span>
                 <div>
                     <label for="calibrationRectangleLeftInput">left</label>
                     <input id="calibrationRectangleLeftInput" type="radio" [value]="true" [(ngModel)]="calibrationRectangleConfig.leftAligned" (change)="buildMaze()" name="horizontalRadio"/>
