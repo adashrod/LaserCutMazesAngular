@@ -66,6 +66,7 @@ td {
 
 .svg-preview {
     background: #d4a59a;
+    overflow: scroll;
 }
 
 .blueprint {

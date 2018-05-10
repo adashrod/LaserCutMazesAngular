@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import Big from "big.js";
 import { saveAs } from "file-saver";
 
@@ -42,8 +42,8 @@ export class MazeBuilderComponent implements OnInit {
     currentAlgorithm = 0;
 
     maze: Maze | null;
-    svgSrc: string | null;
-    svgDataUrl: SafeUrl | null;
+    rawSvgSrc: string | null;
+    safeSvgSrc: SafeHtml | null;
     showSvgPreview: boolean = false;
     autoGenerateSvg: boolean;
     outOfBounds: boolean = false;
@@ -85,8 +85,8 @@ export class MazeBuilderComponent implements OnInit {
     }
 
     buildMaze() {
-        this.svgSrc = null;
-        this.svgDataUrl = null;
+        this.safeSvgSrc = null;
+        this.rawSvgSrc = null;
         if (typeof this.mazeConfig.numRows !== "number" || typeof this.mazeConfig.numCols !== "number" ||
                 this.mazeConfig.numRows <= 0 || this.mazeConfig.numCols <= 0) {
             return;
@@ -128,17 +128,17 @@ export class MazeBuilderComponent implements OnInit {
         const mazePrinter = new MazePrinter(sheetWallModel, new Big(this.maxWidth).mul(this.ppu),
             new Big(this.maxHeight).mul(this.ppu), this.maxPrinterUnits, this.ppu);
         if (this.includeCalibrationRectangle) {
-            this.svgSrc = mazePrinter.printSvg(this.consolidateConfigs(), this.calibrationRectangleConfig);
+            this.rawSvgSrc = mazePrinter.printSvg(this.consolidateConfigs(), this.calibrationRectangleConfig);
         } else {
-            this.svgSrc = mazePrinter.printSvg(this.consolidateConfigs());
+            this.rawSvgSrc = mazePrinter.printSvg(this.consolidateConfigs());
         }
-        this.svgDataUrl = this.sanitizer.bypassSecurityTrustUrl(`data:image/svg+xml;utf-8,${this.svgSrc}`);
+        this.safeSvgSrc = this.sanitizer.bypassSecurityTrustHtml(this.rawSvgSrc);
         this.outOfBounds = sheetWallModel.outOfBounds;
         console.info(`svg export time: ${new Date().getTime() - start} ms`);
     }
 
     downloadSvg() {
-        const file = new File([this.svgSrc || ""], "maze.svg", {type: "image/svg+xml;charset=utf-8"});
+        const file = new File([this.rawSvgSrc || ""], "maze.svg", {type: "image/svg+xml;charset=utf-8"});
         saveAs(file);
     }
 

@@ -33,6 +33,8 @@ export default class MazePrinter {
      */
     printSvg(configs: string[][], calibrationRectangle?: CalibrationRectangle): string {
         let result = SVG_HEADER;
+        result = result.replace("{width}", this.sheetWallModel.maxHorizontalDisplacement.plus(5).toString())
+            .replace("{height}", this.sheetWallModel.maxVerticalDisplacement.plus(5).toString());
         result += this.createConfigComment(configs);
         const svgElementGenerator = new SvgElementGenerator();
 

@@ -348,7 +348,7 @@
     </app-help-modal>
     <label for="auto-svg">Automatic SVG generation is {{autoGenerateSvg ? "on" : "off"}}</label><input id="auto-svg" type="checkbox" [(ngModel)]="autoGenerateSvg" name="autoSvgCheckbox"/>
 </form>
-<input type="button" (click)="downloadSvg()" value="Download" [disabled]="!svgSrc"/>
+<input type="button" (click)="downloadSvg()" value="Download" [disabled]="!rawSvgSrc"/>
 <label for="svg-preview">SVG preview is {{showSvgPreview ? "on" : "off"}}</label><input id="svg-preview" type="checkbox" [(ngModel)]="showSvgPreview" name="svgPreviewCheckbox"/>
 <app-help-modal>
     <div class="title">Toggle SVG Preview</div>
@@ -364,6 +364,4 @@
         </div>
     </app-help-modal>
 </span>
-<div class="svg-preview" *ngIf="showSvgPreview">
-    <img class="blueprint" [src]="svgDataUrl" *ngIf="svgDataUrl"/>
-</div>
+<div class="svg-preview" *ngIf="showSvgPreview" [innerHTML]="safeSvgSrc"></div>

@@ -89,6 +89,31 @@ export default class Shape {
         return maximum.sub(minimum);
     }
 
+    get maxHorizontalDisplacement(): Big {
+        let maximum: Big | null = null;
+        for (const path of this.paths) {
+            for (const point of path.points) {
+                if (maximum === null || point.x.gt(maximum)) {
+                    maximum = point.x;
+                }
+            }
+        }
+        return maximum || ZERO;
+    }
+
+
+    get maxVerticalDisplacement(): Big {
+        let maximum: Big | null = null;
+        for (const path of this.paths) {
+            for (const point of path.points) {
+                if (maximum === null || point.y.gt(maximum)) {
+                    maximum = point.y;
+                }
+            }
+        }
+        return maximum || ZERO;
+    }
+
     translate(delta: OrderedPair<Big>): Shape {
         for (const path of this.paths) {
             path.translate(delta);

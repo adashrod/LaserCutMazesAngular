@@ -1,3 +1,5 @@
+import Big from "big.js";
+
 import Shape from "app/models/shape";
 import VectorNumber from "app/models/vector-number";
 
@@ -19,5 +21,25 @@ export default class SheetWallModel {
     addShape(shape: Shape): SheetWallModel {
         this.walls.push(shape);
         return this;
+    }
+
+    get maxHorizontalDisplacement(): Big {
+        let max = this.floorOutline.maxHorizontalDisplacement;
+        for (const wall of this.walls) {
+            if (wall.maxHorizontalDisplacement.gt(max)) {
+                max = wall.maxHorizontalDisplacement;
+            }
+        }
+        return max;
+    }
+
+    get maxVerticalDisplacement(): Big {
+        let max = this.floorOutline.maxVerticalDisplacement;
+        for (const wall of this.walls) {
+            if (wall.maxVerticalDisplacement.gt(max)) {
+                max = wall.maxVerticalDisplacement;
+            }
+        }
+        return max;
     }
 }
