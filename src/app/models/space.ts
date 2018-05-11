@@ -15,14 +15,26 @@ export default class Space {
      * @param direction which wall to remove
      */
     openWall(direction: Direction): void {
+        this.changeWall(direction, true);
+    }
+
+    /**
+     * Adds a wall in the space
+     * @param direction which wall to add
+     */
+    closeWall(direction: Direction): void {
+        this.changeWall(direction, false);
+    }
+
+    private changeWall(direction: Direction, open: boolean) {
         if (direction === Direction.NORTH) {
-            this.northOpen = true;
+            this.northOpen = open;
         } else if (direction === Direction.EAST) {
-            this.eastOpen = true;
+            this.eastOpen = open;
         } else if (direction === Direction.SOUTH) {
-            this.southOpen = true;
+            this.southOpen = open;
         } else if (direction === Direction.WEST) {
-            this.westOpen = true;
+            this.westOpen = open;
         }
     }
 

@@ -7,6 +7,7 @@ import DepthFirstSearch from "app/algorithms/depth-first-search-algorithm";
 import KruskalsAlgorithm from "app/algorithms/kruskals-algorithm";
 import MazeGenerator from "app/algorithms/maze-generator";
 import PrimsAlgorithm from "app/algorithms/prims-algorithm";
+import OrderedPair from "app/common/ordered-pair";
 import Unit from "app/common/unit";
 import LinearWallModelGenerator from "app/factories/linear-wall-model-generator";
 import RectangularWallModelGenerator from "app/factories/rectangular-wall-model-generator";
@@ -15,6 +16,7 @@ import { min } from "app/misc/big-util";
 import CalibrationRectangle from "app/models/calibration-rectangle";
 import Maze from "app/models/maze";
 import MazeConfig from "app/models/maze-config";
+import Direction from "app/direction";
 import MazePrinter from "app/maze-printer";
 
 @Component({
@@ -48,7 +50,7 @@ export class MazeBuilderComponent implements OnInit {
     autoGenerateSvg: boolean;
     outOfBounds: boolean = false;
 
-    consolidateConfigs(): string[][] {
+    private consolidateConfigs(): string[][] {
         const configs: string[][] = [];
         const mc = this.mazeConfig;
         configs.push(["numMazeRows", mc.numRows.toString()]);
@@ -100,9 +102,51 @@ export class MazeBuilderComponent implements OnInit {
         console.log(`seed used: ${algo.seed}`);
         this.maze = maze;
         console.log(`maze build time: ${new Date().getTime() - start} ms`);
+        this.afterBuild();
+    }
+
+    private afterBuild(): void {
         if (this.autoGenerateSvg) {
             this.exportSvg();
         }
+    }
+
+    onClickMazeCell(event: MouseEvent, row: number, column: number): void {
+        const elem = <HTMLElement>event.target;
+        const x = event.offsetX, y = event.offsetY;
+        const edge = this.getEdge(x / elem.offsetWidth, y / elem.offsetHeight);
+        if (edge !== null) {
+            if (this.maze === null) {
+                return;
+            }
+            const close = this.maze.grid[row][column].isOpen(edge);
+            const otherCellDelta = this.getAdjacentCellDelta(edge);
+            if (close) {
+                this.maze.grid[row][column].closeWall(edge);
+                if (this.maze.isInBounds(column + otherCellDelta.x, row + otherCellDelta.y)) {
+                    this.maze.grid[row + otherCellDelta.y][column + otherCellDelta.x].closeWall(edge.opposite);
+                }
+            } else {
+                this.maze.grid[row][column].openWall(edge);
+                if (this.maze.isInBounds(column + otherCellDelta.x, row + otherCellDelta.y)) {
+                    this.maze.grid[row + otherCellDelta.y][column + otherCellDelta.x].openWall(edge.opposite);
+                }
+            }
+            this.afterBuild();
+        }
+    }
+
+    private getAdjacentCellDelta(direction: Direction): OrderedPair<number> {
+        if (direction === Direction.NORTH) {
+            return new OrderedPair(0, -1);
+        } else if (direction === Direction.EAST) {
+            return new OrderedPair(1, 0);
+        } else if (direction === Direction.SOUTH) {
+            return new OrderedPair(0, 1);
+        } else if (direction === Direction.WEST) {
+            return new OrderedPair(-1, 0);
+        }
+        throw new Error("invalid direction");
     }
 
     exportSvg() {
@@ -142,7 +186,7 @@ export class MazeBuilderComponent implements OnInit {
         saveAs(file);
     }
 
-    benchmark(): number {
+    private benchmark(): number {
         const start = new Date().getTime();
         this.mazeConfig.numCols = 8;
         this.mazeConfig.numRows = 8;
@@ -154,5 +198,31 @@ export class MazeBuilderComponent implements OnInit {
         this.maze = null;
         this.lastSeedUsed = "";
         return end - start;
+    }
+
+    private getEdge(x: number, y: number): Direction | null {
+        const threshold = .3;
+        if (x < threshold) {
+            if (y < threshold) {
+                return Direction.NORTH;
+            } else if (y > 1 - threshold) {
+                return Direction.SOUTH;
+            }
+            return Direction.WEST;
+        } else if (x > 1 - threshold) {
+            if (y < threshold) {
+                return Direction.NORTH;
+            } else if (y > 1 - threshold) {
+                return Direction.SOUTH;
+            }
+            return Direction.EAST;
+        }
+        if (y < threshold) {
+            return Direction.NORTH;
+        }
+        if (y > 1 - threshold) {
+            return Direction.SOUTH;
+        }
+        return null;
     }
 }

@@ -370,8 +370,8 @@
     </app-help-modal>
     <div *ngIf="maze">
         <table class="maze">
-            <tr *ngFor="let row of maze.grid">
-                <td *ngFor="let elem of row" [ngClass]="{'northWall': !elem.northOpen, 'eastWall': !elem.eastOpen, 'southWall': !elem.southOpen, 'westWall': !elem.westOpen}"></td>
+            <tr *ngFor="let row of maze.grid; let r = index">
+                <td *ngFor="let elem of row; let c = index" [ngClass]="{'northWall': !elem.northOpen, 'eastWall': !elem.eastOpen, 'southWall': !elem.southOpen, 'westWall': !elem.westOpen}" (click)="onClickMazeCell($event, r, c)"></td>
             </tr>
         </table>
     </div>
