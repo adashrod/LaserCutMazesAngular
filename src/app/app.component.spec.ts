@@ -2,6 +2,7 @@
 
 import { FormsModule } from "@angular/forms";
 import { TestBed, async } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 
 import { HelpModalComponent } from "app/help-modal/help-modal.component";
 import { MazeBuilderComponent } from "app/maze-builder/maze-builder.component";
@@ -10,7 +11,10 @@ import { AppComponent } from "app/app.component";
 describe("AppComponent", () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [FormsModule],
+            imports: [
+                FormsModule,
+                RouterTestingModule
+            ],
             declarations: [
                 AppComponent,
                 HelpModalComponent,

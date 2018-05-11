@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { HelpComponent } from "app/help/help.component";
+import { LightboxThumbnailComponent } from "app/lightbox-thumbnail/lightbox-thumbnail.component";
 
 describe("HelpComponent", () => {
     let component: HelpComponent;
@@ -8,7 +9,10 @@ describe("HelpComponent", () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ HelpComponent ]
+            declarations: [
+                HelpComponent,
+                LightboxThumbnailComponent
+            ]
         })
         .compileComponents();
     }));
