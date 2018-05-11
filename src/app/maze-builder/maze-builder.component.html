@@ -191,7 +191,7 @@
                 <label for="algorithmInput">algorithm</label>
                 <div>
                     <select id="algorithmInput" [(ngModel)]="currentAlgorithm" (change)="buildMaze()" name="algorithmInput">
-                        <option *ngFor="let a of algorithms; let i = index" [ngValue]="i">{{a.name}}</option>
+                        <option *ngFor="let a of algorithms" [ngValue]="a">{{a.name}}</option>
                     </select>
                     <app-help-modal>
                         <div class="title">Maze Generation Algorithm</div>

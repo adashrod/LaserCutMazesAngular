@@ -42,7 +42,7 @@ export class MazeBuilderComponent implements OnInit {
     includeCalibrationRectangle: boolean = false;
     calibrationRectangleConfig: CalibrationRectangle = new CalibrationRectangle();
     algorithms: MazeGenerator[] = [new DepthFirstSearch(), new PrimsAlgorithm(), new KruskalsAlgorithm(), new EmptyAlgorithm()];
-    currentAlgorithm = 0;
+    currentAlgorithm = this.algorithms[0];
 
     maze: Maze | null;
     rawSvgSrc: string | null;
@@ -61,7 +61,7 @@ export class MazeBuilderComponent implements OnInit {
         configs.push(["materialThickness", mc.materialThickness.toString()]);
         configs.push(["hallWidth", mc.hallWidth.toString()]);
         configs.push(["separationSpace", mc.separationSpace.toString()]);
-        configs.push(["algorithm", this.algorithms[this.currentAlgorithm].name]);
+        configs.push(["algorithm", this.currentAlgorithm.name]);
         configs.push(["randomSeed", this.lastSeedUsed]);
         configs.push(["printerConfigUnits", this.maxPrinterUnits.pluralName]);
         configs.push(["printerConfigPixelsPerUnit", this.ppu.toString()]);
@@ -96,11 +96,10 @@ export class MazeBuilderComponent implements OnInit {
         }
         const start = new Date().getTime();
         const maze = new Maze(this.mazeConfig.numCols, this.mazeConfig.numRows);
-        const algo = this.algorithms[this.currentAlgorithm];
-        algo.seed = this.randomSeed.toString().length > 0 ? this.randomSeed : new Date().getTime();
-        this.lastSeedUsed = algo.seed.toString();
-        maze.build(algo);
-        console.log(`seed used: ${algo.seed}`);
+        this.currentAlgorithm.seed = this.randomSeed.toString().length > 0 ? this.randomSeed : new Date().getTime();
+        this.lastSeedUsed = this.currentAlgorithm.seed.toString();
+        maze.build(this.currentAlgorithm);
+        console.log(`seed used: ${this.currentAlgorithm.seed}`);
         this.maze = maze;
         console.log(`maze build time: ${new Date().getTime() - start} ms`);
         this.afterBuild();

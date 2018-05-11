@@ -25,6 +25,10 @@
     display: table-cell;
 }
 
+.row > span {
+    padding: 2px 5px;
+}
+
 .row input, .row select, .row label {
     margin: 2px 5px;
 }
@@ -78,5 +82,5 @@ td {
 .out-of-bounds {
     background: #4285f4;
     border: 1px solid #5c2018;
-    padding: 2px 5px 2px;
+    padding: 2px 5px;
 }
