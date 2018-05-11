@@ -92,7 +92,6 @@
         </div>
     </app-help-modal>
 </div>
-<!-- <form #mazeForm="ngForm"> -->
 <form>
     <div class="group">
         <div class="maze-inputs inputs">
@@ -105,104 +104,123 @@
             </div>
             <div class="row">
                 <label for="numRowsInput">number of rows</label>
-                <input id="numRowsInput" type="number" min="1" step="1" [(ngModel)]="mazeConfig.numRows" name="numRowsInput"/>
-                <app-help-modal>
-                    <div class="title">number of maze rows</div>
-                    <div class="body">Number of rows, aka height. This is the number of horizontal lanes in the maze. (positive integers)</div>
-                </app-help-modal>
+                <div>
+                    <input id="numRowsInput" type="number" min="1" step="1" [(ngModel)]="mazeConfig.numRows" name="numRowsInput"/>
+                    <app-help-modal>
+                        <div class="title">number of maze rows</div>
+                        <div class="body">Number of rows, aka height. This is the number of horizontal lanes in the maze (positive integers only).</div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="numColsInput">number of columns</label>
-                <input id="numColsInput" type="number" min="1" step="1" [(ngModel)]="mazeConfig.numCols" name="numColsInput"/>
-                <app-help-modal>
-                    <div class="title">number of maze columns</div>
-                    <div class="body">Number of columns, aka width. This is the number of vertical lanes in the maze. (positive integers)</div>
-                </app-help-modal>
+                <div>
+                    <input id="numColsInput" type="number" min="1" step="1" [(ngModel)]="mazeConfig.numCols" name="numColsInput"/>
+                    <app-help-modal>
+                        <div class="title">number of maze columns</div>
+                        <div class="body">Number of columns, aka width. This is the number of vertical lanes in the maze (positive integers only).</div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="mazeUnitInput">units</label>
-                <select id="mazeUnitInput" [(ngModel)]="mazeConfig.unit" (change)="buildMaze()" name="mazeUnitInput">
-                    <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.pluralName}}</option>
-                </select>
-                <app-help-modal>
-                    <div class="title">Maze Measurement Units</div>
-                    <div class="body">These are the units used for the measurements below.</div>
-                </app-help-modal>
+                <div>
+                    <select id="mazeUnitInput" [(ngModel)]="mazeConfig.unit" (change)="buildMaze()" name="mazeUnitInput">
+                        <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.pluralName}}</option>
+                    </select>
+                    <app-help-modal>
+                        <div class="title">Maze Measurement Units</div>
+                        <div class="body">These are the units used for the measurements below.</div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="wallHeightInput">wall height</label>
-                <input id="wallHeightInput" type="number" min=".01" step=".25" [(ngModel)]="mazeConfig.wallHeight" (change)="buildMaze()" name="wallHeightInput"/>
-                <app-help-modal>
-                    <div class="title">Wall Height</div>
-                    <div class="body">
-                        The height of the walls from the floor of the maze. This should be tall enough so that a marble rolling through the maze won't bounce over the walls.
-                        <img src="assets/wallHeight.png"/>
-                    </div>
-                </app-help-modal>
+                <div>
+                    <input id="wallHeightInput" type="number" min=".01" step=".25" [(ngModel)]="mazeConfig.wallHeight" (change)="buildMaze()" name="wallHeightInput"/>
+                    <app-help-modal>
+                        <div class="title">Wall Height</div>
+                        <div class="body">
+                            The height of the walls from the floor of the maze. This should be tall enough so that a marble rolling through the maze won't bounce over the walls.
+                            <img src="assets/wallHeight.png"/>
+                        </div>
+                    </app-help-modal>
+
+                </div>
             </div>
             <div class="row">
                 <label for="materialThicknessInput">material thickness</label>
-                <input id="materialThicknessInput" type="number" min=".01" step=".01" [(ngModel)]="mazeConfig.materialThickness" (change)="buildMaze()" name="materialThicknessInput"/>
-                <app-help-modal>
-                    <div class="title">Material Thickness</div>
-                    <div class="body">
-                        The thickness of the material being used to cut out the maze pieces. Note: this will also be the width of the walls once assembled.
-                        <img src="assets/materialThickness.png"/>
-                    </div>
-                </app-help-modal>
+                <div>
+                    <input id="materialThicknessInput" type="number" min=".01" step=".01" [(ngModel)]="mazeConfig.materialThickness" (change)="buildMaze()" name="materialThicknessInput"/>
+                    <app-help-modal>
+                        <div class="title">Material Thickness</div>
+                        <div class="body">
+                            The thickness of the material being used to cut out the maze pieces. Note: this will also be the width of the walls once assembled.
+                            <img src="assets/materialThickness.png"/>
+                        </div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="hallWidthInput">hall width</label>
-                <input id="hallWidthInput" type="number" min=".1" step=".1" [(ngModel)]="mazeConfig.hallWidth" (change)="buildMaze()" name="hallWidthInput"/>
-                <app-help-modal>
-                    <div class="title">Hall width</div>
-                    <div class="body">
-                        Hall width, or space between walls. This should be at least as big as the diameter of a marble that would be rolling through the maze.
-                        <img src="assets/hallWidth.png"/>
-                    </div>
-                </app-help-modal>
+                <div>
+                    <input id="hallWidthInput" type="number" min=".1" step=".1" [(ngModel)]="mazeConfig.hallWidth" (change)="buildMaze()" name="hallWidthInput"/>
+                    <app-help-modal>
+                        <div class="title">Hall width</div>
+                        <div class="body">
+                            Hall width, or space between walls. This should be at least as big as the diameter of a marble that would be rolling through the maze.
+                            <img src="assets/hallWidth.png"/>
+                        </div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="separationSpaceInput">separation space</label>
-                <input id="separationSpaceInput" type="number" min="0" step=".01" [(ngModel)]="mazeConfig.separationSpace" (change)="buildMaze()" name="separationSpaceInput"/>
-                <app-help-modal>
-                    <div class="title">Separation Space</div>
-                    <div class="body">
-                        The minimum space between separate pieces on the blueprint for laser cutting. If set to 0, no material will be wasted between pieces, but if the kerf of the laser is high, the pieces might end up too narrow/short.
-                        <img src="assets/separationSpace.png"/>
-                    </div>
-                </app-help-modal>
+                <div>
+                    <input id="separationSpaceInput" type="number" min="0" step=".01" [(ngModel)]="mazeConfig.separationSpace" (change)="buildMaze()" name="separationSpaceInput"/>
+                    <app-help-modal>
+                        <div class="title">Separation Space</div>
+                        <div class="body">
+                            The minimum space between separate pieces on the blueprint for laser cutting. If set to 0, no material will be wasted between pieces, but if the kerf of the laser is high, the pieces might end up too narrow/short.
+                            <img src="assets/separationSpace.png"/>
+                        </div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="algorithmInput">algorithm</label>
-                <select id="algorithmInput" [(ngModel)]="currentAlgorithm" (change)="buildMaze()" name="algorithmInput">
-                    <option *ngFor="let a of algorithms; let i = index" [ngValue]="i">{{a.name}}</option>
-                </select>
-                <app-help-modal>
-                    <div class="title">Maze Generation Algorithm</div>
-                    <div class="body">
-                        <span>This is the algorithm that is used to randomly generate the maze.</span>
-                        <dl>
-                            <dt>Prim's Algorithm</dt>
-                            <dd>Method: start with all spaces having all walls closed. Randomly pick a space and add it to the maze path. Add all of its neighboring spaces to a list. While there are spaces in the list, remove a random one, pick a random neighbor, connect the two (remove the wall), and add the removed space's unexplored neighbors to the list. Repeat until all spaces have been visited. <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm" target="_blank">Prim's Algorithm on Wikipedia</a></dd>
-                            <dt>Kruskal's Algorithm</dt>
-                            <dd>Method: start with all spaces having all walls closed. Go over every wall that separates two spaces (outer walls not included). Randomly pick a wall. If the two spaces separated by the wall are not already connected by a path, remove the wall between them. Repeat until all spaces are on the same path. <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm" target="_blank">Kruskal's Algorithm on Wikipedia</a></dd>
-                            <dt>Depth-First Search</dt>
-                            <dd>Method: start with all spaces having all walls closed. Randomly pick a space and add it to the maze path. Move in a random direction and add that to the path. Continue until a dead end is reached, then backtrack until reaching a space where a fork is possible and pick a new direction. Continue until all spaces have been visited. This method tends to make mazes with long paths, dead ends, and not a lot of forks. <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Depth-First Search Algorithm on Wikipedia</a></dd>
-                        </dl>
-                    </div>
-                </app-help-modal>
+                <div>
+                    <select id="algorithmInput" [(ngModel)]="currentAlgorithm" (change)="buildMaze()" name="algorithmInput">
+                        <option *ngFor="let a of algorithms; let i = index" [ngValue]="i">{{a.name}}</option>
+                    </select>
+                    <app-help-modal>
+                        <div class="title">Maze Generation Algorithm</div>
+                        <div class="body">
+                            <span>This is the algorithm that is used to randomly generate the maze.</span>
+                            <dl>
+                                <dt>Prim's Algorithm</dt>
+                                <dd>Method: start with all spaces having all walls closed. Randomly pick a space and add it to the maze path. Add all of its neighboring spaces to a list. While there are spaces in the list, remove a random one, pick a random neighbor, connect the two (remove the wall), and add the removed space's unexplored neighbors to the list. Repeat until all spaces have been visited. <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm" target="_blank">Prim's Algorithm on Wikipedia</a></dd>
+                                <dt>Kruskal's Algorithm</dt>
+                                <dd>Method: start with all spaces having all walls closed. Go over every wall that separates two spaces (outer walls not included). Randomly pick a wall. If the two spaces separated by the wall are not already connected by a path, remove the wall between them. Repeat until all spaces are on the same path. <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm" target="_blank">Kruskal's Algorithm on Wikipedia</a></dd>
+                                <dt>Depth-First Search</dt>
+                                <dd>Method: start with all spaces having all walls closed. Randomly pick a space and add it to the maze path. Move in a random direction and add that to the path. Continue until a dead end is reached, then backtrack until reaching a space where a fork is possible and pick a new direction. Continue until all spaces have been visited. This method tends to make mazes with long paths, dead ends, and not a lot of forks. <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Depth-First Search Algorithm on Wikipedia</a></dd>
+                            </dl>
+                        </div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="randomSeedInput">random seed</label>
-                <input id="randomSeedInput" type="text" [(ngModel)]="randomSeed" (change)="buildMaze()" (keyup)="buildMaze()" name="randomSeedInput"/>
-                <app-help-modal>
-                    <div class="title">Random Seed</div>
-                    <div class="body">
-                        <p>The random seed is where the random number generator "starts" generating random numbers. It can be any string of numbers/letters/etc. If you enter a random seed, then the randomly generated maze will always be the same randomly generated maze as long as you use that seed.</p>
-                        <p>For example: if you use Prim's algorithm, enter a seed of "rand12", and choose 4 rows and 4 columns, you should see a maze that has a path from the top-left corner, to the top-right corner, to the bottom-right corner. You should be able to generate that same maze using the same row, column, and seed parameters at any time, in any browser, even if you refresh the page.</p>
-                    </div>
-                </app-help-modal>
+                <div>
+                    <input id="randomSeedInput" type="text" [(ngModel)]="randomSeed" (change)="buildMaze()" (keyup)="buildMaze()" name="randomSeedInput"/>
+                    <app-help-modal>
+                        <div class="title">Random Seed</div>
+                        <div class="body">
+                            <p>The random seed is where the random number generator "starts" generating random numbers. It can be any string of numbers/letters/etc. If you enter a random seed, then the randomly generated maze will always be the same randomly generated maze as long as you use that seed.</p>
+                            <p>For example: if you use Prim's algorithm, enter a seed of "rand12", and choose 4 rows and 4 columns, you should see a maze that has a path from the top-left corner, to the top-right corner, to the bottom-right corner. You should be able to generate that same maze using the same row, column, and seed parameters at any time, in any browser, even if you refresh the page.</p>
+                        </div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <span>last seed used:</span>
@@ -219,40 +237,48 @@
             </div>
             <div class="row">
                 <label for="maxPrinterUnits">units</label>
-                <select id="maxPrinterUnits" [(ngModel)]="maxPrinterUnits" (change)="buildMaze()" name="maxPrinterUnits">
-                    <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.pluralName}}</option>
-                </select>
-                <app-help-modal [popLeft]="true">
-                    <div class="title">Printer Dimension Units</div>
-                    <div class="body">These are the units used for the measurements below.</div>
-                </app-help-modal>
+                <div>
+                    <select id="maxPrinterUnits" [(ngModel)]="maxPrinterUnits" (change)="buildMaze()" name="maxPrinterUnits">
+                        <option *ngFor="let u of mazeUnits" [ngValue]="u">{{u.pluralName}}</option>
+                    </select>
+                    <app-help-modal [popLeft]="true">
+                        <div class="title">Printer Dimension Units</div>
+                        <div class="body">These are the units used for the measurements below.</div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="printerPpu">pixels per {{maxPrinterUnits.singularName}}</label>
-                <input type="number" min="1" step="1" [(ngModel)]="ppu" (change)="buildMaze()" name="printerPpu"/>
-                <app-help-modal [popLeft]="true">
-                    <div class="title">Pixels per Unit</div>
-                    <div class="body">
-                        The number of pixels that the laser cutter interprets as being the length of the selected unit. E.g. Choosing inches and 96 would mean
-                        96 pixels per inch, aka 96 dots per inch (DPI).
-                    </div>
-                </app-help-modal>
+                <div>
+                    <input type="number" min="1" step="1" [(ngModel)]="ppu" (change)="buildMaze()" name="printerPpu"/>
+                    <app-help-modal [popLeft]="true">
+                        <div class="title">Pixels per Unit</div>
+                        <div class="body">
+                            The number of pixels that the laser cutter interprets as being the length of the selected unit. E.g. Choosing inches and 96 would mean
+                            96 pixels per inch, aka 96 dots per inch (DPI).
+                        </div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="maxWidthInput">max printer width</label>
-                <input id="maxWidthInput" type="number" min="1" [(ngModel)]="maxWidth" (change)="buildMaze()" name="maxWidthInput"/>
-                <app-help-modal [popLeft]="true">
-                    <div class="title">Max Printer Width</div>
-                    <div class="body">The width of the laser cutter's printable area</div>
-                </app-help-modal>
+                <div>
+                    <input id="maxWidthInput" type="number" min="1" [(ngModel)]="maxWidth" (change)="buildMaze()" name="maxWidthInput"/>
+                    <app-help-modal [popLeft]="true">
+                        <div class="title">Max Printer Width</div>
+                        <div class="body">The width of the laser cutter's printable area</div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="maxHeightInput">max printer height</label>
-                <input id="maxHeightInput" type="number" min="1" [(ngModel)]="maxHeight" (change)="buildMaze()" name="maxHeightInput"/>
-                <app-help-modal [popLeft]="true">
-                    <div class="title">Max Printer Height</div>
-                    <div class="body">The height of the laser cutter's printable area</div>
-                </app-help-modal>
+                <div>
+                    <input id="maxHeightInput" type="number" min="1" [(ngModel)]="maxHeight" (change)="buildMaze()" name="maxHeightInput"/>
+                    <app-help-modal [popLeft]="true">
+                        <div class="title">Max Printer Height</div>
+                        <div class="body">The height of the laser cutter's printable area</div>
+                    </app-help-modal>
+                </div>
             </div>
         </div>
         <div class="calibration-inputs inputs">
@@ -269,40 +295,48 @@
             </div>
             <div class="row">
                 <label for="includeCalibrationRectangleInput">include in SVG</label>
-                <input id="includeCalibrationRectangleInput" type="checkbox" [(ngModel)]="includeCalibrationRectangle" (change)="buildMaze()" name="includeCalibrationRectangleInput"/>
-                <app-help-modal [popLeft]="true">
-                    <div class="title">Include Calibration Rectangle</div>
-                    <div class="body">Check this box to include the calibration rectangle in the exported SVG.</div>
-                </app-help-modal>
+                <div>
+                    <input id="includeCalibrationRectangleInput" type="checkbox" [(ngModel)]="includeCalibrationRectangle" (change)="buildMaze()" name="includeCalibrationRectangleInput"/>
+                    <app-help-modal [popLeft]="true">
+                        <div class="title">Include Calibration Rectangle</div>
+                        <div class="body">Check this box to include the calibration rectangle in the exported SVG.</div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="calibrationRectangleUnitInput">units</label>
-                <select id="calibrationRectangleUnitInput" [(ngModel)]="calibrationRectangleConfig.unit" (change)="buildMaze()" name="calibrationRectangleUnitInput">
-                    <option *ngFor="let u of rectangleUnits" [ngValue]="u">{{u.pluralName}}</option>
-                </select>
-                <app-help-modal [popLeft]="true">
-                    <div class="title">Calibration Rectangle Units</div>
-                    <div class="body">These are the units used for the measurements below.</div>
-                </app-help-modal>
+                <div>
+                    <select id="calibrationRectangleUnitInput" [(ngModel)]="calibrationRectangleConfig.unit" (change)="buildMaze()" name="calibrationRectangleUnitInput">
+                        <option *ngFor="let u of rectangleUnits" [ngValue]="u">{{u.pluralName}}</option>
+                    </select>
+                    <app-help-modal [popLeft]="true">
+                        <div class="title">Calibration Rectangle Units</div>
+                        <div class="body">These are the units used for the measurements below.</div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="calibrationRectangleWidthInput">rectangle width</label>
-                <input id="calibrationRectangleWidthInput" type="number" min="1" step="1" [(ngModel)]="calibrationRectangleConfig.width" (change)="buildMaze()" name="calibrationRectangleWidthInput"/>
-                <app-help-modal [popLeft]="true">
-                    <div class="title">Rectangle Width</div>
-                    <div class="body">The width of the rectangle in the specified units.</div>
-                </app-help-modal>
+                <div>
+                    <input id="calibrationRectangleWidthInput" type="number" min="1" step="1" [(ngModel)]="calibrationRectangleConfig.width" (change)="buildMaze()" name="calibrationRectangleWidthInput"/>
+                    <app-help-modal [popLeft]="true">
+                        <div class="title">Rectangle Width</div>
+                        <div class="body">The width of the rectangle in the specified units (positive integers only).</div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
                 <label for="calibrationRectangleHeightInput">rectangle height</label>
-                <input id="calibrationRectangleHeightInput" type="number" min="1" step="1" [(ngModel)]="calibrationRectangleConfig.height" (change)="buildMaze()" name="calibrationRectangleHeightInput"/>
-                <app-help-modal [popLeft]="true">
-                    <div class="title">Rectangle Height</div>
-                    <div class="body">The height of the rectangle in the specified units.</div>
-                </app-help-modal>
+                <div>
+                    <input id="calibrationRectangleHeightInput" type="number" min="1" step="1" [(ngModel)]="calibrationRectangleConfig.height" (change)="buildMaze()" name="calibrationRectangleHeightInput"/>
+                    <app-help-modal [popLeft]="true">
+                        <div class="title">Rectangle Height</div>
+                        <div class="body">The height of the rectangle in the specified units (positive integers only).</div>
+                    </app-help-modal>
+                </div>
             </div>
             <div class="row">
-                <span>horizontal alignment&nbsp;</span>
+                <span>horizontal alignment</span>
                 <div>
                     <label for="calibrationRectangleLeftInput">left</label>
                     <input id="calibrationRectangleLeftInput" type="radio" [value]="true" [(ngModel)]="calibrationRectangleConfig.leftAligned" (change)="buildMaze()" name="horizontalRadio"/>

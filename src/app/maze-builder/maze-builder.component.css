@@ -8,6 +8,7 @@
 }
 
 .inputs {
+    width: 385px;
     border-width: 2px;
     border-style: outset;
     border-color: #f3e0dc #d4a59a #d4a59a #f3e0dc;
@@ -16,24 +17,19 @@
     color: #5c2018;
 }
 
-.maze-inputs {
-    width: 390px;
-}
-
-.printer-inputs, .calibration-inputs {
-    width: 380px;
-}
-
 .row {
     display: table-row;
 }
 
-.row > span, .row > input, .row > label, .row > select {
+.row > span, .row > div {
     display: table-cell;
+}
+
+.row input, .row select, .row label {
     margin: 2px 5px;
 }
 
-.row > input {
+.row input[type="number"], .row input[type="text"] {
     width: 60px;
 }
 
