@@ -204,6 +204,8 @@
                                 <dd>Method: start with all spaces having all walls closed. Go over every wall that separates two spaces (outer walls not included). Randomly pick a wall. If the two spaces separated by the wall are not already connected by a path, remove the wall between them. Repeat until all spaces are on the same path. <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm" target="_blank">Kruskal's Algorithm on Wikipedia</a></dd>
                                 <dt>Depth-First Search</dt>
                                 <dd>Method: start with all spaces having all walls closed. Randomly pick a space and add it to the maze path. Move in a random direction and add that to the path. Continue until a dead end is reached, then backtrack until reaching a space where a fork is possible and pick a new direction. Continue until all spaces have been visited. This method tends to make mazes with long paths, dead ends, and not a lot of forks. <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Depth-First Search Algorithm on Wikipedia</a></dd>
+                                <dt>Do-It-Yourself</dt>
+                                <dd>This "algorithm" does nothing. You start out with a maze with all walls closed and click on walls to toggle them on/off and design your own maze.</dd>
                             </dl>
                         </div>
                     </app-help-modal>
@@ -368,12 +370,13 @@
         <div class="title">Generate a New Random Maze</div>
         <div class="body">The maze is automatically rebuilt when you change any of the inputs. You can use this to manually generate a different random maze, but only if you don't set a random seed.</div>
     </app-help-modal>
-    <div *ngIf="maze">
+    <div *ngIf="maze" class="group">
         <table class="maze">
             <tr *ngFor="let row of maze.grid; let r = index">
                 <td *ngFor="let elem of row; let c = index" [ngClass]="{'northWall': !elem.northOpen, 'eastWall': !elem.eastOpen, 'southWall': !elem.southOpen, 'westWall': !elem.westOpen}" (click)="onClickMazeCell($event, r, c)"></td>
             </tr>
         </table>
+        <div class="try-clicking">&lt;- Try clicking on the walls of the maze to toggle them</div>
     </div>
     <input type="button" (click)="exportSvg()" value="Export SVG Blueprint" [disabled]="!maze"/>
     <app-help-modal>

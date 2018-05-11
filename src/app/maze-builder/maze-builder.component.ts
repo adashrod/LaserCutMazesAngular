@@ -4,6 +4,7 @@ import Big from "big.js";
 import { saveAs } from "file-saver";
 
 import DepthFirstSearch from "app/algorithms/depth-first-search-algorithm";
+import EmptyAlgorithm from "app/algorithms/empty-algorithm";
 import KruskalsAlgorithm from "app/algorithms/kruskals-algorithm";
 import MazeGenerator from "app/algorithms/maze-generator";
 import PrimsAlgorithm from "app/algorithms/prims-algorithm";
@@ -40,7 +41,7 @@ export class MazeBuilderComponent implements OnInit {
 
     includeCalibrationRectangle: boolean = false;
     calibrationRectangleConfig: CalibrationRectangle = new CalibrationRectangle();
-    algorithms: MazeGenerator[] = [new PrimsAlgorithm(), new KruskalsAlgorithm(), new DepthFirstSearch()];
+    algorithms: MazeGenerator[] = [new DepthFirstSearch(), new PrimsAlgorithm(), new KruskalsAlgorithm(), new EmptyAlgorithm()];
     currentAlgorithm = 0;
 
     maze: Maze | null;

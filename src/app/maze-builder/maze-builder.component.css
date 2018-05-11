@@ -61,6 +61,10 @@ td {
     border-left: 2px solid black;
 }
 
+.try-clicking {
+    padding-left: 10px;
+}
+
 .svg-preview {
     background: #d4a59a;
     overflow: scroll;
