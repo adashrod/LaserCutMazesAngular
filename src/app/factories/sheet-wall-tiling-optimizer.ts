@@ -46,8 +46,7 @@ export default class SheetWallTilingOptimizer {
         while (shapesDeque.length > 0) {
             if (this.fitsInNewRow(wallHeight)) {
                 // add to new row in current column
-                const longWall = shapesDeque[0];
-                shapesDeque.shift();
+                const longWall = <Shape>shapesDeque.shift();
                 if (this.currentMaxRowWidth !== null && longWall.width.gt(this.currentMaxRowWidth)) {
                     // simple fix for potential tiling overlap when numRows > numCols, not ideal because it wastes a bit of material space
                     this.currentMaxRowWidth = longWall.width;
@@ -67,8 +66,7 @@ export default class SheetWallTilingOptimizer {
             while (shapesDeque.length > 0) {
                 const shortWall = shapesDeque[shapesDeque.length - 1];
                 if (this.fitsInCurrentRow(shortWall)) {
-                    this.addToCurrentRow(shortWall);
-                    shapesDeque.pop();
+                    this.addToCurrentRow(<Shape>shapesDeque.pop());
                 } else {
                     this.cursor = new OrderedPair(this.beginningOfLineX, this.cursor.y.add(wallHeight).add(this.separationSpace));
                     break;

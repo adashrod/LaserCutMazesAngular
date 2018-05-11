@@ -34,10 +34,7 @@ export default class DepthFirstSearchAlgorithm extends MazeGenerator {
                 if (stack.length === 0) {
                     break;
                 }
-                const top = stack.pop();
-                if (typeof top !== "undefined") {
-                    current = top;
-                }
+                current = <OrderedPair<number>>stack.pop();
             }
         }
     }

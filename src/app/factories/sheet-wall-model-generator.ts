@@ -184,10 +184,7 @@ export default class SheetWallModelGenerator {
         for (let i = 0; i < paths.length; i++) {
             const notch = paths[i];
             const nextNotch = i < paths.length - 1 ? paths[i + 1] : paths[0];
-            const notchInfo = this.notchEdgeMap.get(notch), nextNotchInfo = this.notchEdgeMap.get(nextNotch);
-            if (typeof notchInfo === "undefined" || typeof nextNotchInfo === "undefined") {
-                throw new Error("notch and nextNotch are definitely in the map because they were retrieved from notchEdgeMap.keys()");
-            }
+            const notchInfo = <NotchPosInfo>this.notchEdgeMap.get(notch), nextNotchInfo = <NotchPosInfo>this.notchEdgeMap.get(nextNotch);
             if (notchInfo.direction === nextNotchInfo.direction || nextNotchInfo.isCorner) {
                 const points = this.findNotchConnectionPoints(notchInfo, notch, nextNotch, false);
                 const firstPoint = points.firstPoint, secondPoint = points.secondPoint;
@@ -263,10 +260,7 @@ export default class SheetWallModelGenerator {
      * A987
      */
     private edgeNotchComparator = (p1: Path, p2: Path) => {
-        const p1Info = this.notchEdgeMap.get(p1), p2Info = this.notchEdgeMap.get(p2);
-        if (typeof p1Info === "undefined" || typeof p2Info === "undefined") {
-            throw new Error("p1Info and p2Info are definitely in the map because they were retrieved from notchEdgeInfo.keys()");
-        }
+        const p1Info = <NotchPosInfo>this.notchEdgeMap.get(p1), p2Info = <NotchPosInfo>this.notchEdgeMap.get(p2);
         const p1Dir = p1Info.direction, p2Dir = p2Info.direction;
         const dirCmp = SheetWallModelGenerator.directionRank[p1Dir.name] - SheetWallModelGenerator.directionRank[p2Dir.name];
         if (dirCmp !== 0) {

@@ -111,7 +111,7 @@ export default class MazePrinter {
         return comment;
     }
 
-    private buildCalibrationRectangle(calibrationRectangle: CalibrationRectangle): Path[] {
+    private buildCalibrationRectangle(calibrationRectangle: CalibrationRectangle): [Path, Path, Path, Path] {
         const multiplier = this.printerUnits.perInch.mul(this.ppu).div(calibrationRectangle.unit.perInch),
             width = multiplier.mul(calibrationRectangle.width),
             height = multiplier.mul(calibrationRectangle.height);
@@ -132,7 +132,7 @@ export default class MazePrinter {
         return [top, right, bottom, left];
     }
 
-    private buildBoundingBoxRectangle(): Path[] {
+    private buildBoundingBoxRectangle(): [Path, Path, Path, Path] {
         const top: Path = new Path(new OrderedPair<Big>(ZERO, ZERO), new OrderedPair<Big>(this.maxWidth, ZERO)),
             right: Path = new Path(new OrderedPair<Big>(this.maxWidth, ZERO), new OrderedPair<Big>(this.maxWidth, this.maxHeight)),
             bottom: Path = new Path(new OrderedPair<Big>(this.maxWidth, this.maxHeight), new OrderedPair<Big>(ZERO, this.maxHeight)),
