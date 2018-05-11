@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Input, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnInit, Input, ViewChild } from "@angular/core";
 
 @Component({
     selector: "app-lightbox-thumbnail",
