@@ -20,7 +20,7 @@ export default class CalibrationRectangle {
     }
 
     set width(w: number) {
-        this._width = Math.max(0, Math.floor(w));
+        this._width = Math.max(1, Math.floor(w));
     }
 
     /**
@@ -31,7 +31,7 @@ export default class CalibrationRectangle {
     }
 
     set height(h: number) {
-        this._height = Math.max(0, Math.floor(h));
+        this._height = Math.max(1, Math.floor(h));
     }
 
     get unit(): Unit {
