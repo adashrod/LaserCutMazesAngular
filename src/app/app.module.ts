@@ -20,9 +20,9 @@ const appRoutes: Routes = [{
     path: "LaserCutMazes/help",
     component: HelpComponent
 }, {
-    path: "",
+    path: "LaserCutMazes",
     redirectTo: "LaserCutMazes/welcome",
-    pathMatch: "full"
+    pathMatch: "prefix"
 }];
 @NgModule({
     declarations: [
