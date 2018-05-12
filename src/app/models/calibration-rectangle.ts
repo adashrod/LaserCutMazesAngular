@@ -20,7 +20,13 @@ export default class CalibrationRectangle {
     }
 
     set width(w: number) {
-        this._width = Math.max(1, Math.floor(w));
+        let val: number;
+        if (typeof w === "string") {
+            val = parseInt(w, 10);
+        } else {
+            val = w;
+        }
+        this._width = Math.max(1, Math.floor(val));
     }
 
     /**
@@ -31,7 +37,13 @@ export default class CalibrationRectangle {
     }
 
     set height(h: number) {
-        this._height = Math.max(1, Math.floor(h));
+        let val: number;
+        if (typeof h === "string") {
+            val = parseInt(h, 10);
+        } else {
+            val = h;
+        }
+        this._height = Math.max(1, Math.floor(val));
     }
 
     get unit(): Unit {

@@ -20,7 +20,11 @@ export default class MazeConfig {
 
     set numRows(newVal: number) {
         const oldVal = this.numRows;
-        this._numRows = newVal;
+        if (typeof newVal === "string") {
+            this._numRows = parseInt(newVal, 10);
+        } else {
+            this._numRows = newVal;
+        }
         if (oldVal !== newVal) {
             for (const l of this.listeners) {
                 l(oldVal, newVal);
@@ -34,7 +38,11 @@ export default class MazeConfig {
 
     set numCols(newVal: number) {
         const oldVal = this.numCols;
-        this._numCols = newVal;
+        if (typeof newVal === "string") {
+            this._numCols = parseInt(newVal, 10);
+        } else {
+            this._numCols = newVal;
+        }
         if (oldVal !== newVal) {
             for (const l of this.listeners) {
                 l(oldVal, newVal);

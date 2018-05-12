@@ -68,6 +68,8 @@ export class MazeBuilderComponent implements OnInit {
         }
     }
 
+    numericInputType: string = /msie\s|trident\/|edge\//i.test((<any>window).navigator.userAgent) ? "text" : "number";
+
     private consolidateConfigs(): string[][] {
         const configs: string[][] = [];
         const mc = this.mazeConfig;
