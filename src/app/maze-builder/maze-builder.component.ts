@@ -47,9 +47,26 @@ export class MazeBuilderComponent implements OnInit {
     maze: Maze | null;
     rawSvgSrc: string | null;
     safeSvgSrc: SafeHtml | null;
-    showSvgPreview: boolean = false;
+    private _showSvgPreview: boolean = false;
     autoGenerateSvg: boolean;
     outOfBounds: boolean = false;
+
+    trackEvents: boolean = true;
+
+    get showSvgPreview(): boolean {
+        return this._showSvgPreview;
+    }
+
+    set showSvgPreview(show: boolean) {
+        this._showSvgPreview = show;
+        if (show) {
+            (<any>window).ga("send", {
+                hitType: "event",
+                eventCategory: "Builder",
+                eventAction: "showSvg"
+            });
+        }
+    }
 
     private consolidateConfigs(): string[][] {
         const configs: string[][] = [];
@@ -84,7 +101,9 @@ export class MazeBuilderComponent implements OnInit {
         this.mazeConfig.addChangeListener((oldVal, newVal) => {
             this.buildMaze();
         });
+        this.trackEvents = false;
         this.autoGenerateSvg = this.benchmark() < MazeBuilderComponent.AUTO_SVG_THRESHOLD_MS;
+        this.trackEvents = true;
     }
 
     buildMaze() {
@@ -102,6 +121,14 @@ export class MazeBuilderComponent implements OnInit {
         console.log(`seed used: ${this.currentAlgorithm.seed}`);
         this.maze = maze;
         console.log(`maze build time: ${new Date().getTime() - start} ms`);
+        if (this.trackEvents) {
+            (<any>window).ga("send", {
+                hitType: "event",
+                eventCategory: "Builder",
+                eventAction: "build",
+                eventLabel: this.currentAlgorithm.name
+            });
+        }
         this.afterBuild();
     }
 
@@ -179,11 +206,25 @@ export class MazeBuilderComponent implements OnInit {
         this.safeSvgSrc = this.sanitizer.bypassSecurityTrustHtml(this.rawSvgSrc);
         this.outOfBounds = sheetWallModel.outOfBounds;
         console.info(`svg export time: ${new Date().getTime() - start} ms`);
+        if (!this.autoGenerateSvg && this.trackEvents) {
+            (<any>window).ga("send", {
+                hitType: "event",
+                eventCategory: "Builder",
+                eventAction: "export",
+                eventLabel: this.currentAlgorithm.name
+            });
+        }
     }
 
     downloadSvg() {
         const file = new File([this.rawSvgSrc || ""], "maze.svg", {type: "image/svg+xml;charset=utf-8"});
         saveAs(file);
+        (<any>window).ga("send", {
+            hitType: "event",
+            eventCategory: "Builder",
+            eventAction: "download",
+            eventLabel: this.currentAlgorithm.name
+        });
     }
 
     private benchmark(): number {
