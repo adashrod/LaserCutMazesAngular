@@ -45,7 +45,7 @@ export class MazeBuilderComponent implements OnInit {
     currentAlgorithm = this.algorithms[0];
 
     maze: Maze | null;
-    rawSvgSrc: string | null;
+    rawSvgSrc: string;
     safeSvgSrc: SafeHtml | null;
     private _showSvgPreview: boolean = false;
     autoGenerateSvg: boolean;
@@ -108,7 +108,7 @@ export class MazeBuilderComponent implements OnInit {
 
     buildMaze() {
         this.safeSvgSrc = null;
-        this.rawSvgSrc = null;
+        this.rawSvgSrc = "";
         if (typeof this.mazeConfig.numRows !== "number" || typeof this.mazeConfig.numCols !== "number" ||
                 this.mazeConfig.numRows <= 0 || this.mazeConfig.numCols <= 0) {
             return;
@@ -217,7 +217,7 @@ export class MazeBuilderComponent implements OnInit {
     }
 
     downloadSvg() {
-        const file = new File([this.rawSvgSrc || ""], "maze.svg", {type: "image/svg+xml;charset=utf-8"});
+        const file = new File([this.rawSvgSrc], "maze.svg", {type: "image/svg+xml;charset=utf-8"});
         saveAs(file);
         (<any>window).ga("send", {
             hitType: "event",
