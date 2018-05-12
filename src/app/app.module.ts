@@ -11,17 +11,17 @@ import { WelcomeComponent } from "app/welcome/welcome.component";
 import { LightboxThumbnailComponent } from "./lightbox-thumbnail/lightbox-thumbnail.component";
 
 const appRoutes: Routes = [{
-    path: "welcome",
+    path: "LaserCutMazes/welcome",
     component: WelcomeComponent
 }, {
-    path: "builder",
+    path: "LaserCutMazes/builder",
     component: MazeBuilderComponent
 }, {
-    path: "help",
+    path: "LaserCutMazes/help",
     component: HelpComponent
 }, {
     path: "",
-    redirectTo: "/welcome",
+    redirectTo: "LaserCutMazes/welcome",
     pathMatch: "full"
 }];
 @NgModule({
