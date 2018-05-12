@@ -217,8 +217,8 @@ export class MazeBuilderComponent implements OnInit {
     }
 
     downloadSvg() {
-        const file = new File([this.rawSvgSrc], "maze.svg", {type: "image/svg+xml;charset=utf-8"});
-        saveAs(file);
+        const blob = new Blob([this.rawSvgSrc], {type: "image/svg+xml;charset=utf-8"});
+        saveAs(blob, "maze.svg");
         (<any>window).ga("send", {
             hitType: "event",
             eventCategory: "Builder",
