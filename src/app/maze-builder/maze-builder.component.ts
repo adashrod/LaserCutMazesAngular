@@ -62,7 +62,7 @@ export class MazeBuilderComponent implements OnInit {
         if (show) {
             (<any>window).ga("send", {
                 hitType: "event",
-                eventCategory: "Builder",
+                eventCategory: "Designer",
                 eventAction: "showSvg"
             });
         }
@@ -126,7 +126,7 @@ export class MazeBuilderComponent implements OnInit {
         if (this.trackEvents) {
             (<any>window).ga("send", {
                 hitType: "event",
-                eventCategory: "Builder",
+                eventCategory: "Designer",
                 eventAction: "build",
                 eventLabel: this.currentAlgorithm.name
             });
@@ -211,7 +211,7 @@ export class MazeBuilderComponent implements OnInit {
         if (!this.autoGenerateSvg && this.trackEvents) {
             (<any>window).ga("send", {
                 hitType: "event",
-                eventCategory: "Builder",
+                eventCategory: "Designer",
                 eventAction: "export",
                 eventLabel: this.currentAlgorithm.name
             });
@@ -223,7 +223,7 @@ export class MazeBuilderComponent implements OnInit {
         saveAs(blob, "maze.svg");
         (<any>window).ga("send", {
             hitType: "event",
-            eventCategory: "Builder",
+            eventCategory: "Designer",
             eventAction: "download",
             eventLabel: this.currentAlgorithm.name
         });

@@ -10,6 +10,7 @@ import { HelpModalComponent } from "app/help-modal/help-modal.component";
 import { WelcomeComponent } from "app/welcome/welcome.component";
 import { LightboxThumbnailComponent } from "app/lightbox-thumbnail/lightbox-thumbnail.component";
 import { AboutComponent } from "app/about/about.component";
+import { TrackClickDirective } from "app/track-click.directive";
 
 const appRoutes: Routes = [{
     path: "LaserCutMazes/welcome",
@@ -36,7 +37,8 @@ const appRoutes: Routes = [{
         HelpModalComponent,
         LightboxThumbnailComponent,
         MazeBuilderComponent,
-        WelcomeComponent
+        WelcomeComponent,
+        TrackClickDirective
     ],
     imports: [
         BrowserModule,
