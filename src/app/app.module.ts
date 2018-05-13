@@ -8,17 +8,21 @@ import { AppComponent } from "app/app.component";
 import { HelpComponent } from "app/help/help.component";
 import { HelpModalComponent } from "app/help-modal/help-modal.component";
 import { WelcomeComponent } from "app/welcome/welcome.component";
-import { LightboxThumbnailComponent } from "./lightbox-thumbnail/lightbox-thumbnail.component";
+import { LightboxThumbnailComponent } from "app/lightbox-thumbnail/lightbox-thumbnail.component";
+import { AboutComponent } from "app/about/about.component";
 
 const appRoutes: Routes = [{
     path: "LaserCutMazes/welcome",
     component: WelcomeComponent
 }, {
-    path: "LaserCutMazes/builder",
+    path: "LaserCutMazes/designer",
     component: MazeBuilderComponent
 }, {
     path: "LaserCutMazes/help",
     component: HelpComponent
+}, {
+    path: "LaserCutMazes/about",
+    component: AboutComponent
 }, {
     path: "LaserCutMazes",
     redirectTo: "LaserCutMazes/welcome",
@@ -26,6 +30,7 @@ const appRoutes: Routes = [{
 }];
 @NgModule({
     declarations: [
+        AboutComponent,
         AppComponent,
         HelpComponent,
         HelpModalComponent,
