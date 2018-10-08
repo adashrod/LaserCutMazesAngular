@@ -3,6 +3,10 @@ import OrderedPair from "app/common/ordered-pair";
 import Maze from "app/models/maze";
 import Direction from "app/direction";
 
+/**
+ * An implementation of https://en.wikipedia.org/wiki/Depth-first_search
+ * @author adashrod@gmail.com
+ */
 export default class DepthFirstSearchAlgorithm extends MazeGenerator {
     private maze: Maze;
     private explored: Map<string, boolean> = new Map<string, boolean>(); // using a map with stringified keys as a HashSet

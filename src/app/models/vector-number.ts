@@ -23,6 +23,11 @@ export default class VectorNumber {
         this.position = position;
     }
 
+    /**
+     * Given a digit character, returns a {@link Shape} with points describing the shape of that numeral
+     * @param c a digit char
+     * @return a shape that looks like the numeral
+     */
     static characterToShape(c: string): Shape {
         const shape = VectorNumber.charMap[c];
         if (typeof shape !== "undefined") {

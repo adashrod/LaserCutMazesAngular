@@ -103,6 +103,40 @@
                 </app-help-modal>
             </div>
             <div class="row">
+                <label for="svgTypeInput">print mode</label>
+                <div>
+                    <select id="printModeInput" [(ngModel)]="printMode" (change)="buildMaze()" name="printMode">
+                        <option *ngFor="let e of printModes" [ngValue]="e">{{e.name}}</option>
+                    </select>
+                    <app-help-modal>
+                        <div class="title">Maze Print Mode</div>
+                        <div class="body">
+                            <dl>
+                                <dt>Floor and Wall</dt>
+                                <dd>
+                                    One piece is cut out for the floor of the maze, individual pieces are cut out for each wall, and wall pieces must be 
+                                    fastened into notches in the floor.
+                                    <br/>
+                                    <img src="LaserCutMazes/assets/floorAndWallPartiallyAssembled.png"/>
+                                    <div class="image-caption">floor with some wall pieces in place</div>
+                                    <img src="LaserCutMazes/assets/wallPiecesSmall.png"/>
+                                    <div class="image-caption">wall pieces</div>
+                                </dd>
+                                <dt>Single Sheet</dt>
+                                <dd>
+                                    Two pieces are cut out: one that is the entire shape of the maze, and one that is a plain rectangle the same size as the 
+                                    first piece. The maze piece goes on top of the plain rectangle and no other assembly is required. Additional copies of the
+                                    pieces can be printed and stacked to provide additional height.
+                                    <br/>
+                                    <img src="LaserCutMazes/assets/singleSheetPieces.png"/>
+                                    <div class="image-caption">the maze piece and plain floor</div>
+                                </dd>
+                            </dl>
+                        </div>
+                    </app-help-modal>
+                </div>
+            </div>
+            <div class="row">
                 <label for="numRowsInput">number of rows</label>
                 <div>
                     <input id="numRowsInput" [type]="numericInputType" min="1" step="1" [(ngModel)]="mazeConfig.numRows" name="numRowsInput"/>
@@ -135,28 +169,43 @@
                 </div>
             </div>
             <div class="row">
-                <label for="wallHeightInput">wall height</label>
+                <label for="wallHeightInput" [ngClass]="{'disabled': printMode === PrintMode.SINGLE_SHEET}">wall height</label>
                 <div>
-                    <input id="wallHeightInput" [type]="numericInputType" min=".01" step=".25" [(ngModel)]="mazeConfig.wallHeight" (change)="buildMaze()" name="wallHeightInput"/>
+                    <input id="wallHeightInput" [type]="numericInputType" min=".01" step=".25" [(ngModel)]="mazeConfig.wallHeight" (change)="buildMaze()" name="wallHeightInput" [disabled]="printMode === PrintMode.SINGLE_SHEET"/>
                     <app-help-modal>
                         <div class="title">Wall Height</div>
-                        <div class="body">
-                            The height of the walls from the floor of the maze. This should be tall enough so that a marble rolling through the maze won't bounce over the walls.
-                            <img src="LaserCutMazes/assets/wallHeight.png"/>
+                        <div [ngSwitch]="printMode" class="body">
+                            <div *ngSwitchCase="PrintMode.FLOOR_AND_WALL">
+                                The height of the walls from the floor of the maze. This should be tall enough so that a marble rolling through the maze won't bounce over the walls.
+                                <img src="LaserCutMazes/assets/wallHeight.png"/>
+                            </div>
+                            <div *ngSwitchCase="PrintMode.SINGLE_SHEET">Not used in Single Sheet mode</div>
                         </div>
                     </app-help-modal>
 
                 </div>
             </div>
             <div class="row">
-                <label for="materialThicknessInput">material thickness</label>
+                <label [ngSwitch]="printMode" for="materialThicknessInput">
+                    <span *ngSwitchCase="PrintMode.FLOOR_AND_WALL">material thickness</span>
+                    <span *ngSwitchCase="PrintMode.SINGLE_SHEET">wall width</span>
+                </label>
                 <div>
                     <input id="materialThicknessInput" [type]="numericInputType" min=".01" step=".01" [(ngModel)]="mazeConfig.materialThickness" (change)="buildMaze()" name="materialThicknessInput"/>
                     <app-help-modal>
-                        <div class="title">Material Thickness</div>
-                        <div class="body">
-                            The thickness of the material being used to cut out the maze pieces. Note: this will also be the width of the walls once assembled.
-                            <img src="LaserCutMazes/assets/materialThickness.png"/>
+                        <div [ngSwitch]="printMode" class="title">
+                            <div *ngSwitchCase="PrintMode.FLOOR_AND_WALL">Material Thickness</div>
+                            <div *ngSwitchCase="PrintMode.SINGLE_SHEET">Wall Width</div>
+                        </div>
+                        <div class="body" [ngSwitch]="printMode">
+                            <div *ngSwitchCase="PrintMode.FLOOR_AND_WALL">
+                                The thickness of the material being used to cut out the maze pieces. Note: this will also be the width of the walls once assembled.
+                                <img src="LaserCutMazes/assets/materialThickness.png"/>
+                            </div>
+                            <div *ngSwitchCase="PrintMode.SINGLE_SHEET">
+                                The width of the walls in between the hallways.
+                                <img src="LaserCutMazes/assets/singleSheetWallWidth.png"/>
+                        </div>
                         </div>
                     </app-help-modal>
                 </div>

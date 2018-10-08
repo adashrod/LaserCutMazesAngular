@@ -9,17 +9,23 @@ import SheetWallModel from "app/models/sheet-wall-model";
 import VectorNumber from "app/models/vector-number";
 import Path from "app/svg/path";
 import SvgElementGenerator from "app/svg/svg-element-generator";
+import SingleSheetModel from "app/models/single-sheet-model";
 
 export default class MazePrinter {
-    private sheetWallModel: SheetWallModel;
+    singleSheetModel: SingleSheetModel | null = null;
+    private sheetWallModel: SheetWallModel | null = null;
     private maxWidth: Big;
     private maxHeight: Big;
     private printerUnits: Unit;
     private ppu: number;
     precision: number = 5;
 
-    constructor(sheetWallModel: SheetWallModel, maxWidth: Big, maxHeight: Big, printerUnits: Unit, ppu: number) {
-        this.sheetWallModel = sheetWallModel;
+    constructor(model: SheetWallModel | SingleSheetModel, maxWidth: Big, maxHeight: Big, printerUnits: Unit, ppu: number) {
+        if (model instanceof SheetWallModel) {
+            this.sheetWallModel = model;
+        } else {
+            this.singleSheetModel = model;
+        }
         this.maxWidth = maxWidth;
         this.maxHeight = maxHeight;
         this.printerUnits = printerUnits;
@@ -33,53 +39,77 @@ export default class MazePrinter {
      */
     printSvg(configs: string[][], calibrationRectangle?: CalibrationRectangle): string {
         let result = SVG_HEADER;
-        result = result.replace("{width}", this.sheetWallModel.maxHorizontalDisplacement.plus(5).toString())
-            .replace("{height}", this.sheetWallModel.maxVerticalDisplacement.plus(5).toString());
-        result += this.createConfigComment(configs);
         const svgElementGenerator = new SvgElementGenerator();
 
-        result += "<g id=\"floor-notches\">";
-        for (const notch of this.sheetWallModel.floorNotches.paths) {
-            const svgPath = svgElementGenerator.modelPathToSvgPath(notch);
-            result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
-        }
-        result += "</g>\n";
-
-        result += "<g id=\"floor-numbers\">";
-        for (const floorNumber of this.sheetWallModel.floorNumbers) {
-            result += svgElementGenerator.vectorNumberToSvgText(floorNumber, this.precision);
-        }
-        result += "</g>\n";
-
-        result += "<g id=\"wall-numbers\">";
-        const wallLabelValues: VectorNumber[] = [];
-        const valIter = this.sheetWallModel.wallLabels.values();
-        let vObj;
-        while (!(vObj = valIter.next()).done) {
-            wallLabelValues.push(vObj.value);
-        }
-        for (const wallNumber of wallLabelValues) {
-            result += svgElementGenerator.vectorNumberToSvgText(wallNumber, this.precision);
-        }
-        result += "</g>\n";
-
-        result += "<g id=\"walls\">";
-        for (const shape of this.sheetWallModel.walls) {
-            for (const wall of shape.paths) {
-                const svgPath = svgElementGenerator.modelPathToSvgPath(wall);
+        let outOfBounds;
+        if (this.sheetWallModel !== null) {
+            outOfBounds = this.sheetWallModel.outOfBounds;
+            result = result.replace("{width}", this.sheetWallModel.maxHorizontalDisplacement.plus(5).toString())
+                .replace("{height}", this.sheetWallModel.maxVerticalDisplacement.plus(5).toString());
+            result += this.createConfigComment(configs);
+            result += "<g id=\"floor-notches\">";
+            for (const notch of this.sheetWallModel.floorNotches.paths) {
+                const svgPath = svgElementGenerator.modelPathToSvgPath(notch);
                 result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
             }
-        }
-        result += "</g>\n";
+            result += "</g>\n";
 
-        result += "<g id=\"floor-outline\">";
-        for (const outlinePath of this.sheetWallModel.floorOutline.paths) {
-            const svgPath = svgElementGenerator.modelPathToSvgPath(outlinePath);
-            svgPath.style = svgPath.style.replace("#000000", "#ff0000");
-            result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
-        }
-        result += "</g>\n";
+            result += "<g id=\"floor-numbers\">";
+            for (const floorNumber of this.sheetWallModel.floorNumbers) {
+                result += svgElementGenerator.vectorNumberToSvgText(floorNumber, this.precision);
+            }
+            result += "</g>\n";
 
+            result += "<g id=\"wall-numbers\">";
+            const wallLabelValues: VectorNumber[] = [];
+            const valIter = this.sheetWallModel.wallLabels.values();
+            let vObj;
+            while (!(vObj = valIter.next()).done) {
+                wallLabelValues.push(vObj.value);
+            }
+            for (const wallNumber of wallLabelValues) {
+                result += svgElementGenerator.vectorNumberToSvgText(wallNumber, this.precision);
+            }
+            result += "</g>\n";
+
+            result += "<g id=\"walls\">";
+            for (const shape of this.sheetWallModel.walls) {
+                for (const wall of shape.paths) {
+                    const svgPath = svgElementGenerator.modelPathToSvgPath(wall);
+                    result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
+                }
+            }
+            result += "</g>\n";
+
+            result += "<g id=\"floor-outline\">";
+            for (const outlinePath of this.sheetWallModel.floorOutline.paths) {
+                const svgPath = svgElementGenerator.modelPathToSvgPath(outlinePath);
+                svgPath.style = svgPath.style.replace("#000000", "#ff0000");
+                result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
+            }
+            result += "</g>\n";
+        } else if (this.singleSheetModel !== null) {
+            outOfBounds = this.singleSheetModel.outOfBounds;
+            result = result.replace("{width}", this.singleSheetModel.maxHorizontalDisplacement.plus(5).toString())
+                .replace("{height}", this.singleSheetModel.maxVerticalDisplacement.plus(5).toString());
+            result += this.createConfigComment(configs);
+            result += "<g id=\"floor-outline\">";
+            for (const path of this.singleSheetModel.floorOutline.paths) {
+                const svgPath = svgElementGenerator.modelPathToSvgPath(path);
+                svgPath.style = svgPath.style.replace("#000000", "#ff0000");
+                result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
+            }
+            result += "</g>\n";
+
+            result += "<g id=\"holes\">";
+            for (const hole of this.singleSheetModel.holes.paths) {
+                const svgPath = svgElementGenerator.modelPathToSvgPath(hole);
+                result += svgElementGenerator.pathToSvgText(svgPath, this.precision);
+            }
+            result += "</g>\n";
+        } else {
+            throw new Error("illegal state: can't call MazePrinter#print() without a model");
+        }
         if (calibrationRectangle != null) {
             result += "<g id=\"calibration-rectangle\">";
             for (const rectSide of this.buildCalibrationRectangle(calibrationRectangle)) {
@@ -89,7 +119,7 @@ export default class MazePrinter {
             result += "</g>\n";
         }
 
-        if (this.sheetWallModel.outOfBounds) {
+        if (outOfBounds) {
             result += "<g id=\"bounding-box\">";
             for (const rectSide of this.buildBoundingBoxRectangle()) {
                 rectSide.style = rectSide.style.replace("000000", "ff00ff");

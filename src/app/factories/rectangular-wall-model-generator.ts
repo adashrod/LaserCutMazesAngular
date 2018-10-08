@@ -47,6 +47,12 @@ export default class RectangularWallModelGenerator {
             this.createWallSpacesFromLinearWalls(rectangularWallModel, verticalWalls, true, true);
             this.createWallSpacesFromLinearWalls(rectangularWallModel, horizontalWalls, false, false);
         }
+        for (let r = 0; r < this.isWall.length; r++) {
+            const row = this.isWall[r];
+            for (let c = 0; c < row.length; c++) {
+                rectangularWallModel.isWall[r][c] = this.isWall[r][c];
+            }
+        }
 
         return rectangularWallModel;
     }

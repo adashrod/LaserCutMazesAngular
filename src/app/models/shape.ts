@@ -4,6 +4,9 @@ import OrderedPair from "app/common/ordered-pair";
 import { ZERO } from "app/misc/big-util";
 import Path from "app/models/path";
 
+/**
+ * A shape is a collection of paths. It can have one or many paths that are each not connected to each other.
+ */
 export default class Shape {
     readonly paths: Path[] = [];
     private cachedWidth: Big | null = null;

@@ -4,6 +4,10 @@ import Maze from "app/models/maze";
 import Space from "app/models/space";
 import Direction from "app/direction";
 
+/**
+ * An instance of LinearWallModelGenerator can be used to create a {@link LinearWallModel} from a {@link Maze}
+ * @author adashrod@gmail.com
+ */
 export default class LinearWallModelGenerator {
     private maze: Maze;
     /**

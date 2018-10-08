@@ -32,6 +32,11 @@ class NotchConnection {
     }
 }
 
+/**
+ * An instance of SheetWallModelGenerator can be used to create {@link SheetWallModel}s from
+ * {@link RectangularWallModel}s.
+ * @author adashrod@gmail.com
+ */
 export default class SheetWallModelGenerator {
     private static directionRank = createDirectionRankMap();
 

@@ -26,3 +26,13 @@ a:hover {
 a:visited {
     color: #5c2018;
 }
+
+.disabled {
+    text-decoration: line-through;
+}
+
+.image-caption {
+    text-align: center;
+    font-size: 10px;
+    font-style: italic;
+}

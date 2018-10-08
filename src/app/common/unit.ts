@@ -14,4 +14,8 @@ export default class Unit {
         this.pluralName = singularName + pluralSuffix;
         this.perInch = perInch;
     }
+
+    public static values(): Unit[] {
+        return [Unit.INCHES, Unit.CENTIMETERS, Unit.MILLIMETERS];
+    }
 }

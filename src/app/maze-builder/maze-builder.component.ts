@@ -13,12 +13,14 @@ import Unit from "app/common/unit";
 import LinearWallModelGenerator from "app/factories/linear-wall-model-generator";
 import RectangularWallModelGenerator from "app/factories/rectangular-wall-model-generator";
 import SheetWallModelGenerator from "app/factories/sheet-wall-model-generator";
+import SingleSheetModelGenerator from "app/factories/single-sheet-model-generator";
 import { min } from "app/misc/big-util";
 import CalibrationRectangle from "app/models/calibration-rectangle";
 import Maze from "app/models/maze";
 import MazeConfig from "app/models/maze-config";
 import Direction from "app/direction";
 import MazePrinter from "app/maze-printer";
+import PrintMode from "app/print-mode";
 
 @Component({
     selector: "app-maze-builder",
@@ -27,10 +29,14 @@ import MazePrinter from "app/maze-printer";
 })
 export class MazeBuilderComponent implements OnInit {
     static AUTO_SVG_THRESHOLD_MS = 500;
-    readonly mazeUnits: Unit[] = [Unit.INCHES, Unit.CENTIMETERS, Unit.MILLIMETERS];
+    readonly PrintMode = PrintMode;
+
+    readonly mazeUnits: Unit[] = Unit.values();
     readonly rectangleUnits: Unit[] = [Unit.INCHES, Unit.CENTIMETERS];
+    readonly printModes: PrintMode[] = PrintMode.values();
 
     mazeConfig: MazeConfig = new MazeConfig();
+    printMode: PrintMode = PrintMode.FLOOR_AND_WALL;
     randomSeed: string = "";
     lastSeedUsed: string;
 
@@ -188,32 +194,50 @@ export class MazeBuilderComponent implements OnInit {
         const linearWallModel = linearWallModelGenerator.generate();
         const rectangularWallModelGenerator = new RectangularWallModelGenerator(linearWallModel);
         const rectangularWallModel = rectangularWallModelGenerator.generate();
-        const sheetWallModelGenerator = new SheetWallModelGenerator(rectangularWallModel);
-        sheetWallModelGenerator.hallWidth = new Big(this.mazeConfig.hallWidth).mul(multiplier);
-        sheetWallModelGenerator.materialThickness = new Big(this.mazeConfig.materialThickness).mul(multiplier);
-        sheetWallModelGenerator.maxHeight = new Big(this.maxHeight).mul(this.ppu);
-        sheetWallModelGenerator.maxWidth = new Big(this.maxWidth).mul(this.ppu);
-        sheetWallModelGenerator.notchHeight = min(this.maxPrinterUnits.perInch.mul(this.ppu).div(Unit.MILLIMETERS.perInch).mul(4),
-            new Big(this.mazeConfig.hallWidth).mul(multiplier).mul(".33"));
-        sheetWallModelGenerator.separationSpace = new Big(this.mazeConfig.separationSpace).mul(multiplier);
-        sheetWallModelGenerator.wallHeight = new Big(this.mazeConfig.wallHeight).mul(multiplier);
-        const sheetWallModel = sheetWallModelGenerator.generate();
-        const mazePrinter = new MazePrinter(sheetWallModel, new Big(this.maxWidth).mul(this.ppu),
-            new Big(this.maxHeight).mul(this.ppu), this.maxPrinterUnits, this.ppu);
+        let mazePrinter;
+        if (this.printMode === PrintMode.FLOOR_AND_WALL) {
+            const sheetWallModelGenerator = new SheetWallModelGenerator(rectangularWallModel);
+            sheetWallModelGenerator.hallWidth = new Big(this.mazeConfig.hallWidth).mul(multiplier);
+            sheetWallModelGenerator.materialThickness = new Big(this.mazeConfig.materialThickness).mul(multiplier);
+            sheetWallModelGenerator.maxHeight = new Big(this.maxHeight).mul(this.ppu);
+            sheetWallModelGenerator.maxWidth = new Big(this.maxWidth).mul(this.ppu);
+            sheetWallModelGenerator.notchHeight = min(this.maxPrinterUnits.perInch.mul(this.ppu).div(Unit.MILLIMETERS.perInch).mul(4),
+                new Big(this.mazeConfig.hallWidth).mul(multiplier).mul(".33"));
+            sheetWallModelGenerator.separationSpace = new Big(this.mazeConfig.separationSpace).mul(multiplier);
+            sheetWallModelGenerator.wallHeight = new Big(this.mazeConfig.wallHeight).mul(multiplier);
+            const sheetWallModel = sheetWallModelGenerator.generate();
+            this.outOfBounds = sheetWallModel.outOfBounds;
+            mazePrinter = new MazePrinter(sheetWallModel, new Big(this.maxWidth).mul(this.ppu),
+                new Big(this.maxHeight).mul(this.ppu), this.maxPrinterUnits, this.ppu);
+        } else if (this.printMode === PrintMode.SINGLE_SHEET) {
+            const singleSheetModelGenerator = new SingleSheetModelGenerator(rectangularWallModel);
+            singleSheetModelGenerator.hallWidth = new Big(this.mazeConfig.hallWidth).mul(multiplier);
+            singleSheetModelGenerator.wallWidth = new Big(this.mazeConfig.materialThickness).mul(multiplier);
+            singleSheetModelGenerator.maxHeight = new Big(this.maxHeight).mul(this.ppu);
+            singleSheetModelGenerator.maxWidth = new Big(this.maxWidth).mul(this.ppu);
+            singleSheetModelGenerator.separationSpace = new Big(this.mazeConfig.separationSpace).mul(multiplier);
+            const singleSheetModel = singleSheetModelGenerator.generate();
+            this.outOfBounds = singleSheetModel.outOfBounds;
+            mazePrinter = new MazePrinter(singleSheetModel, new Big(this.maxWidth).mul(this.ppu),
+                new Big(this.maxHeight).mul(this.ppu), this.maxPrinterUnits, this.ppu);
+        } else {
+            console.error("impossible PrintMode enum: ", this.printMode);
+            return;
+        }
+
         if (this.includeCalibrationRectangle) {
             this.rawSvgSrc = mazePrinter.printSvg(this.consolidateConfigs(), this.calibrationRectangleConfig);
         } else {
             this.rawSvgSrc = mazePrinter.printSvg(this.consolidateConfigs());
         }
         this.safeSvgSrc = this.sanitizer.bypassSecurityTrustHtml(this.rawSvgSrc);
-        this.outOfBounds = sheetWallModel.outOfBounds;
         console.info(`svg export time: ${new Date().getTime() - start} ms`);
         if (!this.autoGenerateSvg && this.trackEvents) {
             (<any>window).ga("send", {
                 hitType: "event",
                 eventCategory: "Designer",
                 eventAction: "export",
-                eventLabel: this.currentAlgorithm.name
+                eventLabel: `${this.currentAlgorithm.name}-${this.printMode.name}`
             });
         }
     }
@@ -225,7 +249,7 @@ export class MazeBuilderComponent implements OnInit {
             hitType: "event",
             eventCategory: "Designer",
             eventAction: "download",
-            eventLabel: this.currentAlgorithm.name
+            eventLabel: `${this.currentAlgorithm.name}-${this.printMode.name}`
         });
     }
 
@@ -233,7 +257,7 @@ export class MazeBuilderComponent implements OnInit {
         const start = new Date().getTime();
         this.mazeConfig.numCols = 8;
         this.mazeConfig.numRows = 8;
-        this.buildMaze();
+        // no need to call buildMaze() because it gets called automatically by the changeListener
         this.exportSvg();
         const end = new Date().getTime();
         this.mazeConfig.numCols = 0;
