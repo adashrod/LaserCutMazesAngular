@@ -8,10 +8,11 @@ import { NavigationEnd, Router } from "@angular/router";
 })
 export class AppComponent implements OnInit {
     constructor(private router: Router) {
+        const w = window as any;
         this.router.events.subscribe(event => {
-            if (event instanceof NavigationEnd && typeof (<any>window).ga === "function") {
-                (<any>window).ga("set", "page", event.urlAfterRedirects);
-                (<any>window).ga("send", "pageview");
+            if (event instanceof NavigationEnd && typeof w.ga === "function") {
+                w.ga("set", "page", event.urlAfterRedirects);
+                w.ga("send", "pageview");
             }
         });
     }

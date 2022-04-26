@@ -66,7 +66,7 @@ export class MazeBuilderComponent implements OnInit {
     set showSvgPreview(show: boolean) {
         this._showSvgPreview = show;
         if (show) {
-            (<any>window).ga("send", {
+            this.sendEvent({
                 hitType: "event",
                 eventCategory: "Designer",
                 eventAction: "showSvg"
@@ -74,7 +74,7 @@ export class MazeBuilderComponent implements OnInit {
         }
     }
 
-    numericInputType: string = /msie\s|trident\/|edge\//i.test((<any>window).navigator.userAgent) ? "text" : "number";
+    numericInputType: string = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent) ? "text" : "number";
 
     private consolidateConfigs(): string[][] {
         const configs: string[][] = [];
@@ -130,7 +130,7 @@ export class MazeBuilderComponent implements OnInit {
         this.maze = maze;
         console.log(`maze build time: ${new Date().getTime() - start} ms`);
         if (this.trackEvents) {
-            (<any>window).ga("send", {
+            this.sendEvent({
                 hitType: "event",
                 eventCategory: "Designer",
                 eventAction: "build",
@@ -233,7 +233,7 @@ export class MazeBuilderComponent implements OnInit {
         this.safeSvgSrc = this.sanitizer.bypassSecurityTrustHtml(this.rawSvgSrc);
         console.info(`svg export time: ${new Date().getTime() - start} ms`);
         if (!this.autoGenerateSvg && this.trackEvents) {
-            (<any>window).ga("send", {
+            this.sendEvent({
                 hitType: "event",
                 eventCategory: "Designer",
                 eventAction: "export",
@@ -245,7 +245,7 @@ export class MazeBuilderComponent implements OnInit {
     downloadSvg() {
         const blob = new Blob([this.rawSvgSrc], {type: "image/svg+xml;charset=utf-8"});
         saveAs(blob, "maze.svg");
-        (<any>window).ga("send", {
+        this.sendEvent({
             hitType: "event",
             eventCategory: "Designer",
             eventAction: "download",
@@ -291,5 +291,11 @@ export class MazeBuilderComponent implements OnInit {
             return Direction.SOUTH;
         }
         return null;
+    }
+
+    private sendEvent(payload: { hitType: string, eventCategory: string, eventAction: string, eventLabel?: string}): void {
+        if (typeof (window as any).ga === "function") {
+            (window as any).ga("send", payload);
+        }
     }
 }

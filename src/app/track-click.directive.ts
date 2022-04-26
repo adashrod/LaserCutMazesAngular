@@ -11,11 +11,14 @@ export class TrackClickDirective {
 
     @HostListener("click")
     onClick(): void {
-        (<any>window).ga("send", {
-            hitType: "event",
-            eventCategory: this.category,
-            eventAction: "externalLink",
-            eventLabel: this.label
-        });
+        const w = window as any;
+        if (typeof w.ga === "function") {
+            w.ga("send", {
+                hitType: "event",
+                eventCategory: this.category,
+                eventAction: "externalLink",
+                eventLabel: this.label
+            });
+        }
     }
 }
