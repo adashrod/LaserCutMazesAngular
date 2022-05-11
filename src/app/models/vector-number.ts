@@ -11,12 +11,12 @@ import Shape from "app/models/shape";
 export default class VectorNumber {
     private static charMap = buildCharMap();
 
-    readonly number: number;
-    readonly width: Big;
-    readonly height: Big;
-    readonly position: OrderedPair<Big>;
+    public readonly number: number;
+    public readonly width: Big;
+    public readonly height: Big;
+    public readonly position: OrderedPair<Big>;
 
-    constructor(number: number, width: Big, height: Big, position: OrderedPair<Big>) {
+    public constructor(number: number, width: Big, height: Big, position: OrderedPair<Big>) {
         this.number = number;
         this.width = width;
         this.height = height;
@@ -28,22 +28,22 @@ export default class VectorNumber {
      * @param c a digit char
      * @return a shape that looks like the numeral
      */
-    static characterToShape(c: string): Shape {
+     public static characterToShape(c: string): Shape {
         const shape = VectorNumber.charMap[c];
-        if (typeof shape !== "undefined") {
+        if (shape instanceof Shape) {
             return Shape.copy(shape);
         }
         throw new Error(`"${c}" is not a valid character for VectorNumber`);
     }
 
-    translate(delta: OrderedPair<Big>): VectorNumber {
+    public translate(delta: OrderedPair<Big>): VectorNumber {
         this.position.x = this.position.x.add(delta.x);
         this.position.y = this.position.y.add(delta.y);
         return this;
     }
 }
 
-function buildCharMap(): Object {
+function buildCharMap(): Record<string, unknown> {
     const map = {};
     const zero = new Shape();
     const one = new Shape();

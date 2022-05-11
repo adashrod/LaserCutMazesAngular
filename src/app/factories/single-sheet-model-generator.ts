@@ -1,22 +1,22 @@
-import Big from "big.js";
+import type Big from "big.js";
 
 import OrderedPair from "app/common/ordered-pair";
 import { ZERO } from "app/misc/big-util";
 import Path from "app/models/path";
-import RectangularWallModel from "app/models/rectangular-wall-model";
+import type RectangularWallModel from "app/models/rectangular-wall-model";
 import SingleSheetModel from "app/models/single-sheet-model";
 
 export default class SingleSheetModelGenerator {
 
-    wallWidth: Big;
-    hallWidth: Big;
-    separationSpace: Big;
-    maxWidth: Big;
-    maxHeight: Big;
+    public wallWidth: Big;
+    public hallWidth: Big;
+    public separationSpace: Big;
+    public maxWidth: Big;
+    public maxHeight: Big;
 
     private model: RectangularWallModel;
 
-    constructor(model: RectangularWallModel) {
+    public constructor(model: RectangularWallModel) {
         this.model = model;
     }
 
@@ -85,8 +85,8 @@ export default class SingleSheetModelGenerator {
      * @param end   end of range, exclusive
      * @return an object with two properties: evens and odds
      */
-    private countEvensAndOdds(start: number, endExclusive: number): { evens: number, odds: number } {
-        const result: { evens: number, odds: number } = { evens: 0, odds: 0 };
+    private countEvensAndOdds(start: number, endExclusive: number): { evens: number; odds: number } {
+        const result: { evens: number; odds: number } = { evens: 0, odds: 0 };
         if (endExclusive > start) {
             const count = endExclusive - start;
             result.odds = Math.floor((count + start % 2) / 2);

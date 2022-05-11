@@ -1,25 +1,27 @@
-import { Component, OnInit } from "@angular/core";
-import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import type { OnInit } from "@angular/core";
+import { Component } from "@angular/core";
+import type { SafeHtml } from "@angular/platform-browser";
+import { DomSanitizer } from "@angular/platform-browser";
 import Big from "big.js";
 import { saveAs } from "file-saver";
 
 import DepthFirstSearch from "app/algorithms/depth-first-search-algorithm";
 import EmptyAlgorithm from "app/algorithms/empty-algorithm";
 import KruskalsAlgorithm from "app/algorithms/kruskals-algorithm";
-import MazeGenerator from "app/algorithms/maze-generator";
+import type MazeGenerator from "app/algorithms/maze-generator";
 import PrimsAlgorithm from "app/algorithms/prims-algorithm";
 import OrderedPair from "app/common/ordered-pair";
 import Unit from "app/common/unit";
+import Direction from "app/direction";
 import LinearWallModelGenerator from "app/factories/linear-wall-model-generator";
 import RectangularWallModelGenerator from "app/factories/rectangular-wall-model-generator";
 import SheetWallModelGenerator from "app/factories/sheet-wall-model-generator";
 import SingleSheetModelGenerator from "app/factories/single-sheet-model-generator";
+import MazePrinter from "app/maze-printer";
 import { min } from "app/misc/big-util";
 import CalibrationRectangle from "app/models/calibration-rectangle";
 import Maze from "app/models/maze";
 import MazeConfig from "app/models/maze-config";
-import Direction from "app/direction";
-import MazePrinter from "app/maze-printer";
 import PrintMode from "app/print-mode";
 
 @Component({
@@ -28,42 +30,43 @@ import PrintMode from "app/print-mode";
     styleUrls: ["./maze-builder.component.css"]
 })
 export class MazeBuilderComponent implements OnInit {
-    static AUTO_SVG_THRESHOLD_MS = 500;
-    readonly PrintMode = PrintMode;
+    private static AUTO_SVG_THRESHOLD_MS = 500;
 
-    readonly mazeUnits: Unit[] = Unit.values();
-    readonly rectangleUnits: Unit[] = [Unit.INCHES, Unit.CENTIMETERS];
-    readonly printModes: PrintMode[] = PrintMode.values();
+    public readonly PrintMode = PrintMode;
 
-    mazeConfig: MazeConfig = new MazeConfig();
-    printMode: PrintMode = PrintMode.FLOOR_AND_WALL;
-    randomSeed: string = "";
-    lastSeedUsed: string;
+    public readonly mazeUnits: Unit[] = Unit.values();
+    public readonly rectangleUnits: Unit[] = [Unit.INCHES, Unit.CENTIMETERS];
+    public readonly printModes: PrintMode[] = PrintMode.values();
 
-    maxWidth: number = 19.5;
-    maxHeight: number = 11;
-    maxPrinterUnits = Unit.INCHES;
-    ppu: number = 96;
+    public mazeConfig: MazeConfig = new MazeConfig();
+    public printMode: PrintMode = PrintMode.FLOOR_AND_WALL;
+    public randomSeed: string = "";
+    public lastSeedUsed: string;
 
-    includeCalibrationRectangle: boolean = false;
-    calibrationRectangleConfig: CalibrationRectangle = new CalibrationRectangle();
-    algorithms: MazeGenerator[] = [new DepthFirstSearch(), new PrimsAlgorithm(), new KruskalsAlgorithm(), new EmptyAlgorithm()];
-    currentAlgorithm = this.algorithms[0];
+    public maxWidth: number = 19.5;
+    public maxHeight: number = 11;
+    public maxPrinterUnits = Unit.INCHES;
+    public ppu: number = 96;
 
-    maze: Maze | null;
-    rawSvgSrc: string;
-    safeSvgSrc: SafeHtml | null;
+    public includeCalibrationRectangle: boolean = false;
+    public calibrationRectangleConfig: CalibrationRectangle = new CalibrationRectangle();
+    public algorithms: MazeGenerator[] = [new DepthFirstSearch(), new PrimsAlgorithm(), new KruskalsAlgorithm(), new EmptyAlgorithm()];
+    public currentAlgorithm = this.algorithms[0];
+
+    public maze: Maze | null;
+    public rawSvgSrc: string;
+    public safeSvgSrc: SafeHtml | null;
     private _showSvgPreview: boolean = false;
-    autoGenerateSvg: boolean;
-    outOfBounds: boolean = false;
+    public autoGenerateSvg: boolean;
+    public outOfBounds: boolean = false;
 
-    trackEvents: boolean = true;
+    private trackEvents: boolean = true;
 
-    get showSvgPreview(): boolean {
+    public get showSvgPreview(): boolean {
         return this._showSvgPreview;
     }
 
-    set showSvgPreview(show: boolean) {
+    public set showSvgPreview(show: boolean) {
         this._showSvgPreview = show;
         if (show) {
             this.sendEvent({
@@ -74,7 +77,7 @@ export class MazeBuilderComponent implements OnInit {
         }
     }
 
-    numericInputType: string = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent) ? "text" : "number";
+    public numericInputType: string = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent) ? "text" : "number";
 
     private consolidateConfigs(): string[][] {
         const configs: string[][] = [];
@@ -103,9 +106,9 @@ export class MazeBuilderComponent implements OnInit {
         return configs;
     }
 
-    constructor(private sanitizer: DomSanitizer) {}
+    public constructor(private sanitizer: DomSanitizer) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.mazeConfig.addChangeListener((oldVal, newVal) => {
             this.buildMaze();
         });
@@ -114,7 +117,7 @@ export class MazeBuilderComponent implements OnInit {
         this.trackEvents = true;
     }
 
-    buildMaze() {
+    public buildMaze(): void {
         this.safeSvgSrc = null;
         this.rawSvgSrc = "";
         if (typeof this.mazeConfig.numRows !== "number" || typeof this.mazeConfig.numCols !== "number" ||
@@ -146,7 +149,7 @@ export class MazeBuilderComponent implements OnInit {
         }
     }
 
-    onClickMazeCell(event: MouseEvent, row: number, column: number): void {
+    public onClickMazeCell(event: MouseEvent, row: number, column: number): void {
         const elem = <HTMLElement>event.target;
         const x = event.offsetX, y = event.offsetY;
         const edge = this.getEdge(x / elem.offsetWidth, y / elem.offsetHeight);
@@ -184,7 +187,7 @@ export class MazeBuilderComponent implements OnInit {
         throw new Error("invalid direction");
     }
 
-    exportSvg() {
+    public exportSvg(): void {
         if (this.maze === null) {
             return;
         }
@@ -242,7 +245,7 @@ export class MazeBuilderComponent implements OnInit {
         }
     }
 
-    downloadSvg() {
+    public downloadSvg(): void {
         const blob = new Blob([this.rawSvgSrc], {type: "image/svg+xml;charset=utf-8"});
         saveAs(blob, "maze.svg");
         this.sendEvent({
@@ -293,7 +296,7 @@ export class MazeBuilderComponent implements OnInit {
         return null;
     }
 
-    private sendEvent(payload: { hitType: string, eventCategory: string, eventAction: string, eventLabel?: string}): void {
+    private sendEvent(payload: { hitType: string; eventCategory: string; eventAction: string; eventLabel?: string}): void {
         if (typeof (window as any).ga === "function") {
             (window as any).ga("send", payload);
         }

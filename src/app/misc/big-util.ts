@@ -8,7 +8,7 @@ export function max(a: Big, b: Big): Big {
     return a.gt(b) ? a : b;
 }
 
-export function roundAndStrip(num: Big, precision: number) {
+export function roundAndStrip(num: Big, precision: number): string {
     const s = num.toFixed(precision);
     const dot = s.indexOf(".");
     if (dot === -1) {

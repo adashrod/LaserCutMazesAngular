@@ -1,9 +1,9 @@
-import Big from "big.js";
+import type Big from "big.js";
 
 import OrderedPair from "app/common/ordered-pair";
 import { HALF, ZERO } from "app/misc/big-util";
-import Shape from "app/models/shape";
-import SheetWallModel from "app/models/sheet-wall-model";
+import type Shape from "app/models/shape";
+import type SheetWallModel from "app/models/sheet-wall-model";
 
 /**
  * This class has an optimization function that tiles the walls in the sheet so that they're
@@ -21,7 +21,7 @@ export default class SheetWallTilingOptimizer {
     private beginningOfLineX: Big;
     private currentMaxRowWidth: Big | null;
 
-    constructor(sheetWallModel: SheetWallModel, separationSpace: Big, maxWidth: Big, maxHeight: Big, wallHeight: Big) {
+    public constructor(sheetWallModel: SheetWallModel, separationSpace: Big, maxWidth: Big, maxHeight: Big, wallHeight: Big) {
         this.sheetWallModel = sheetWallModel;
         this.separationSpace = separationSpace;
         this.maxWidth = maxWidth;
@@ -30,7 +30,7 @@ export default class SheetWallTilingOptimizer {
     }
 
     // todo: could make this even more efficient by doing rows instead of columns after the first column
-    optimize(): void {
+    public optimize(): void {
         const floorWidth = this.sheetWallModel.floorOutline.width,
             floorHeight = this.sheetWallModel.floorOutline.height,
             wallHeight = this.sheetWallModel.walls[0].height;

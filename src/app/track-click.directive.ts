@@ -1,16 +1,14 @@
-import { Directive, Input, HostListener } from "@angular/core";
+import { Directive, HostListener, Input } from "@angular/core";
 
 @Directive({
     selector: "[appTrackClick]"
 })
 export class TrackClickDirective {
-    @Input() category: string;
-    @Input() label: string;
-
-    constructor() {}
+    @Input() public category: string;
+    @Input() public label: string;
 
     @HostListener("click")
-    onClick(): void {
+    public onClick(): void {
         const w = window as any;
         if (typeof w.ga === "function") {
             w.ga("send", {

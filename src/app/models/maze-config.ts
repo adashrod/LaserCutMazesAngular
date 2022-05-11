@@ -6,19 +6,19 @@ import Unit from "app/common/unit";
 export default class MazeConfig {
     private _numRows: number;
     private _numCols: number;
-    unit: Unit = Unit.INCHES;
-    wallHeight: number = .5;
-    materialThickness: number = .118;
-    hallWidth: number = .5;
-    separationSpace: number = .05;
+    public unit: Unit = Unit.INCHES;
+    public wallHeight: number = .5;
+    public materialThickness: number = .118;
+    public hallWidth: number = .5;
+    public separationSpace: number = .05;
     // algorithm: MazeGenerator;
     private listeners: ((oldVal: any, newVal: any) => void)[] = [];
 
-    get numRows(): number {
+    public get numRows(): number {
         return this._numRows;
     }
 
-    set numRows(newVal: number) {
+    public set numRows(newVal: number) {
         const oldVal = this.numRows;
         if (typeof newVal === "string") {
             this._numRows = parseInt(newVal, 10);
@@ -32,11 +32,11 @@ export default class MazeConfig {
         }
     }
 
-    get numCols(): number {
+    public get numCols(): number {
         return this._numCols;
     }
 
-    set numCols(newVal: number) {
+    public set numCols(newVal: number) {
         const oldVal = this.numCols;
         if (typeof newVal === "string") {
             this._numCols = parseInt(newVal, 10);
@@ -50,7 +50,7 @@ export default class MazeConfig {
         }
     }
 
-    addChangeListener(listener: (oldVal: any, newVal: any) => void): void {
+    public addChangeListener(listener: (oldVal: any, newVal: any) => void): void {
         this.listeners.push(listener);
     }
 }

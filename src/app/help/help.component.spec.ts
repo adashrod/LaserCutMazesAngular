@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import type { ComponentFixture} from "@angular/core/testing";
+import { async, TestBed } from "@angular/core/testing";
 
 import { HelpComponent } from "app/help/help.component";
 import { LightboxThumbnailComponent } from "app/lightbox-thumbnail/lightbox-thumbnail.component";
@@ -8,7 +9,7 @@ describe("HelpComponent", () => {
     let fixture: ComponentFixture<HelpComponent>;
 
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
+        void TestBed.configureTestingModule({
             declarations: [
                 HelpComponent,
                 LightboxThumbnailComponent
@@ -24,6 +25,6 @@ describe("HelpComponent", () => {
     });
 
     it("should create", () => {
-        expect(component).toBeTruthy();
+        void expect(component).toBeTruthy();
     });
 });

@@ -1,31 +1,33 @@
-import Big from "big.js";
+import type Big from "big.js";
+import type { Comparison } from "big.js";
 
 import OrderedPair from "app/common/ordered-pair";
+import Direction from "app/direction";
 import SheetWallTilingOptimizer from "app/factories/sheet-wall-tiling-optimizer";
-import { min, HALF, ZERO } from "app/misc/big-util";
+import { HALF, min, ZERO } from "app/misc/big-util";
 import Path from "app/models/path";
-import RectangularWallModel, { Wall as RwmWall } from "app/models/rectangular-wall-model";
+import type { Wall as RwmWall } from "app/models/rectangular-wall-model";
+import type RectangularWallModel from "app/models/rectangular-wall-model";
 import Shape from "app/models/shape";
 import SheetWallModel from "app/models/sheet-wall-model";
 import VectorNumber from "app/models/vector-number";
-import Direction from "app/direction";
 
 class NotchPosInfo {
-    direction: Direction;
-    isCorner: boolean;
+    public direction: Direction;
+    public isCorner: boolean;
 
-    constructor(direction: Direction, isCorner: boolean) {
+    public constructor(direction: Direction, isCorner: boolean) {
         this.direction = direction;
         this.isCorner = isCorner;
     }
 }
 
 class NotchConnection {
-    firstPoint: OrderedPair<Big>;
-    cornerPoint: OrderedPair<Big>;
-    secondPoint: OrderedPair<Big>;
+    public firstPoint: OrderedPair<Big>;
+    public cornerPoint: OrderedPair<Big>;
+    public secondPoint: OrderedPair<Big>;
 
-    constructor(firstPoint: OrderedPair<Big>, cornerPoint: OrderedPair<Big>, secondPoint: OrderedPair<Big>) {
+    public constructor(firstPoint: OrderedPair<Big>, cornerPoint: OrderedPair<Big>, secondPoint: OrderedPair<Big>) {
         this.firstPoint = firstPoint;
         this.cornerPoint = cornerPoint;
         this.secondPoint = secondPoint;
@@ -40,20 +42,20 @@ class NotchConnection {
 export default class SheetWallModelGenerator {
     private static directionRank = createDirectionRankMap();
 
-    wallHeight: Big;
-    materialThickness: Big;
-    hallWidth: Big;
-    notchHeight: Big;
-    separationSpace: Big;
-    maxWidth: Big;
-    maxHeight: Big;
+    public wallHeight: Big;
+    public materialThickness: Big;
+    public hallWidth: Big;
+    public notchHeight: Big;
+    public separationSpace: Big;
+    public maxWidth: Big;
+    public maxHeight: Big;
     private notchEdgeMap: Map<Path, NotchPosInfo> = new Map(); // reference equality is ok because there won't be any duplicate keys
                                     // (1-to-1 notches and notch metadata)
     private model: RectangularWallModel;
     private wallTypeLabelsByLength: Map<string, number> = new Map(); // reference equality won't work because this map is being used as a
                                     // cache and keys are recalculated on every get; call toString() on them for cache hits
 
-    constructor(model: RectangularWallModel) {
+    public constructor(model: RectangularWallModel) {
         this.model = model;
     }
 
@@ -233,16 +235,14 @@ export default class SheetWallModelGenerator {
     }
 
     private numDigits(number: number): number {
-        const n = number < 0 ? -1 * number : number;
-        let exp = 1;
+        const n = Math.abs(number);
+        let count = 1;
         let powerOfTen = 10;
-        while (true) {
-            if (n < powerOfTen) {
-                return exp;
-            }
+        while (n >= powerOfTen) {
             powerOfTen *= 10;
-            exp++;
+            count++;
         }
+        return count;
     }
 
     private findWallTypeLabel(wallLength: Big): number {
@@ -264,7 +264,7 @@ export default class SheetWallModelGenerator {
      * B  6
      * A987
      */
-    private edgeNotchComparator = (p1: Path, p2: Path) => {
+    private edgeNotchComparator = (p1: Path, p2: Path): Comparison => {
         const p1Info = <NotchPosInfo>this.notchEdgeMap.get(p1), p2Info = <NotchPosInfo>this.notchEdgeMap.get(p2);
         const p1Dir = p1Info.direction, p2Dir = p2Info.direction;
         const dirCmp = SheetWallModelGenerator.directionRank[p1Dir.name] - SheetWallModelGenerator.directionRank[p2Dir.name];

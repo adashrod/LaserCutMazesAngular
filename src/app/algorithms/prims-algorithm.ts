@@ -1,7 +1,7 @@
 import MazeGenerator from "app/algorithms/maze-generator";
 import OrderedPair from "app/common/ordered-pair";
-import Maze from "app/models/maze";
 import Direction from "app/direction";
+import type Maze from "app/models/maze";
 
 /**
  * An implementation of https://en.wikipedia.org/wiki/Prim%27s_algorithm for generating random 2D mazes with square
@@ -17,11 +17,11 @@ export default class PrimsAlgorithm extends MazeGenerator {
     private deltas = [new OrderedPair<number>(0, -1), new OrderedPair<number>(1, 0),
         new OrderedPair<number>(0, 1), new OrderedPair<number>(-1, 0)];
 
-    get name(): string {
+    public get name(): string {
         return "Prim's";
     }
 
-    buildPaths(maze: Maze): void {
+    public buildPaths(maze: Maze): void {
         this.maze = maze;
         this.onPath.clear();
         this.exploringNext.clear();
@@ -66,8 +66,8 @@ export default class PrimsAlgorithm extends MazeGenerator {
 
     private isUnexplored(x: number, y: number): boolean {
         const space = this.maze.grid[y][x];
-        return !space.isOpen(Direction.NORTH) && !space.isOpen(Direction.EAST) &&
-            !space.isOpen(Direction.SOUTH) && !space.isOpen(Direction.WEST) &&
-            !this.exploringNext.has(new OrderedPair<number>(x, y).toString());
+        const wallsClosed = !space.isOpen(Direction.NORTH) && !space.isOpen(Direction.EAST) &&
+            !space.isOpen(Direction.SOUTH) && !space.isOpen(Direction.WEST);
+        return wallsClosed && !this.exploringNext.has(new OrderedPair<number>(x, y).toString());
     }
 }

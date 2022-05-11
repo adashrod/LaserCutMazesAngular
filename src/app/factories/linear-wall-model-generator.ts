@@ -1,8 +1,8 @@
 import OrderedPair from "app/common/ordered-pair";
-import LinearWallModel, { Wall as LwmWall } from "app/models/linear-wall-model";
-import Maze from "app/models/maze";
-import Space from "app/models/space";
 import Direction from "app/direction";
+import LinearWallModel, { Wall as LwmWall } from "app/models/linear-wall-model";
+import type Maze from "app/models/maze";
+import type Space from "app/models/space";
 
 /**
  * An instance of LinearWallModelGenerator can be used to create a {@link LinearWallModel} from a {@link Maze}
@@ -16,13 +16,13 @@ export default class LinearWallModelGenerator {
      * intersection of two long walls. The second wall built will be split at the intersection into 2 parts.
      * @return true for east-west, false for north-south
      */
-    favorEwWalls: boolean;
+    private favorEwWalls: boolean;
 
-    constructor(maze: Maze) {
+    public constructor(maze: Maze) {
         this.maze = maze;
     }
 
-    generate(): LinearWallModel {
+    public generate(): LinearWallModel {
         const width = this.maze.numCols;
         const height = this.maze.numRows;
         const lastCol = width - 1;
@@ -120,7 +120,7 @@ export default class LinearWallModelGenerator {
                 // in prev lane, but not for row because we don't care about prev lane when doing the outer
                 // check
                 if (!spaceInSameLane.isOpen(overlapCheckDirection) ||
-                    (!isFinalWall && spaceInPrevLane != null && !spaceInPrevLane.isOpen(overlapCheckDirection))) {
+                        (!isFinalWall && spaceInPrevLane != null && !spaceInPrevLane.isOpen(overlapCheckDirection))) {
                     // i += length puts i just past the wall that's blocked by a perpendicular one; -1 is needed
                     // so that the next loop iter still checks that space after i++ happens
                     additive = -1;

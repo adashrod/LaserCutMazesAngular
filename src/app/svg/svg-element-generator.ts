@@ -1,12 +1,12 @@
 import Big from "big.js";
 
 import OrderedPair from "app/common/ordered-pair";
-import { ZERO, roundAndStrip } from "app/misc/big-util";
-import ModelPath from "app/models/path";
+import { roundAndStrip, ZERO } from "app/misc/big-util";
+import type ModelPath from "app/models/path";
 import Shape from "app/models/shape";
-import VectorNumber, { CHARACTER_WIDTH, CHARACTER_HEIGHT } from "app/models/vector-number";
+import VectorNumber, { CHARACTER_HEIGHT, CHARACTER_WIDTH } from "app/models/vector-number";
 import SvgPath from "app/svg/path";
-import Rect from "app/svg/rect";
+import type Rect from "app/svg/rect";
 
 /**
  * A simple, not very flexible utility for serializing SVG elements to strings for manual SVG file construction.
@@ -14,7 +14,7 @@ import Rect from "app/svg/rect";
  * @author adashrod@gmail.com
  */
 export default class SvgElementGenerator {
-    modelPathToSvgPath(path: ModelPath): SvgPath {
+    public modelPathToSvgPath(path: ModelPath): SvgPath {
         const result = new SvgPath();
         Array.prototype.push.apply(result.multiPartPath, path.points);
         if (path.isClosed) {
@@ -23,7 +23,7 @@ export default class SvgElementGenerator {
         return result;
     }
 
-    pathToSvgText(path: SvgPath, fpPrecision: number): string {
+    public pathToSvgText(path: SvgPath, fpPrecision: number): string {
         let dAttrBuilder = "M";
         if (path.multiPartPath.length === 0) {
             dAttrBuilder += ` ${roundAndStrip(path.start.x, fpPrecision)},${roundAndStrip(path.start.y, fpPrecision)} ` +
@@ -36,15 +36,15 @@ export default class SvgElementGenerator {
                 dAttrBuilder += " Z"; // closed path
             }
         }
-        return `<path style="${path.style}" d="${dAttrBuilder}" id="${path.id || ""}"/>`;
+        return `<path style="${path.style}" d="${dAttrBuilder}" id="${path.id ?? ""}"/>`;
     }
 
-    rectToSvgText(rect: Rect, fpPrecision: number): string {
+    public rectToSvgText(rect: Rect, fpPrecision: number): string {
         return `<rect style="${rect.style}" x="${roundAndStrip(rect.x, fpPrecision)}" y="${roundAndStrip(rect.y, fpPrecision)}" ` +
             `width="${roundAndStrip(rect.width, fpPrecision)}" height="${roundAndStrip(rect.height, fpPrecision)}"/>`;
     }
 
-    vectorNumberToSvgText(vectorNumber: VectorNumber, fpPrecision: number): string {
+    public vectorNumberToSvgText(vectorNumber: VectorNumber, fpPrecision: number): string {
         const vnStr = vectorNumber.number.toString();
         const stringShape = new Shape();
         for (let i = 0; i < vnStr.length; i++) {

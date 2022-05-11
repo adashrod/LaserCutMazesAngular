@@ -1,4 +1,4 @@
-import Big from "big.js";
+import type Big from "big.js";
 
 import OrderedPair from "app/common/ordered-pair";
 import { ZERO } from "app/misc/big-util";
@@ -8,7 +8,7 @@ import Path from "app/models/path";
  * A shape is a collection of paths. It can have one or many paths that are each not connected to each other.
  */
 export default class Shape {
-    readonly paths: Path[] = [];
+    public readonly paths: Path[] = [];
     private cachedWidth: Big | null = null;
     private cachedHeight: Big | null = null;
 
@@ -17,13 +17,13 @@ export default class Shape {
      * if passed no arguments, creates an empty Shape
      * @param path optional path
      */
-    constructor(path?: Path) {
+    public constructor(path?: Path) {
         if (typeof path !== "undefined") {
             this.paths.push(path);
         }
     }
 
-    static copy(shape: Shape): Shape {
+    public static copy(shape: Shape): Shape {
         const copy = new Shape();
         for (const path of shape.paths) {
             const pathCopy = new Path();
@@ -36,21 +36,21 @@ export default class Shape {
         return copy;
     }
 
-    addPath(path: Path): Shape {
+    public addPath(path: Path): Shape {
         this.paths.push(path);
         this.cachedWidth = null;
         this.cachedHeight = null;
         return this;
     }
 
-    addShape(shape: Shape): Shape {
+    public addShape(shape: Shape): Shape {
         Array.prototype.push.apply(this.paths, shape.paths);
         this.cachedWidth = null;
         this.cachedHeight = null;
         return this;
     }
 
-    get width(): Big {
+    public get width(): Big {
         if (this.cachedWidth !== null) {
             return this.cachedWidth;
         }
@@ -71,7 +71,7 @@ export default class Shape {
         return maximum.sub(minimum);
     }
 
-    get height(): Big {
+    public get height(): Big {
         if (this.cachedHeight !== null) {
             return this.cachedHeight;
         }
@@ -92,7 +92,7 @@ export default class Shape {
         return maximum.sub(minimum);
     }
 
-    get maxHorizontalDisplacement(): Big {
+    public get maxHorizontalDisplacement(): Big {
         let maximum: Big | null = null;
         for (const path of this.paths) {
             for (const point of path.points) {
@@ -105,7 +105,7 @@ export default class Shape {
     }
 
 
-    get maxVerticalDisplacement(): Big {
+    public get maxVerticalDisplacement(): Big {
         let maximum: Big | null = null;
         for (const path of this.paths) {
             for (const point of path.points) {
@@ -117,7 +117,7 @@ export default class Shape {
         return maximum || ZERO;
     }
 
-    translate(delta: OrderedPair<Big>): Shape {
+    public translate(delta: OrderedPair<Big>): Shape {
         for (const path of this.paths) {
             path.translate(delta);
         }
@@ -130,7 +130,7 @@ export default class Shape {
      * @param scaleFactor
      * @return
      */
-    scale(scaleFactor: OrderedPair<Big>): Shape {
+     public scale(scaleFactor: OrderedPair<Big>): Shape {
         for (const path of this.paths) {
             for (const point of path.points) {
                 point.x = point.x.mul(scaleFactor.x);
@@ -140,7 +140,7 @@ export default class Shape {
         return this;
     }
 
-    toString(): string {
+    public toString(): string {
         let result = "Shape[";
         if (this.paths.length > 0) {
             for (const p of this.paths) {

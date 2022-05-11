@@ -1,16 +1,17 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule, Routes } from "@angular/router";
+import type { Routes } from "@angular/router";
+import { RouterModule } from "@angular/router";
 
-import { MazeBuilderComponent } from "app/maze-builder/maze-builder.component";
-import { AppComponent } from "app/app.component";
-import { HelpComponent } from "app/help/help.component";
-import { HelpModalComponent } from "app/help-modal/help-modal.component";
-import { WelcomeComponent } from "app/welcome/welcome.component";
-import { LightboxThumbnailComponent } from "app/lightbox-thumbnail/lightbox-thumbnail.component";
 import { AboutComponent } from "app/about/about.component";
+import { AppComponent } from "app/app.component";
+import { HelpModalComponent } from "app/help-modal/help-modal.component";
+import { HelpComponent } from "app/help/help.component";
+import { LightboxThumbnailComponent } from "app/lightbox-thumbnail/lightbox-thumbnail.component";
+import { MazeBuilderComponent } from "app/maze-builder/maze-builder.component";
 import { TrackClickDirective } from "app/track-click.directive";
+import { WelcomeComponent } from "app/welcome/welcome.component";
 
 const appRoutes: Routes = [{
     path: "LaserCutMazes/welcome",
@@ -48,4 +49,5 @@ const appRoutes: Routes = [{
     providers: [],
     bootstrap: [AppComponent]
 })
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class AppModule {}

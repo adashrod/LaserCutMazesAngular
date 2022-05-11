@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
+import type { OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: "app-help-modal",
@@ -8,17 +9,15 @@ import { Component, Input, OnInit } from "@angular/core";
 export class HelpModalComponent implements OnInit {
     private static instances: HelpModalComponent[] = [];
 
-    showHelpModal: boolean = false;
-    @Input() popLeft: boolean;
-    @Input() glow: boolean;
+    public showHelpModal: boolean = false;
+    @Input() public popLeft: boolean;
+    @Input() public glow: boolean;
 
-    constructor() {}
-
-    ngOnInit() {
+    public ngOnInit(): void {
         HelpModalComponent.instances.push(this);
     }
 
-    toggle(): void {
+    public toggle(): void {
         for (const comp of HelpModalComponent.instances) {
             if (comp !== this) {
                 comp.close();
@@ -27,7 +26,7 @@ export class HelpModalComponent implements OnInit {
         this.showHelpModal = !this.showHelpModal;
     }
 
-    close(): void {
+    public close(): void {
         this.showHelpModal = false;
     }
 }

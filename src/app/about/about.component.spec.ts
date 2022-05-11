@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import type { ComponentFixture} from "@angular/core/testing";
+import { async, TestBed } from "@angular/core/testing";
 
 import { AboutComponent } from "app/about/about.component";
 
@@ -7,7 +8,7 @@ describe("AboutComponent", () => {
     let fixture: ComponentFixture<AboutComponent>;
 
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
+        void TestBed.configureTestingModule({
             declarations: [
                 AboutComponent
             ]
@@ -22,6 +23,6 @@ describe("AboutComponent", () => {
     });
 
     it("should create", () => {
-        expect(component).toBeTruthy();
+        void expect(component).toBeTruthy();
     });
 });

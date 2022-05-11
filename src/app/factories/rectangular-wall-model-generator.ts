@@ -1,7 +1,8 @@
 import OrderedPair from "app/common/ordered-pair";
-import LinearWallModel, { Wall as LwmWall } from "app/models/linear-wall-model";
-import RectangularWallModel, { Wall as RwmWall } from "app/models/rectangular-wall-model";
 import Direction from "app/direction";
+import type { Wall as LwmWall } from "app/models/linear-wall-model";
+import type LinearWallModel from "app/models/linear-wall-model";
+import RectangularWallModel, { Wall as RwmWall } from "app/models/rectangular-wall-model";
 
 /**
  * An instance of RectangularWallModelGenerator can be used to create a {@link RectangularWallModel} from
@@ -12,7 +13,7 @@ export default class RectangularWallModelGenerator {
     private model: LinearWallModel;
     private isWall: boolean[][] = [];
 
-    constructor(model: LinearWallModel) {
+    public constructor(model: LinearWallModel) {
         this.model = model;
         const r = 2 * model.height + 1, c = 2 * model.width + 1;
         for (let y = 0; y < r; y++) {
@@ -23,7 +24,7 @@ export default class RectangularWallModelGenerator {
         }
     }
 
-    generate(): RectangularWallModel {
+    public generate(): RectangularWallModel {
         const rectangularWallModel = new RectangularWallModel(this.isWall[0].length, this.isWall.length);
 
         const verticalWalls: LwmWall[] = [], horizontalWalls: LwmWall[] = [];
@@ -78,7 +79,7 @@ export default class RectangularWallModelGenerator {
         }
     }
 
-    fillOutWallSpaces(wallsAreVertical: boolean, wsx: number, wsy: number, wex: number, wey: number): void {
+    private fillOutWallSpaces(wallsAreVertical: boolean, wsx: number, wsy: number, wex: number, wey: number): void {
         if (wallsAreVertical) {
             for (let y = wsy; y <= wey; y++) {
                 this.isWall[y][wsx] = true;

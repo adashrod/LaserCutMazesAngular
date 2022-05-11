@@ -1,20 +1,20 @@
-import OrderedPair from "app/common/ordered-pair";
+import type OrderedPair from "app/common/ordered-pair";
 
 /**
  * four directions for relating Spaces to each other
  */
 export default class Direction {
-    static NORTH: Direction = new Direction("NORTH");
-    static EAST: Direction = new Direction("EAST");
-    static SOUTH: Direction = new Direction("SOUTH");
-    static WEST: Direction = new Direction("WEST");
+    public static NORTH: Direction = new Direction("NORTH");
+    public static EAST: Direction = new Direction("EAST");
+    public static SOUTH: Direction = new Direction("SOUTH");
+    public static WEST: Direction = new Direction("WEST");
 
-    readonly name: string;
+    public readonly name: string;
 
     /**
      * Determines the direction that relates "from" to "to", e.g. if "to" is to the EAST of "from", EAST is returned
      */
-    static determineDirection(from: OrderedPair<number>, to: OrderedPair<number>): Direction {
+    public static determineDirection(from: OrderedPair<number>, to: OrderedPair<number>): Direction {
         const xComp = from.x - to.x;
         if (xComp < 0) { return Direction.EAST; }
         if (xComp > 0) { return Direction.WEST; }
@@ -28,7 +28,7 @@ export default class Direction {
         this.name = name;
     }
 
-    get opposite(): Direction {
+    public get opposite(): Direction {
         if (this === Direction.NORTH) {
             return Direction.SOUTH;
         }
@@ -44,7 +44,7 @@ export default class Direction {
         throw new Error("invalid direction");
     }
 
-    toString(): string {
+    public toString(): string {
         return this.name;
     }
 }

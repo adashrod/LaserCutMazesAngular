@@ -1,5 +1,6 @@
+import type { ComponentFixture} from "@angular/core/testing";
+import { async, TestBed } from "@angular/core/testing";
 import { FormsModule } from "@angular/forms";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { HelpModalComponent } from "app/help-modal/help-modal.component";
 import { MazeBuilderComponent } from "app/maze-builder/maze-builder.component";
@@ -9,7 +10,7 @@ describe("MazeBuilderComponent", () => {
     let fixture: ComponentFixture<MazeBuilderComponent>;
 
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
+        void TestBed.configureTestingModule({
             imports: [FormsModule],
             declarations: [
                 HelpModalComponent,
@@ -26,6 +27,6 @@ describe("MazeBuilderComponent", () => {
     });
 
     it("should create", () => {
-        expect(component).toBeTruthy();
+        void expect(component).toBeTruthy();
     });
 });

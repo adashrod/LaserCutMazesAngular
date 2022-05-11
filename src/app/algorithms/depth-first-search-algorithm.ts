@@ -1,7 +1,7 @@
 import MazeGenerator from "app/algorithms/maze-generator";
 import OrderedPair from "app/common/ordered-pair";
-import Maze from "app/models/maze";
 import Direction from "app/direction";
+import type Maze from "app/models/maze";
 
 /**
  * An implementation of https://en.wikipedia.org/wiki/Depth-first_search
@@ -13,11 +13,11 @@ export default class DepthFirstSearchAlgorithm extends MazeGenerator {
     private deltas = [new OrderedPair<number>(0, -1), new OrderedPair<number>(1, 0),
         new OrderedPair<number>(0, 1), new OrderedPair<number>(-1, 0)];
 
-    get name(): string {
+    public get name(): string {
         return "Depth-First Search";
     }
 
-    buildPaths(maze: Maze): void {
+    public buildPaths(maze: Maze): void {
         this.maze = maze;
         this.explored.clear();
         const stack: OrderedPair<number>[] = [];

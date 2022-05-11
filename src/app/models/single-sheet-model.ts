@@ -1,20 +1,20 @@
-import Big from "big.js";
+import type Big from "big.js";
 
+import type Path from "app/models/path";
 import Shape from "app/models/shape";
-import Path from "app/models/path";
 
 export default class SingleSheetModel {
-    readonly holes: Shape = new Shape();
-    readonly floorOutline: Shape = new Shape();
+    public readonly holes: Shape = new Shape();
+    public readonly floorOutline: Shape = new Shape();
 
-    outOfBounds: boolean = false;
+    public outOfBounds: boolean = false;
 
-    addHole(path: Path): SingleSheetModel {
+    public addHole(path: Path): SingleSheetModel {
         this.holes.addPath(path);
         return this;
     }
 
-    get maxHorizontalDisplacement(): Big {
+    public get maxHorizontalDisplacement(): Big {
         let max = this.floorOutline.maxHorizontalDisplacement;
         for (const shape of [this.holes, this.floorOutline]) {
             if (shape.maxHorizontalDisplacement.gt(max)) {
@@ -24,7 +24,7 @@ export default class SingleSheetModel {
         return max;
     }
 
-    get maxVerticalDisplacement(): Big {
+    public get maxVerticalDisplacement(): Big {
         let max = this.floorOutline.maxVerticalDisplacement;
         for (const shape of [this.holes, this.floorOutline]) {
             if (shape.maxVerticalDisplacement.gt(max)) {

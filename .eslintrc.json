@@ -1,0 +1,86 @@
+{
+    "root": true,
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": ["./tsconfig.json"]
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "sequence"
+    ],
+    "rules": {
+        "no-restricted-imports": ["error", {
+            "patterns": [".*"]
+        }],
+        "sequence/ordered-import-members": [
+            "error", {
+                "ignoreCase": true,
+                "sortSpecifiersWithComments": true
+            }
+        ],
+        "sequence/ordered-imports-by-path": [
+            "error", {
+                "ignoreCase": true,
+                "sortSideEffectsFirst": true,
+                "allowSeparateGroups": true,
+                "sortTypeImportsFirst": true
+            }
+        ],
+        "sequence/strict-camel-case": [
+            "error", {
+                "ignoreProperties": false,
+                "ignoreImports": false,
+                "allowOneCharWords": "always",
+                "ignoreSingleWords": false,
+                "ignoredIdentifiers": [
+                    "NORTH", "EAST", "SOUTH", "WEST",
+                    "INCHES", "CENTIMETERS", "MILLIMETERS",
+                    "ZERO", "HALF"
+                ]
+            }
+        ],
+        "sequence/logical-expression-complexity": [
+            "error", {
+                "maxHeight": 4,
+                "maxTerms": 5
+            }
+        ],
+        "@typescript-eslint/strict-boolean-expressions": [
+            "warn", {
+                "allowString" : false,
+                "allowNumber" : false
+            }
+        ],
+        "@typescript-eslint/no-inferrable-types": 0,
+        "@typescript-eslint/array-type": 2,
+        "@typescript-eslint/consistent-type-imports": [
+            2, {
+                "prefer": "type-imports"
+            }
+        ],
+        "@typescript-eslint/explicit-function-return-type": 2,
+        "@typescript-eslint/explicit-member-accessibility": 2,
+        "@typescript-eslint/explicit-module-boundary-types": 2,
+        "func-call-spacing": "off",
+        "@typescript-eslint/func-call-spacing": 2,
+        "@typescript-eslint/member-delimiter-style": 2,
+        "@typescript-eslint/no-base-to-string": 2,
+        "@typescript-eslint/no-confusing-void-expression": 2,
+        "@typescript-eslint/no-extraneous-class": 2,
+        "@typescript-eslint/no-floating-promises": 2,
+        "no-invalid-this": "off",
+        "@typescript-eslint/no-invalid-this": 2,
+        "quotes": "off",
+        "@typescript-eslint/quotes": [2, "double"],
+        "space-before-function-paren": "off",
+        "@typescript-eslint/space-before-function-paren": [2, {
+            "anonymous": "never",
+            "named": "never",
+            "asyncArrow": "always"
+        }]
+    }
+}

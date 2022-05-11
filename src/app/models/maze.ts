@@ -1,4 +1,4 @@
-import MazeGenerator from "app/algorithms/maze-generator";
+import type MazeGenerator from "app/algorithms/maze-generator";
 import Space from "app/models/space";
 
 /**
@@ -7,11 +7,11 @@ import Space from "app/models/space";
  * @author adashrod@gmail.com
  */
 export default class Maze {
-    readonly numCols: number;
-    readonly numRows: number;
-    readonly grid: Space[][] = [];
+    public readonly numCols: number;
+    public readonly numRows: number;
+    public readonly grid: Space[][] = [];
 
-    constructor(numCols: number, numRows: number) {
+    public constructor(numCols: number, numRows: number) {
         this.numCols = numCols;
         this.numRows = numRows;
         this.grid = [];
@@ -38,7 +38,7 @@ export default class Maze {
     /**
      * check if a space determined by the coordinates is inside the maze boundary
      */
-    isInBounds(x: number, y: number): boolean {
+    public isInBounds(x: number, y: number): boolean {
         return x >= 0 && x < this.numCols && y >= 0 && y < this.numRows;
     }
 
@@ -46,7 +46,7 @@ export default class Maze {
      * Randomizes this maze using the supplied algorithm
      * @param generatorAlgorithm which algorithm to use
      */
-    build(generatorAlgorithm: MazeGenerator): void {
+    public build(generatorAlgorithm: MazeGenerator): void {
         this.resetGrid();
         generatorAlgorithm.buildPaths(this);
     }

@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import type { ComponentFixture} from "@angular/core/testing";
+import { async, TestBed } from "@angular/core/testing";
 
 import { HelpModalComponent } from "app/help-modal/help-modal.component";
 
@@ -7,7 +8,7 @@ describe("HelpModalComponent", () => {
     let fixture: ComponentFixture<HelpModalComponent>;
 
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
+        void TestBed.configureTestingModule({
             declarations: [
                 HelpModalComponent
             ]
@@ -22,6 +23,6 @@ describe("HelpModalComponent", () => {
     });
 
     it("should create", () => {
-        expect(component).toBeTruthy();
+        void expect(component).toBeTruthy();
     });
 });

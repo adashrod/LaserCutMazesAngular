@@ -1,4 +1,4 @@
-import Big from "big.js";
+import type Big from "big.js";
 
 import OrderedPair from "app/common/ordered-pair";
 import { ZERO } from "app/misc/big-util";
@@ -8,8 +8,8 @@ import { ZERO } from "app/misc/big-util";
  * point 2, ..., point n - 1 to point n, and (if isClosed == true) point n to point 0
  */
 export default class Path {
-    readonly points: OrderedPair<Big>[] = [];
-    isClosed: boolean = true;
+    public readonly points: OrderedPair<Big>[] = [];
+    public isClosed: boolean = true;
     private cachedWidth: Big | null = null;
     private cachedHeight: Big | null = null;
 
@@ -19,7 +19,7 @@ export default class Path {
      * @param from start of path
      * @param to end of path
      */
-    constructor(from?: OrderedPair<Big>, to?: OrderedPair<Big>) {
+    public constructor(from?: OrderedPair<Big>, to?: OrderedPair<Big>) {
         if (typeof from !== "undefined" && typeof to !== "undefined") {
             this.points.push(from);
             this.points.push(to);
@@ -27,7 +27,7 @@ export default class Path {
         }
     }
 
-    static copy(path: Path): Path {
+    public static copy(path: Path): Path {
         const pathCopy = new Path();
         for (const point of path.points) {
             pathCopy.addPoint(new OrderedPair(point.x, point.y));
@@ -36,17 +36,17 @@ export default class Path {
         return pathCopy;
     }
 
-    addPoint(point: OrderedPair<Big>): Path {
+    public addPoint(point: OrderedPair<Big>): Path {
         this.points.push(point);
         return this;
     }
 
-    setClosed(closed: boolean): Path {
+    public setClosed(closed: boolean): Path {
         this.isClosed = closed;
         return this;
     }
 
-    get width(): Big {
+    public get width(): Big {
         if (this.cachedWidth !== null) {
             return this.cachedWidth;
         }
@@ -65,7 +65,7 @@ export default class Path {
         return maximum.sub(minimum);
     }
 
-    get height(): Big {
+    public get height(): Big {
         if (this.cachedHeight !== null) {
             return this.cachedHeight;
         }
@@ -84,7 +84,7 @@ export default class Path {
         return maximum.sub(minimum);
     }
 
-    translate(delta: OrderedPair<Big>): Path {
+    public translate(delta: OrderedPair<Big>): Path {
         for (const point of this.points) {
             point.x = point.x.add(delta.x);
             point.y = point.y.add(delta.y);
@@ -92,7 +92,7 @@ export default class Path {
         return this;
     }
 
-    toString(): string {
+    public toString(): string {
         let builder = "";
         for (const point of this.points) {
             builder += `(${point.x}, ${point.y}) -> `;

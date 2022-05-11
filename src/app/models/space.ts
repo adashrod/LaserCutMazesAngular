@@ -5,16 +5,16 @@ import Direction from "app/direction";
  * @author adashrod@gmail.com
  */
 export default class Space {
-    northOpen: boolean = false;
-    eastOpen: boolean = false;
-    southOpen: boolean = false;
-    westOpen: boolean = false;
+    public northOpen: boolean = false;
+    public eastOpen: boolean = false;
+    public southOpen: boolean = false;
+    public westOpen: boolean = false;
 
     /**
      * Removes a wall in the space
      * @param direction which wall to remove
      */
-    openWall(direction: Direction): void {
+     public openWall(direction: Direction): void {
         this.changeWall(direction, true);
     }
 
@@ -22,11 +22,11 @@ export default class Space {
      * Adds a wall in the space
      * @param direction which wall to add
      */
-    closeWall(direction: Direction): void {
+     public closeWall(direction: Direction): void {
         this.changeWall(direction, false);
     }
 
-    private changeWall(direction: Direction, open: boolean) {
+    private changeWall(direction: Direction, open: boolean): void {
         if (direction === Direction.NORTH) {
             this.northOpen = open;
         } else if (direction === Direction.EAST) {
@@ -42,7 +42,7 @@ export default class Space {
      * @param direction which direction to check for a wall
      * @return true if the wall in the specified direction is open (no wall)
      */
-    isOpen(direction: Direction): boolean {
+     public isOpen(direction: Direction): boolean {
         switch (direction) {
             case Direction.NORTH:
                 return this.northOpen;
@@ -57,7 +57,7 @@ export default class Space {
         }
     }
 
-    toString(): string {
+    public toString(): string {
         let str = "Space[";
         if (this.northOpen) {
             str += "^";

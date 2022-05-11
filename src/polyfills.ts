@@ -17,6 +17,7 @@
 /***************************************************************************************************
  * BROWSER POLYFILLS
  */
+/* eslint-disable sequence/ordered-imports-by-path */
 
 /** IE9, IE10 and IE11 requires all of the following polyfills. **/
 import "core-js/es6/symbol";
@@ -77,3 +78,4 @@ import "zone.js/dist/zone";  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+/* eslint-enable sequence/ordered-imports-by-path */

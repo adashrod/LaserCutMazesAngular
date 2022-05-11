@@ -1,14 +1,14 @@
-import OrderedPair from "app/common/ordered-pair";
+import type OrderedPair from "app/common/ordered-pair";
 import Direction from "app/direction";
 
 /**
  * A wall within a LinearWallModel. The model is a 2D top-down representation of a maze. Walls have no depth
  */
 export class Wall {
-    start: OrderedPair<number>;
-    end: OrderedPair<number>;
+    public start: OrderedPair<number>;
+    public end: OrderedPair<number>;
 
-    constructor(a: OrderedPair<number>, b: OrderedPair<number>) {
+    public constructor(a: OrderedPair<number>, b: OrderedPair<number>) {
         const direction = Direction.determineDirection(a, b);
         if (direction === Direction.NORTH || direction === Direction.WEST) {
             this.start = b;
@@ -19,7 +19,7 @@ export class Wall {
         }
     }
 
-    toString(): string {
+    public toString(): string {
         return `Wall[${this.start.toString()} to ${this.end.toString()}]`;
     }
 }
@@ -32,18 +32,18 @@ export class Wall {
  * @author adashrod@gmail.com
  */
 export default class LinearWallModel {
-    readonly width: number;
-    readonly height: number;
-    readonly walls: Wall[] = [];
-    readonly favorEwWalls: boolean;
+    public readonly width: number;
+    public readonly height: number;
+    public readonly walls: Wall[] = [];
+    public readonly favorEwWalls: boolean;
 
-    constructor(width: number, height: number, favorEwWalls: boolean) {
+    public constructor(width: number, height: number, favorEwWalls: boolean) {
         this.width = width;
         this.height = height;
         this.favorEwWalls = favorEwWalls;
     }
 
-    addWall(wall: Wall): void {
+    public addWall(wall: Wall): void {
         this.walls.push(wall);
     }
 }

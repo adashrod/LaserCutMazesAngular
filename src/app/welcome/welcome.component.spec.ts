@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import type { ComponentFixture} from "@angular/core/testing";
+import { async, TestBed } from "@angular/core/testing";
 
 import { WelcomeComponent } from "app/welcome/welcome.component";
 
@@ -7,7 +8,7 @@ describe("WelcomeComponent", () => {
     let fixture: ComponentFixture<WelcomeComponent>;
 
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
+        void TestBed.configureTestingModule({
             declarations: [ WelcomeComponent ]
         })
         .compileComponents();
@@ -20,6 +21,6 @@ describe("WelcomeComponent", () => {
     });
 
     it("should create", () => {
-        expect(component).toBeTruthy();
+        void expect(component).toBeTruthy();
     });
 });

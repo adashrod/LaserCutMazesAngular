@@ -1,23 +1,23 @@
 import MazeGenerator from "app/algorithms/maze-generator";
 import OrderedPair from "app/common/ordered-pair";
-import Maze from "app/models/maze";
 import Direction from "app/direction";
 
 /**
  * Simple unidirectional tree for implementing a disjoint set
  */
+import type Maze from "app/models/maze";
 class Tree {
-    parent: Tree = this;
+    private parent: Tree = this;
 
-    get root(): Tree {
+    public get root(): Tree {
         return this.parent === this ? this.parent : this.parent.root;
     }
 
-    isConnectedTo(otherTree: Tree): boolean {
+    public isConnectedTo(otherTree: Tree): boolean {
         return this.root === otherTree.root;
     }
 
-    merge(otherTree: Tree): void {
+    public merge(otherTree: Tree): void {
         otherTree.root.parent = this;
     }
 }
@@ -26,10 +26,10 @@ class Tree {
  * An edge is determined by the coordinates of the two spaces that it separates
  */
 class Edge {
-    a: OrderedPair<number>;
-    b: OrderedPair<number>;
+    public a: OrderedPair<number>;
+    public b: OrderedPair<number>;
 
-    constructor(a: OrderedPair<number>, b: OrderedPair<number>) {
+    public constructor(a: OrderedPair<number>, b: OrderedPair<number>) {
         this.a = a;
         this.b = b;
     }
@@ -44,11 +44,11 @@ export default class KruskalsAlgorithm extends MazeGenerator {
     private parallelMatrix: Tree[][] = [];
     private edges: Edge[] = [];
 
-    get name(): string {
+    public get name(): string {
         return "Kruskal's";
     }
 
-    buildPaths(maze: Maze): void {
+    public buildPaths(maze: Maze): void {
         this.parallelMatrix = [];
         this.edges = [];
         for (let y = 0; y < maze.numRows; y++) {

@@ -1,8 +1,9 @@
 import MazeGenerator from "app/algorithms/maze-generator";
-import Maze from "app/models/maze";
+import type Maze from "app/models/maze";
 
 export default class EmptyAlgorithm extends MazeGenerator {
-    readonly name: string = "Do-It-Yourself";
+    public readonly name: string = "Do-It-Yourself";
 
-    buildPaths(maze: Maze): void {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    public buildPaths(maze: Maze): void {}
 }

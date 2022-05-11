@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import type { ComponentFixture} from "@angular/core/testing";
+import { async, TestBed } from "@angular/core/testing";
 
 import { LightboxThumbnailComponent } from "app/lightbox-thumbnail/lightbox-thumbnail.component";
 
@@ -7,7 +8,7 @@ describe("LightboxThumbnailComponent", () => {
     let fixture: ComponentFixture<LightboxThumbnailComponent>;
 
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
+        void TestBed.configureTestingModule({
             declarations: [ LightboxThumbnailComponent ]
         })
         .compileComponents();
@@ -20,6 +21,6 @@ describe("LightboxThumbnailComponent", () => {
     });
 
     it("should create", () => {
-        expect(component).toBeTruthy();
+        void expect(component).toBeTruthy();
     });
 });

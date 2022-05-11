@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, Input, ViewChild } from "@angular/core";
+import type { OnInit} from "@angular/core";
+import { Component, ElementRef, Input, ViewChild } from "@angular/core";
 
 @Component({
     selector: "app-lightbox-thumbnail",
@@ -6,33 +7,31 @@ import { Component, ElementRef, OnInit, Input, ViewChild } from "@angular/core";
     styleUrls: ["./lightbox-thumbnail.component.css"]
 })
 export class LightboxThumbnailComponent implements OnInit {
-    @Input() title: string;
-    @Input() image: string;
-    @Input() thumbnailWidth: number;
-    @Input() thumbnailHeight: number;
-    @ViewChild("thumbnail") thumbnail: ElementRef;
-    shown: boolean = false;
+    @Input() public title: string;
+    @Input() public image: string;
+    @Input() public thumbnailWidth: number;
+    @Input() public thumbnailHeight: number;
+    @ViewChild("thumbnail") private thumbnail: ElementRef;
+    public shown: boolean = false;
 
-    constructor() {}
-
-    ngOnInit() {
-        this.thumbnail.nativeElement.onload = () => {
+    public ngOnInit(): void {
+        this.thumbnail.nativeElement.onload = (): void => {
             const aspectRatio = this.thumbnail.nativeElement.width / this.thumbnail.nativeElement.height;
-            if (this.thumbnailWidth) {
+            if (typeof this.thumbnailWidth === "number") {
                 this.thumbnail.nativeElement.setAttribute("width", this.thumbnailWidth);
                 this.thumbnail.nativeElement.setAttribute("height", Math.round(this.thumbnailWidth / aspectRatio));
-            } else if (this.thumbnailHeight) {
+            } else if (typeof this.thumbnailHeight === "number") {
                 this.thumbnail.nativeElement.setAttribute("width", Math.round(this.thumbnailHeight * aspectRatio));
                 this.thumbnail.nativeElement.setAttribute("height", this.thumbnailHeight);
             }
         };
     }
 
-    showLightbox() {
+    public showLightbox(): void {
         this.shown = true;
     }
 
-    hideLightbox() {
+    public hideLightbox(): void {
         this.shown = false;
     }
 }

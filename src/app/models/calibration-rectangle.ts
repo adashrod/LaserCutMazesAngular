@@ -9,17 +9,17 @@ export default class CalibrationRectangle {
     private _width: number = 6;
     private _height: number = 6;
     private _unit: Unit = Unit.INCHES;
-    leftAligned: boolean = true;
-    topAligned: boolean = true;
+    public leftAligned: boolean = true;
+    public topAligned: boolean = true;
 
     /**
      * the integral number of units wide the rectangle is
      */
-    get width(): number {
+    public get width(): number {
         return this._width;
     }
 
-    set width(w: number) {
+    public set width(w: number) {
         let val: number;
         if (typeof w === "string") {
             val = parseInt(w, 10);
@@ -32,11 +32,11 @@ export default class CalibrationRectangle {
     /**
      * the integral number of units high the rectangle is
      */
-    get height(): number {
+    public get height(): number {
         return this._height;
     }
 
-    set height(h: number) {
+    public set height(h: number) {
         let val: number;
         if (typeof h === "string") {
             val = parseInt(h, 10);
@@ -46,11 +46,11 @@ export default class CalibrationRectangle {
         this._height = Math.max(1, Math.floor(val));
     }
 
-    get unit(): Unit {
+    public get unit(): Unit {
         return this._unit;
     }
 
-    set unit(u: Unit) {
+    public set unit(u: Unit) {
         if (u === Unit.INCHES || u === Unit.CENTIMETERS) {
             this._unit = u;
         } else {
